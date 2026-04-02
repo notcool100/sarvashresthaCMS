@@ -1,0 +1,6 @@
+@SarvashresthaCMS.WebApi_HostAddress = http://localhost:5217
+
+GET {{SarvashresthaCMS.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
