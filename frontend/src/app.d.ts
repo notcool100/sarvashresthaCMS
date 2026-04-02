@@ -1,9 +1,11 @@
-// See https://svelte.dev/docs/kit/types#app.d.ts
-// for information about these interfaces
+import type { AuthResponse } from '$lib/types/api';
+
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			user: AuthResponse | null;
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}

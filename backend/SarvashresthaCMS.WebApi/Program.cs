@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SarvashresthaCMS.Infrastructure.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -96,6 +97,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Serve static files from the 'uploads' folder
+var uploadPath = Path.Combine(app.Environment.ContentRootPath, "uploads");
+if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadPath),
+    RequestPath = "/uploads"
+});
 
 app.UseCors("AllowSvelteKit");
 

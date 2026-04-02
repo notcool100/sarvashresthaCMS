@@ -11,4 +11,11 @@ public interface IBookingRepository
     Task<int> CreateAsync(Booking booking);
     Task<bool> UpdateStatusAsync(int id, string status);
     Task<bool> DeleteAsync(int id);
+    
+    // Dashboard methods
+    Task<decimal> GetTotalRevenueAsync();
+    Task<int> GetCountByStatusAsync(string status);
+    Task<int> GetNewBookingsCountAsync(int days);
+    Task<IEnumerable<(string Month, decimal Revenue)>> GetMonthlyRevenueAsync(int months);
+    Task<IEnumerable<Booking>> GetRecentBookingsAsync(int count);
 }

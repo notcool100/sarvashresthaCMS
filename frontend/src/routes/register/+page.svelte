@@ -44,7 +44,7 @@
   <div class="card">
     <div class="header">
       <h1>Create Account</h1>
-      <p>Join Sarvashrestha Resort today</p>
+      <p>Join Sarvashrestha today</p>
     </div>
 
     <form on:submit|preventDefault={handleRegister}>

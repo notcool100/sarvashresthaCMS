@@ -4,12 +4,13 @@
   import { goto } from '$app/navigation';
   import { UserRole } from '$lib/types/api';
 
-  let email = '';
-  let password = '';
-  let error = '';
-  let loading = false;
+  let email = $state('');
+  let password = $state('');
+  let error = $state('');
+  let loading = $state(false);
 
-  async function handleLogin() {
+  async function handleLogin(e: SubmitEvent) {
+    e.preventDefault();
     loading = true;
     error = '';
     
@@ -18,6 +19,9 @@
       
       if (response.success && response.data) {
         authStore.set(response.data);
+        
+        // Set cookie for hooks.server.ts
+        document.cookie = `auth_data=${JSON.stringify(response.data)}; path=/; max-age=3600; SameSite=Lax`;
         
         // Role-based redirection
         if (response.data.role === UserRole.Admin) {
@@ -42,10 +46,10 @@
   <div class="card">
     <div class="header">
       <h1>Welcome Back</h1>
-      <p>Log in to manage your resort bookings</p>
+      <p>Log in to manage your room bookings</p>
     </div>
 
-    <form on:submit|preventDefault={handleLogin}>
+    <form onsubmit={handleLogin}>
       <div class="input-group">
         <label for="email">Email Address</label>
         <input 

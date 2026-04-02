@@ -33,5 +33,6 @@ export const authService = {
 
   logout() {
     localStorage.removeItem('auth_data');
+    document.cookie = 'auth_data=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
   }
 };

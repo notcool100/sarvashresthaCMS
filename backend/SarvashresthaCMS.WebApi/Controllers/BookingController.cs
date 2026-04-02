@@ -37,12 +37,15 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
     {
         var booking = new Booking
         {
-            ResortId = request.ResortId,
+            RoomId = request.RoomId,
+            OfferId = request.OfferId,
             GuestName = request.GuestName,
             guestEmail = request.GuestEmail,
             CheckIn = request.CheckIn,
             CheckOut = request.CheckOut,
             TotalPrice = request.TotalPrice,
+            DiscountAmount = request.DiscountAmount,
+            FinalPrice = request.FinalPrice,
             Status = "Pending"
         };
 
