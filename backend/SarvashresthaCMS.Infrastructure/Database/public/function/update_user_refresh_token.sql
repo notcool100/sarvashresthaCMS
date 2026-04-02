@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION update_user_refresh_token(
     p_user_id INTEGER,
     p_refresh_token VARCHAR,
-    p_expiry_time TIMESTAMP
+    p_expiry_time TIMESTAMPTZ
 ) RETURNS VOID AS $$
 BEGIN
     UPDATE users

@@ -4,8 +4,8 @@ RETURNS TABLE (
     resort_id INTEGER,
     guest_name VARCHAR,
     guest_email VARCHAR,
-    check_in TIMESTAMP,
-    check_out TIMESTAMP,
+    check_in TIMESTAMPTZ,
+    check_out TIMESTAMPTZ,
     total_price DECIMAL,
     status VARCHAR
 ) AS $$

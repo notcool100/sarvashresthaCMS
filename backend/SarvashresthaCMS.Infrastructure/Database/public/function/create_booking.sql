@@ -2,8 +2,8 @@ CREATE OR REPLACE FUNCTION create_booking(
     p_resort_id INTEGER,
     p_guest_name VARCHAR,
     p_guest_email VARCHAR,
-    p_check_in TIMESTAMP,
-    p_check_out TIMESTAMP,
+    p_check_in TIMESTAMPTZ,
+    p_check_out TIMESTAMPTZ,
     p_total_price DECIMAL
 ) RETURNS INTEGER AS $$
 DECLARE

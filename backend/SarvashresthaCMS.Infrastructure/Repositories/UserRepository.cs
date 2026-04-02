@@ -3,6 +3,7 @@ using SarvashresthaCMS.Application.Interfaces;
 using SarvashresthaCMS.Domain.Entities;
 using SarvashresthaCMS.Domain.Enums;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace SarvashresthaCMS.Infrastructure.Repositories;
 
@@ -35,10 +36,10 @@ public class UserRepository(IDbConnectionFactory dbConnectionFactory) : IUserRep
         parameters.Add("p_username", user.Username);
         parameters.Add("p_email", user.Email);
         parameters.Add("p_password_hash", user.PasswordHash);
-        parameters.Add("p_role", (int)user.Role);
+        parameters.Add("p_role_id", (int)user.Role); // Renamed parameter to p_role_id
 
         return await connection.ExecuteScalarAsync<int>(
-            "SELECT create_user(@p_username, @p_email, @p_password_hash, @p_role)", 
+            "SELECT create_user(@p_username, @p_email, @p_password_hash, @p_role_id)", 
             parameters, 
             commandType: CommandType.Text);
     }
