@@ -1,0 +1,22 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "AllowedOrigins": [
+    "http://localhost:5173",
+    "http://localhost:5174"
+  ],
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Database=sarvashrestha_cms_dev;Username=YOUR_DB_USER;Password=YOUR_DB_PASSWORD"
+  },
+  "JwtSettings": {
+    "Key": "YOUR_SUPER_SECRET_KEY_MIN_32_CHARACTERS_LONG",
+    "Issuer": "SarvashresthaCMS",
+    "Audience": "SarvashresthaCMS_Users",
+    "ExpiryMinutes": "60"
+  }
+}

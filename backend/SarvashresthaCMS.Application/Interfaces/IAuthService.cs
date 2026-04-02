@@ -7,6 +7,7 @@ namespace SarvashresthaCMS.Application.Interfaces;
 public interface IAuthService
 {
     Task<ServiceResponse<AuthResponse>> RegisterAsync(RegisterRequest request);
+    Task<ServiceResponse<AuthResponse>> RegisterStaffAsync(RegisterStaffRequest request);
     Task<ServiceResponse<AuthResponse>> LoginAsync(LoginRequest request);
     Task<ServiceResponse<AuthResponse>> RefreshTokenAsync(RefreshTokenRequest request);
 }

@@ -9,6 +9,24 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSvelteKit", policy =>
+    {
+        var origins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() 
+                      ?? new[] { "http://localhost:5173", "https://localhost:5173" };
+        
+        // Log registered origins to console for debugging
+        Console.WriteLine("Registered CORS Origins: " + string.Join(", ", origins));
+                      
+        policy.WithOrigins(origins)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 // Configure Authorization Services
 builder.Services.AddAuthorization();
 
@@ -78,6 +96,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSvelteKit");
 
 app.UseAuthentication();
 app.UseAuthorization();

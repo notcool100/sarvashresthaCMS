@@ -40,6 +40,32 @@ public class AuthService(IUserRepository userRepository, IJwtTokenGenerator jwtT
         return ServiceResponse<AuthResponse>.Ok(data, "Registration successful.");
     }
 
+    public async Task<ServiceResponse<AuthResponse>> RegisterStaffAsync(RegisterStaffRequest request)
+    {
+        var existingUser = await _userRepository.GetByEmailAsync(request.Email);
+        if (existingUser != null)
+            return ServiceResponse<AuthResponse>.Fail("User with this email already exists.");
+
+        var user = new User
+        {
+            Username = request.Username,
+            Email = request.Email,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+            Role = request.Role // Explicitly allow passing the Role
+        };
+
+        var userId = await _userRepository.CreateAsync(user);
+        user.Id = userId;
+
+        var accessToken = _jwtTokenGenerator.GenerateAccessToken(user);
+        var refreshToken = _jwtTokenGenerator.GenerateRefreshToken();
+
+        await _userRepository.UpdateRefreshTokenAsync(userId, refreshToken, DateTime.UtcNow.AddDays(7));
+
+        var data = new AuthResponse(accessToken, refreshToken, user.Username, user.Email, user.Role);
+        return ServiceResponse<AuthResponse>.Ok(data, $"Staff/Admin user '{user.Username}' created successfully.");
+    }
+
     public async Task<ServiceResponse<AuthResponse>> LoginAsync(LoginRequest request)
     {
         var user = await _userRepository.GetByEmailAsync(request.Email);
