@@ -9,13 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+// Configure Authorization Services
+builder.Services.AddAuthorization();
+
 // Configure Swagger/OpenAPI with JWT Support
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Sarvashrestha CMS API", Version = "v1" });
     
-    // Define the Bearer Auth scheme
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -26,7 +28,6 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Enter JWT token in this format: Bearer {your token here}"
     });
 
-    // Add security requirements for all endpoints
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {

@@ -1,2 +1,6 @@
 <Solution>
+  <Project Path="SarvashresthaCMS.Application/SarvashresthaCMS.Application.csproj" />
+  <Project Path="SarvashresthaCMS.Domain/SarvashresthaCMS.Domain.csproj" />
+  <Project Path="SarvashresthaCMS.Infrastructure/SarvashresthaCMS.Infrastructure.csproj" />
+  <Project Path="SarvashresthaCMS.WebApi/SarvashresthaCMS.WebApi.csproj" />
 </Solution>

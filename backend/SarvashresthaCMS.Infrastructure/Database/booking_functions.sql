@@ -1,4 +1,4 @@
--- Sample PostgreSQL functions for SarvashresthaCMS Bookings
+-- PG functions for SarvashresthaCMS Bookings
 
 -- 1. Create Booking Function
 CREATE OR REPLACE FUNCTION create_booking(
@@ -60,22 +60,34 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- 4. Update Booking Status Function
+-- Updated to return INTEGER (affected row count) for Dapper success detection.
 CREATE OR REPLACE FUNCTION update_booking_status(
     p_id INTEGER,
     p_status VARCHAR
-) RETURNS VOID AS $$
+) RETURNS INTEGER AS $$
+DECLARE
+    affected_rows INTEGER;
 BEGIN
     UPDATE bookings
     SET status = p_status
     WHERE id = p_id;
+    
+    GET DIAGNOSTICS affected_rows = ROW_COUNT;
+    RETURN affected_rows;
 END;
 $$ LANGUAGE plpgsql;
 
 -- 5. Delete Booking Function
+-- Updated to return INTEGER (affected row count) for Dapper success detection.
 CREATE OR REPLACE FUNCTION delete_booking(p_id INTEGER)
-RETURNS VOID AS $$
+RETURNS INTEGER AS $$
+DECLARE
+    affected_rows INTEGER;
 BEGIN
     DELETE FROM bookings
     WHERE id = p_id;
+    
+    GET DIAGNOSTICS affected_rows = ROW_COUNT;
+    RETURN affected_rows;
 END;
 $$ LANGUAGE plpgsql;

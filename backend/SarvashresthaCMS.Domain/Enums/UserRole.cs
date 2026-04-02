@@ -2,7 +2,7 @@ namespace SarvashresthaCMS.Domain.Enums;
 
 public enum UserRole
 {
-    Admin,
-    Staff,
-    Customer
+    Admin = 1,
+    Staff = 2,
+    Customer = 3
 }
