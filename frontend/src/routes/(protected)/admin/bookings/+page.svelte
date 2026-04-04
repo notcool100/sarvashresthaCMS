@@ -74,7 +74,7 @@
         error = '';
         try {
             if (editingId) {
-                const response = await bookingService.update({ ...form, id: editingId });
+                const response = await bookingService.update({ id: editingId, status: form.status });
                 if (!response.success) {
                     error = response.message || 'Failed to update room';
                     return;
