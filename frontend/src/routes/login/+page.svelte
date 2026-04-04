@@ -25,7 +25,7 @@
         
         // Role-based redirection
         if (response.data.role === UserRole.Admin) {
-          goto('/(protected)/admin/items');
+          goto('/admin/dashboard');
         } else if (response.data.role === UserRole.Staff) {
           goto('/(protected)/staff/dashboard'); // Staff dashboard (to be created)
         } else {

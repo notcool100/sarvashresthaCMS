@@ -15,7 +15,7 @@
       <a href="#contact">Contact</a>
 
       {#if $authStore}
-        <a href="/(protected)/user" class="btn-primary">Dashboard</a>
+        <a href="/user" class="btn-primary">Dashboard</a>
       {:else}
         <a href="/login" class="btn-primary">Login</a>
         <a href="/register" class="btn-primary">Book Now</a>
