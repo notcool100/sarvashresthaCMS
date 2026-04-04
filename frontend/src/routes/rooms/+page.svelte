@@ -13,6 +13,9 @@
   ];
 
   let rooms = $state<Room[]>([]);
+  const capacityDropdown = $derived(
+    [...new Set(rooms.map((x) => x.capacity))].sort((a, b) => a - b),
+  );
   let isLoading = $state(true);
 
   onMount(async () => {
@@ -39,6 +42,13 @@
   };
 
   const slug = (room?: Room) => (room ? `/booking?room=${room.id}` : "/booking");
+ 
+  
+  let selectedCapacity = $state("");
+  const isFiltering = $derived(selectedCapacity !== "");
+  let filteredRooms = $derived(
+    isFiltering ? rooms.filter((x) => x.capacity === Number(selectedCapacity)) : [],
+  );
 </script>
 
 <svelte:head>
@@ -87,8 +97,12 @@
         <div class="filter-chip">
           <label>Occupancy</label>
           <div class="filter-value">
-            <span>2 Guests</span>
-            <span class="material-symbols-outlined">expand_more</span>
+            <select bind:value={selectedCapacity}>
+           <option value="">All Capacity</option>
+           {#each capacityDropdown as cap}
+           <option value={cap}>{cap}</option>
+           {/each}
+            </select>
           </div>
         </div>
       </div>
@@ -114,6 +128,30 @@
 
   <section class="max-w-7xl mx-auto px-6">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-y-16 gap-x-10">
+    {#if isFiltering}
+    {#if filteredRooms.length}
+    {#each filteredRooms as fr}
+      <div class="lg:col-span-4 group">
+          <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-5">
+            <a href={slug(fr)}>
+              <img
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                alt={fr.name}
+                src={imageFor(fr, 2)}
+              />
+            </a>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0c3a1a]/70 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+              <h3 class="font-[var(--font-headline)] text-2xl">{fr.name}</h3>
+              <p class="text-xs uppercase tracking-widest opacity-80">${fr.pricePerNight} / Night</p>
+            </div>
+          </div>
+        </div>
+    {/each}
+    {:else}
+    <p>NO foo</p>
+    {/if}
+    {:else}
       {#if featuredRoom}
         <div class="lg:col-span-8 group">
           <div class="relative overflow-hidden rounded-2xl aspect-[16/9] mb-6">
@@ -204,6 +242,7 @@
           </div>
         </div>
       {/each}
+      {/if}
     </div>
   </section>
 
