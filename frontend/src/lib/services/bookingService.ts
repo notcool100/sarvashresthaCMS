@@ -20,7 +20,7 @@ function authHeaders() {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-export const roomService = {
+export const bookingService = {
   async getAll(): Promise<ServiceResponse<booking[]>> {
     const response = await fetch(`${API_BASE_URL}/room`);
     return await response.json();

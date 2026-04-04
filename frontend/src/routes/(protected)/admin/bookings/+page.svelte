@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { bookingService } from '$lib/services/BookingService';
+    import { bookingService } from '$lib/services/bookingService';
     import { fileService } from '$lib/services/fileService';
     import { PUBLIC_API_BASE_URL } from '$env/static/public';
     import type { booking, BookingCreateRequest } from '$lib/types/api';
@@ -74,7 +74,7 @@
         error = '';
         try {
             if (editingId) {
-                const response = await bookingService.update({ id: editingId , ...form });
+                const response = await bookingService.update({ ...form, id: editingId });
                 if (!response.success) {
                     error = response.message || 'Failed to update room';
                     return;
@@ -170,7 +170,7 @@
         {editingId ? 'Edit Booking' : 'Create Booking'}
     </h3>
 
-    <form class="space-y-4" on:submit|preventDefault={booking}>
+    <form class="space-y-4" onsubmit={saveRoom}>
 
         <!-- Guest Name -->
         <div>

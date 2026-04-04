@@ -4,7 +4,6 @@
     import { fileService } from '$lib/services/fileService';
     import { PUBLIC_API_BASE_URL } from '$env/static/public';
     import type { Room, RoomCreateRequest } from '$lib/types/api';
-    import { goto } from '$app/navigation';
 
     let rooms = $state<Room[]>([]);
     let loading = $state(true);
@@ -206,7 +205,7 @@
                                         <div class="flex items-center justify-end gap-2">
                                             <button
                                                 class="px-3 py-2 text-xs font-bold uppercase rounded bg-surface-container-high text-emerald-900 hover:bg-surface-container-highest"
-                                                onclick={() => goto(`/admin/rooms/create?id=${room.id}`)}
+                                                onclick={() => startEdit(room)}
                                             >
                                                 Edit
                                             </button>
