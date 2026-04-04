@@ -15,7 +15,7 @@ function getAccessToken(): string | null {
   }
 }
 
-function authHeaders() {
+function authHeaders():HeadersInit {
   const token = getAccessToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }

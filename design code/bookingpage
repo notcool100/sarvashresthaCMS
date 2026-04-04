@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Book Your Stay | Annapurna Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#fcf9f4",
+                        "on-primary-container": "#90d689",
+                        "surface-container-highest": "#e5e2dd",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#ffe088",
+                        "surface-variant": "#e5e2dd",
+                        "on-primary-fixed-variant": "#0c5216",
+                        "on-tertiary-container": "#ffb2a9",
+                        "outline-variant": "#c0c9bb",
+                        "surface-tint": "#2a6b2c",
+                        "surface": "#fcf9f4",
+                        "on-primary-fixed": "#002203",
+                        "on-background": "#1c1c19",
+                        "background": "#fcf9f4",
+                        "secondary-fixed-dim": "#e9c349",
+                        "on-secondary-fixed-variant": "#574500",
+                        "tertiary": "#7c0007",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dcdad5",
+                        "surface-container": "#f0ede8",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#fed65b",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#a60b12",
+                        "inverse-on-surface": "#f3f0eb",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1c1c19",
+                        "primary-container": "#1b5e20",
+                        "on-secondary-container": "#745c00",
+                        "inverse-primary": "#91d78a",
+                        "surface-container-high": "#ebe8e3",
+                        "surface-container-low": "#f6f3ee",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffdad6",
+                        "on-secondary-fixed": "#241a00",
+                        "secondary": "#735c00",
+                        "primary-fixed-dim": "#91d78a",
+                        "on-surface-variant": "#41493e",
+                        "primary": "#00450d",
+                        "inverse-surface": "#31302d",
+                        "primary-fixed": "#acf4a4",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "outline": "#717a6d",
+                        "on-tertiary-fixed-variant": "#93000b",
+                        "on-tertiary-fixed": "#410002"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .silk-gradient {
+            background: linear-gradient(135deg, #00450d 0%, #1b5e20 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="font-serif text-2xl font-bold text-emerald-900 dark:text-stone-100">Annapurna Sanctuary</div>
+<div class="hidden md:flex items-center gap-8 font-serif tracking-tight text-lg">
+<a class="text-stone-700 dark:text-stone-300 hover:text-emerald-800 transition-all duration-300" href="#">Rooms</a>
+<a class="text-stone-700 dark:text-stone-300 hover:text-emerald-800 transition-all duration-300" href="#">Experiences</a>
+<a class="text-stone-700 dark:text-stone-300 hover:text-emerald-800 transition-all duration-300" href="#">About</a>
+<a class="text-stone-700 dark:text-stone-300 hover:text-emerald-800 transition-all duration-300" href="#">Contact</a>
+</div>
+<button class="silk-gradient text-white px-6 py-2.5 rounded-xl font-label uppercase tracking-widest text-xs font-extrabold hover:opacity-90 transition-all active:scale-95">
+                Book Now
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-8 max-w-screen-2xl mx-auto">
+<div class="grid grid-cols-12 gap-12">
+<!-- Left Column: Booking Flow -->
+<div class="col-span-12 lg:col-span-8 space-y-16">
+<!-- Step 1: Stay Details -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<span class="font-headline text-4xl text-secondary">01</span>
+<h2 class="font-headline text-4xl tracking-tight">Select Your Sanctuary</h2>
+</div>
+<div class="bg-surface-container-low p-10 rounded-xl space-y-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Date Range -->
+<div class="space-y-2">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-outline ml-1">Check-in &amp; Check-out</label>
+<div class="relative flex items-center bg-surface-container-lowest p-4 rounded-lg focus-within:ring-2 focus-within:ring-secondary transition-all">
+<span class="material-symbols-outlined text-outline mr-3">calendar_today</span>
+<input class="bg-transparent border-none p-0 text-sm focus:ring-0 w-full font-semibold" readonly="" type="text" value="Oct 12, 2024 - Oct 18, 2024"/>
+</div>
+</div>
+<!-- Guests -->
+<div class="space-y-2">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-outline ml-1">Travelers</label>
+<div class="relative flex items-center bg-surface-container-lowest p-4 rounded-lg focus-within:ring-2 focus-within:ring-secondary transition-all">
+<span class="material-symbols-outlined text-outline mr-3">group</span>
+<select class="bg-transparent border-none p-0 text-sm focus:ring-0 w-full font-semibold appearance-none">
+<option>2 Adults, 0 Children</option>
+<option>1 Adult</option>
+<option>2 Adults, 1 Child</option>
+<option>2 Adults, 2 Children</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Room Selection Bento -->
+<div class="space-y-6">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-outline ml-1">Room Preference</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Option 1 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-container-lowest border-2 border-primary cursor-pointer transition-all hover:shadow-xl">
+<img class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Luxurious mountain suite with wood interiors, king bed, and floor-to-ceiling windows overlooking the Himalayas at dawn" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlpnPwjgiJ-icOHgXaa0tGPr8GYqED3IU5Z8YqGRziZjflTfJwtcioVURY3gzr-0hjPOmF3DUHJAav0gfPHgSabnUiP6m8_A9axRPl-TfXwJggXBmNrmjJDdvxvQXToKhMwf6AF7RZTxam0DBSVkE3EJpo8dSlzC63RYOClnpdphUP6mwQnmSMGf4aWZPH7qgpCqUcanlDc6K_tz6ma5xvyUTaWUpc6JDwxJGFdRTXuzJU1AZeEg2Xq_AmK17fy2aY_Obyc31HM58"/>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline text-xl">The Summit Suite</h3>
+<span class="text-secondary font-bold">$850/nt</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-4">Unobstructed views of Annapurna South with a private cedar hot tub.</p>
+<div class="flex gap-4 text-xs font-label uppercase tracking-widest text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">square_foot</span> 120m²</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">king_bed</span> King Bed</span>
+</div>
+</div>
+<div class="absolute top-4 right-4 bg-primary text-white p-1 rounded-full">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<!-- Option 2 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-container-lowest border-2 border-transparent hover:border-outline-variant cursor-pointer transition-all hover:shadow-lg">
+<img class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Traditional stone and wood cottage interior with warm textiles, cozy fireplace and panoramic valley views" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFnwLPHuEz_Zj9cpxU5OK2YssU2b5sBmZctTjDFOcET0zOT2J9Od2o9efa357HJXHUxy412rmCa99aTchho7cd7SddKPx7jwSHNNdQE2GgCsFbDodVeSElOwHR8LNAL_8-WvxkBUomwMNi4RYvUh0-TN9Ht6YO4IQ25wMiF3PyE0vnmAY0QGAallO2ujgZ_2Kcgrsvan4tkafJ8vyFmkRKpdwbutfY99Ni_SZYFI0pdlujLOALRqIBqUiL-J6MgGDKlRAWXx-bED8"/>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline text-xl">Heritage Cottage</h3>
+<span class="text-secondary font-bold">$620/nt</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-4">Tucked away in the pine grove for ultimate seclusion and peace.</p>
+<div class="flex gap-4 text-xs font-label uppercase tracking-widest text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">square_foot</span> 85m²</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">bed</span> Queen Bed</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 2: Guest Information -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<span class="font-headline text-4xl text-secondary">02</span>
+<h2 class="font-headline text-4xl tracking-tight">Personal Details</h2>
+</div>
+<div class="bg-surface p-10 space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-1">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-outline ml-1">First Name</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-secondary" placeholder="Tenzing" type="text"/>
+</div>
+<div class="space-y-1">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-outline ml-1">Last Name</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-secondary" placeholder="Norgay" type="text"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-outline ml-1">Email Address</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-secondary" placeholder="expedition@himalayas.com" type="email"/>
+</div>
+<div class="space-y-1">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-outline ml-1">Special Requirements</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-secondary" placeholder="Dietary preferences, arrival time, or celebratory occasions..." rows="4"></textarea>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Sidebar Summary -->
+<div class="col-span-12 lg:col-span-4">
+<div class="sticky top-32 space-y-8">
+<!-- Reservation Card -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden shadow-2xl shadow-on-surface/5">
+<div class="relative h-40">
+<img class="w-full h-full object-cover" data-alt="Distant view of the luxury sanctuary nestled in the green hills with the massive snow-capped Annapurna peaks in background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRmkYaUHMEREn1_iR6s2nQiUIy9mO_qSZ-jM4ZlaRM5mBjcxl5a0UcCa0j_ujzhS5HJLuOVA5QzHCrvoKyxBbGah4qcWktE3bmzT_z_pkZ6N7i9jxZMKc7jPWM9ZY-RdHTPAyGmwJwMhjkzdbH1w3HGXHsuIJ1k1pIkfsLe7T57M5MvxDeKeM4faHOwCpZtI-ka7bKk_95lZcz6zzTArTpcq8HwPuZr42_DlBb-ZPM-3fKAcEQzEjLz46QNuKxn88Ndmt2OfeFWIs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+<h4 class="text-white font-headline text-lg">Your Himalayan Sanctuary</h4>
+</div>
+</div>
+<div class="p-8 space-y-6">
+<!-- Summary Details -->
+<div class="space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Stay Duration</span>
+<span class="font-bold">6 Nights</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Room Type</span>
+<span class="font-bold">Summit Suite</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Guests</span>
+<span class="font-bold">2 Adults</span>
+</div>
+</div>
+<!-- Pricing Tiers -->
+<div class="border-t border-outline-variant/30 pt-6 space-y-3">
+<div class="flex justify-between items-center text-sm">
+<span>$850.00 x 6 nights</span>
+<span>$5,100.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span>Sustainability Fee</span>
+<span>$120.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span>Local Taxes</span>
+<span>$360.00</span>
+</div>
+</div>
+<!-- Total -->
+<div class="pt-4 flex justify-between items-end">
+<div>
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-outline">Total Amount</p>
+<h3 class="font-headline text-3xl text-primary">$5,580.00</h3>
+</div>
+<p class="text-[10px] text-on-surface-variant/70 italic text-right">All-inclusive gourmet<br/>dining included</p>
+</div>
+<button class="w-full silk-gradient text-white py-5 rounded-lg font-label uppercase tracking-[0.2em] text-sm font-extrabold hover:translate-y-[-2px] active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
+                                Complete Reservation
+                            </button>
+<div class="flex items-center justify-center gap-2 text-outline text-[10px] uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span>Secure SSL Encrypted Payment</span>
+</div>
+</div>
+</div>
+<!-- Trust Indicators -->
+<div class="bg-primary-container p-6 rounded-xl flex items-center gap-4 text-white">
+<span class="material-symbols-outlined text-3xl text-secondary-fixed">psychology_alt</span>
+<div>
+<p class="font-headline text-sm italic">"The silence here is a presence you can feel. A transformative stay."</p>
+<p class="font-label text-[9px] uppercase tracking-widest mt-1 text-on-primary-container">— Condé Nast Traveler</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-stone-50 dark:bg-stone-900 w-full py-12 px-8">
+<div class="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center border-t border-stone-200 dark:border-stone-800 pt-12">
+<div class="font-serif text-lg text-emerald-900 dark:text-stone-200">Annapurna Sanctuary</div>
+<div class="flex flex-wrap justify-center gap-6 font-sans text-sm tracking-widest uppercase">
+<a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-opacity opacity-80" href="#">Privacy Policy</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-opacity opacity-80" href="#">Terms of Service</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-opacity opacity-80" href="#">Sustainability</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-opacity opacity-80" href="#">Careers</a>
+</div>
+<div class="text-stone-500 dark:text-stone-400 text-sm md:text-right font-sans tracking-widest uppercase">
+                © 2024 Annapurna Sanctuary Resort. Crafted for the Himalayan Soul.
+            </div>
+</div>
+</footer>
+</body></html>
