@@ -17,8 +17,9 @@
     <div class="aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl">
       <img
         class="h-full w-full object-cover animate-float"
-        alt="Luxury resort overlooking a green valley"
-        src="https://images.unsplash.com/photo-1501117716987-c8e2a64f6c78?q=80&w=1600&auto=format&fit=crop"
+        alt="Luxury resort in the Himalayas"
+        src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop"
+        crossorigin="anonymous"
       />
     </div>
     <div class="hidden md:block absolute -bottom-10 -left-10 bg-white/90 glass-panel p-8 rounded-2xl shadow-xl max-w-xs">
