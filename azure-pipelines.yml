@@ -5,7 +5,7 @@ trigger:
       - dev
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Astro'
 
 variables:
   # Replace 'VpsSshConnection' with the name of the SSH service connection you create in Azure DevOps
