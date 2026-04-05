@@ -2,16 +2,24 @@
   import { authStore } from "$lib/stores/authStore";
 </script>
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-md border-b border-black/5">
+<nav
+  class="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-md border-b border-black/5"
+>
   <div class="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
     <div class="flex flex-col leading-none">
-      <span class="font-[var(--font-headline)] text-2xl tracking-tight text-on-surface">SARVASHRESTHA</span>
-      <span class="text-[0.65rem] tracking-[0.4em] text-on-surface-variant">RESORT & SPA</span>
+      <span
+        class="font-[var(--font-headline)] text-2xl tracking-tight text-on-surface"
+        >SARVASHRESTHA</span
+      >
+      <span class="text-[0.65rem] tracking-[0.4em] text-on-surface-variant"
+        >RESORT & SPA</span
+      >
     </div>
 
     <div class="hidden md:flex items-center gap-10 text-sm">
       <a class="nav-link" href="/">Home</a>
       <a class="nav-link" href="/rooms">Rooms</a>
+      <a class="nav-link" href="/gallery">Gallery</a>
       <a class="nav-link" href="/#experiences">Experiences</a>
       <a class="nav-link" href="/#dining">Dining</a>
       <a class="nav-link" href="/#contact">Contact</a>
@@ -52,7 +60,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .btn-primary:hover {

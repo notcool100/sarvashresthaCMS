@@ -1,0 +1,530 @@
+
+> frontend@0.0.1 check /home/notcool/Desktop/sarvashresthaCMS/frontend
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: /home/notcool/Desktop/sarvashresthaCMS/frontend
+Getting Svelte diagnostics...
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/services/fileService.ts:30:7
+Error: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'. 
+      method: 'POST',
+      headers: { ...authHeaders() },
+      body: formData
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/services/fileService.ts:42:7
+Error: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'. 
+      method: 'POST',
+      headers: { ...authHeaders() },
+      body: formData
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/services/fileService.ts:54:7
+Error: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'. 
+      method: 'POST',
+      headers: { ...authHeaders() },
+      body: formData
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/services/offerService.ts:25:61
+Error: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'. 
+  async getAll(): Promise<ServiceResponse<Offer[]>> {
+    const response = await fetch(`${API_BASE_URL}/offer`, { headers: { ...authHeaders() } });
+    return await response.json();
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/services/offerService.ts:30:67
+Error: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'. 
+  async getById(id: number): Promise<ServiceResponse<Offer>> {
+    const response = await fetch(`${API_BASE_URL}/offer/${id}`, { headers: { ...authHeaders() } });
+    return await response.json();
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/services/offerService.ts:37:7
+Error: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; 'Content-Type': string; } | { Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'undefined'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; 'Content-Type': string; } | { Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'undefined'. 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/services/offerService.ts:49:7
+Error: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; 'Content-Type': string; } | { Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'undefined'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; 'Content-Type': string; } | { Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; 'Content-Type': string; }' is not assignable to type 'undefined'. 
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/services/offerService.ts:61:7
+Error: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+      Type '{ Authorization?: undefined; }' is not assignable to type 'HeadersInit | undefined'.
+        Type '{ Authorization?: undefined; }' is not assignable to type 'undefined'. 
+      method: 'DELETE',
+      headers: { ...authHeaders() }
+    });
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/components/home/FooterSection.svelte:21:12
+Warn: '#' is not a valid href attribute
+https://svelte.dev/e/a11y_invalid_attribute (svelte)
+      <div class="mt-4 grid gap-2 text-sm text-white/80">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/components/home/FooterSection.svelte:22:12
+Warn: '#' is not a valid href attribute
+https://svelte.dev/e/a11y_invalid_attribute (svelte)
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">YouTube</a>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/components/home/FooterSection.svelte:23:12
+Warn: '#' is not a valid href attribute
+https://svelte.dev/e/a11y_invalid_attribute (svelte)
+        <a href="#">Facebook</a>
+        <a href="#">YouTube</a>
+      </div>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/components/ui/Lightbox.svelte:38:3
+Warn: Elements with the 'dialog' interactive role must have a tabindex value
+https://svelte.dev/e/a11y_interactive_supports_focus (svelte)
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+  <div 
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+    transition:fade={{ duration: 200 }}
+    onclick={onClose}
+    role="dialog"
+  >
+    <div 
+      class="relative flex h-full w-full items-center justify-center p-4 md:p-12"
+      onclick={(e) => e.stopPropagation()}
+    >
+      <!-- Close Button -->
+      <button 
+        class="absolute right-4 top-4 z-10 p-2 text-white/70 transition hover:text-white md:right-8 md:top-8"
+        onclick={onClose}
+        aria-label="Close"
+      >
+        <span class="material-symbols-outlined text-3xl md:text-4xl hover:scale-110 transition-transform">close</span>
+      </button>
+
+      <!-- Navigation Arrows (only if multiple images) -->
+      {#if images.length > 1}
+        <button 
+          class="absolute left-4 top-1/2 z-10 -translate-y-1/2 p-2 text-white/50 transition hover:text-white md:left-8"
+          onclick={(e) => { e.stopPropagation(); onPrev(); }}
+          aria-label="Previous image"
+        >
+          <span class="material-symbols-outlined text-4xl md:text-5xl hover:-translate-x-1 transition-transform">chevron_left</span>
+        </button>
+
+        <button 
+          class="absolute right-4 top-1/2 z-10 -translate-y-1/2 p-2 text-white/50 transition hover:text-white md:right-8"
+          onclick={(e) => { e.stopPropagation(); onNext(); }}
+          aria-label="Next image"
+        >
+          <span class="material-symbols-outlined text-4xl md:text-5xl hover:translate-x-1 transition-transform">chevron_right</span>
+        </button>
+      {/if}
+
+      <!-- Main Image -->
+      <div 
+        class="relative flex flex-col items-center shadow-2xl"
+        in:scale={{ duration: 300, start: 0.95 }}
+      >
+        <img 
+          src={images[currentIndex].src} 
+          alt={images[currentIndex].alt || 'Gallery image'}
+          class="max-h-[85vh] max-w-full rounded-md object-contain"
+          loading="lazy"
+        />
+        
+        {#if images[currentIndex].alt}
+          <div class="absolute bottom-0 left-0 w-full rounded-b-md bg-gradient-to-t from-black/80 to-transparent p-6 pt-12 text-center text-white opacity-0 transition-opacity hover:opacity-100 sm:opacity-100">
+            <p class="font-body text-sm tracking-wider uppercase">{images[currentIndex].alt}</p>
+          </div>
+        {/if}
+      </div>
+
+      <!-- Counter -->
+      {#if images.length > 1}
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm text-white/70 font-body uppercase tracking-widest">
+          {currentIndex + 1} / {images.length}
+        </div>
+      {/if}
+    </div>
+  </div>
+{/if}
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/components/ui/Lightbox.svelte:44:5
+Warn: `<div>` with a click handler must have an ARIA role
+https://svelte.dev/e/a11y_no_static_element_interactions (svelte)
+  >
+    <div 
+      class="relative flex h-full w-full items-center justify-center p-4 md:p-12"
+      onclick={(e) => e.stopPropagation()}
+    >
+      <!-- Close Button -->
+      <button 
+        class="absolute right-4 top-4 z-10 p-2 text-white/70 transition hover:text-white md:right-8 md:top-8"
+        onclick={onClose}
+        aria-label="Close"
+      >
+        <span class="material-symbols-outlined text-3xl md:text-4xl hover:scale-110 transition-transform">close</span>
+      </button>
+
+      <!-- Navigation Arrows (only if multiple images) -->
+      {#if images.length > 1}
+        <button 
+          class="absolute left-4 top-1/2 z-10 -translate-y-1/2 p-2 text-white/50 transition hover:text-white md:left-8"
+          onclick={(e) => { e.stopPropagation(); onPrev(); }}
+          aria-label="Previous image"
+        >
+          <span class="material-symbols-outlined text-4xl md:text-5xl hover:-translate-x-1 transition-transform">chevron_left</span>
+        </button>
+
+        <button 
+          class="absolute right-4 top-1/2 z-10 -translate-y-1/2 p-2 text-white/50 transition hover:text-white md:right-8"
+          onclick={(e) => { e.stopPropagation(); onNext(); }}
+          aria-label="Next image"
+        >
+          <span class="material-symbols-outlined text-4xl md:text-5xl hover:translate-x-1 transition-transform">chevron_right</span>
+        </button>
+      {/if}
+
+      <!-- Main Image -->
+      <div 
+        class="relative flex flex-col items-center shadow-2xl"
+        in:scale={{ duration: 300, start: 0.95 }}
+      >
+        <img 
+          src={images[currentIndex].src} 
+          alt={images[currentIndex].alt || 'Gallery image'}
+          class="max-h-[85vh] max-w-full rounded-md object-contain"
+          loading="lazy"
+        />
+        
+        {#if images[currentIndex].alt}
+          <div class="absolute bottom-0 left-0 w-full rounded-b-md bg-gradient-to-t from-black/80 to-transparent p-6 pt-12 text-center text-white opacity-0 transition-opacity hover:opacity-100 sm:opacity-100">
+            <p class="font-body text-sm tracking-wider uppercase">{images[currentIndex].alt}</p>
+          </div>
+        {/if}
+      </div>
+
+      <!-- Counter -->
+      {#if images.length > 1}
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm text-white/70 font-body uppercase tracking-widest">
+          {currentIndex + 1} / {images.length}
+        </div>
+      {/if}
+    </div>
+  </div>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/components/ui/Lightbox.svelte:106:3
+Warn: Do not use empty rulesets (css)
+<style>
+  :global(body) {
+    /* Utility class for overflow will be managed inline */
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/components/ui/Lightbox.svelte:41:5
+Error: Type 'Function' is not assignable to type 'MouseEventHandler<HTMLDivElement>'.
+  Type 'Function' provides no match for the signature '(event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement; }): any'. (ts)
+    transition:fade={{ duration: 200 }}
+    onclick={onClose}
+    role="dialog"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/lib/components/ui/Lightbox.svelte:51:9
+Error: Type 'Function' is not assignable to type 'MouseEventHandler<HTMLButtonElement>'.
+  Type 'Function' provides no match for the signature '(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }): any'. (ts)
+        class="absolute right-4 top-4 z-10 p-2 text-white/70 transition hover:text-white md:right-8 md:top-8"
+        onclick={onClose}
+        aria-label="Close"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/+page.svelte:45:3
+Warn: Unused CSS selector ".section-reveal.is-visible"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+  .section-reveal.is-visible {
+    animation: sectionFade 0.7s ease both;
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/+page.svelte:62:5
+Warn: Unused CSS selector ".section-reveal.is-visible"
+https://svelte.dev/e/css_unused_selector (svelte)
+  @media (prefers-reduced-motion: reduce) {
+    .section-reveal.is-visible {
+      animation: none;
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/+layout.svelte:47:5
+Warn: Using `<slot>` to render parent content is deprecated. Use `{@render ...}` tags instead
+https://svelte.dev/e/slot_element_deprecated (svelte)
+<main class="ml-64 p-10 min-h-screen bg-surface">
+    <slot />
+</main>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:177:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div>
+            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Guest Name</label>
+            <input class="w-full border px-3 py-2 rounded-lg"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:185:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div>
+            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Email</label>
+            <input type="email"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:194:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div>
+            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Booking ID</label>
+            <input type="number"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:203:17
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+            <div>
+                <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Check-in</label>
+                <input type="date"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:210:17
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+            <div>
+                <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Check-out</label>
+                <input type="date"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:219:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div>
+            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Price</label>
+            <input type="number"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:227:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div>
+            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Discount</label>
+            <input type="number"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:235:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div>
+            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Final Price</label>
+            <input type="number"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/bookings/+page.svelte:244:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div>
+            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Status</label>
+            <select class="w-full border px-3 py-2 rounded-lg"
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/offers/+page.svelte:326:33
+Warn: Buttons and links should either contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+https://svelte.dev/e/a11y_consider_explicit_label (svelte)
+                                <img src={getFullImageUrl(form.imageUrl)} alt="Banner Preview" class="w-full h-full object-cover" />
+                                <button 
+                                    type="button"
+                                    class="absolute top-2 right-2 p-1.5 bg-rose-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                    onclick={() => form.imageUrl = ''}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/(protected)/admin/rooms/+page.svelte:333:37
+Warn: Buttons and links should either contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+https://svelte.dev/e/a11y_consider_explicit_label (svelte)
+                                    <img src={getFullImageUrl(imgUrl)} alt="Preview" class="w-full h-full object-cover" />
+                                    <button 
+                                        type="button"
+                                        class="absolute top-1 right-1 p-1 bg-rose-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                        onclick={() => removeImage(imgUrl)}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/booking/+page.svelte:69:15
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+            <div class="field">
+              <label>Check-in & Check-out</label>
+              <div class="input-shell">
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/booking/+page.svelte:76:15
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+            <div class="field">
+              <label>Travelers</label>
+              <div class="input-shell">
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/booking/+page.svelte:91:15
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+            <div class="flex items-center justify-between">
+              <label class="block">Selected Room</label>
+              <a class="change-link" href="/rooms">Change room</a>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/booking/+page.svelte:134:15
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+            <div class="field">
+              <label>First Name</label>
+              <input class="text-input" placeholder="Tenzing" type="text" />
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/booking/+page.svelte:138:15
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+            <div class="field">
+              <label>Last Name</label>
+              <input class="text-input" placeholder="Norgay" type="text" />
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/booking/+page.svelte:143:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+          <div class="field">
+            <label>Email Address</label>
+            <input class="text-input" placeholder="expedition@himalayas.com" type="email" />
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/booking/+page.svelte:147:13
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+          <div class="field">
+            <label>Special Requirements</label>
+            <textarea class="text-input" rows="4" placeholder="Dietary preferences, arrival time, or celebratory occasions..."></textarea>
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/register/+page.svelte:50:11
+Warn: Using `on:submit` to listen to the submit event is deprecated. Use the event attribute `onsubmit` instead
+https://svelte.dev/e/event_directive_deprecated (svelte)
+
+    <form on:submit|preventDefault={handleRegister}>
+      <div class="input-group">
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/register/+page.svelte:6:7
+Warn: `username` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update (svelte)
+
+  let username = "";
+  let email = "";
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/register/+page.svelte:7:7
+Warn: `email` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update (svelte)
+  let username = "";
+  let email = "";
+  let password = "";
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/register/+page.svelte:8:7
+Warn: `password` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update (svelte)
+  let email = "";
+  let password = "";
+  let confirmPassword = "";
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/register/+page.svelte:9:7
+Warn: `confirmPassword` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update (svelte)
+  let password = "";
+  let confirmPassword = "";
+  let error = "";
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/register/+page.svelte:10:7
+Warn: `error` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update (svelte)
+  let confirmPassword = "";
+  let error = "";
+  let loading = false;
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/register/+page.svelte:11:7
+Warn: `loading` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update (svelte)
+  let error = "";
+  let loading = false;
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/rooms/+page.svelte:84:11
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div class="filter-chip">
+          <label>View by Tier</label>
+          <div class="filter-value">
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/rooms/+page.svelte:91:11
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div class="filter-chip">
+          <label>Nightly Rate</label>
+          <div class="filter-value">
+
+/home/notcool/Desktop/sarvashresthaCMS/frontend/src/routes/rooms/+page.svelte:98:11
+Warn: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+        <div class="filter-chip">
+          <label>Occupancy</label>
+          <div class="filter-value">
+
+====================================
+svelte-check found 10 errors and 37 warnings in 12 files
+ ELIFECYCLE  Command failed with exit code 1.
