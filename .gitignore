@@ -1,0 +1,48 @@
+# Build and Publish
+deploy/backend-build/
+deploy/frontend-build/
+frontend/build/
+backend/**/bin/
+backend/**/obj/
+backend/**/publish/
+backend/**/appsettings.json
+backend/**/appsettings.Development.json
+backend/**/appsettings.Production.json
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
+# Packages
+node_modules/
+jspm_packages/
+pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.secret.json
+
+# Tooling
+.svelte-kit/
+.vercel/
+.netlify/
+.wrangler/
