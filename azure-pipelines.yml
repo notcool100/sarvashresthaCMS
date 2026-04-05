@@ -126,17 +126,17 @@ stages:
       displayName: 'Copy appsettings.json'
       inputs:
         sshEndpoint: $(sshServiceConnection)
-        sourceFolder: '$(appsettingsSecure.secureFilePath)'
+        sourceFolder: '$(Agent.TempDirectory)'
+        contents: 'appsettings.json'
         targetFolder: '$(serverDeployPath)/backend/publish'
-        flattenFolders: true
         
     - task: CopyFilesOverSSH@0
       displayName: 'Copy frontend .env'
       inputs:
         sshEndpoint: $(sshServiceConnection)
-        sourceFolder: '$(envSecure.secureFilePath)'
+        sourceFolder: '$(Agent.TempDirectory)'
+        contents: '.env'
         targetFolder: '$(serverDeployPath)/frontend'
-        flattenFolders: true
 
     - task: SSH@0
       displayName: 'Install Frontend Production Dependencies & Restart Services'
