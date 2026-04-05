@@ -145,7 +145,7 @@ stages:
         runOptions: 'inline'
         inline: |
           cd $(serverDeployPath)/frontend
-          npm install --production
+          npm install --omit=dev --ignore-scripts
           systemctl restart sarvashresthaCMS_UAT-backend.service
           systemctl restart sarvashresthaCMS_UAT-frontend.service
           systemctl reload nginx
