@@ -42,6 +42,7 @@ stages:
     - script: |
         npm install -g pnpm
         pnpm install
+        npx svelte-kit sync
         pnpm build
       workingDirectory: 'frontend'
       displayName: 'Install and Build Frontend'
