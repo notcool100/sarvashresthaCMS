@@ -1,0 +1,15 @@
+[Unit]
+Description=sarvashresthaCMS_UAT Backend (.NET WebApi)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/var/www/sarvashresthaCMS_UAT/backend/publish
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:5200
+ExecStart=/usr/bin/dotnet SarvashresthaCMS.WebApi.dll
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

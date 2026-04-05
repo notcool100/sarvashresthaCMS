@@ -1,0 +1,143 @@
+trigger:
+  branches:
+    include:
+      - main
+      - dev
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # Replace 'VpsSshConnection' with the name of the SSH service connection you create in Azure DevOps
+  # Or use variables in ADO rather than raw passwords here for security.
+  sshServiceConnection: 'VpsSshConnection'
+  serverDeployPath: '/var/www/sarvashresthaCMS_UAT'
+
+stages:
+- stage: Build
+  displayName: 'Build Backend and Frontend'
+  jobs:
+  - job: BuildBackend
+    displayName: 'Build .NET WebApi Backend'
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '8.x' # Update version according to your project if needed
+
+    - script: dotnet publish backend/SarvashresthaCMS.WebApi/SarvashresthaCMS.WebApi.csproj -c Release -o $(Build.ArtifactStagingDirectory)/backend/publish
+      displayName: 'Publish .NET Backend'
+
+    - publish: $(Build.ArtifactStagingDirectory)/backend/publish
+      artifact: backend-drop
+
+  - job: BuildFrontend
+    displayName: 'Build SvelteKit Frontend'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '20.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install -g pnpm
+        pnpm install
+        pnpm build
+      workingDirectory: 'frontend'
+      displayName: 'Install and Build Frontend'
+
+    - publish: frontend/build
+      artifact: frontend-drop
+      
+    - publish: frontend/package.json
+      artifact: frontend-package
+
+- stage: Deploy
+  displayName: 'Deploy to VPS'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - job: DeployToVPS
+    displayName: 'Copy files and restart services'
+    steps:
+    - task: DownloadSecureFile@1
+      name: appsettingsSecure
+      displayName: 'Download Secure appsettings.json'
+      inputs:
+        secureFile: 'appsettings.json'
+
+    - task: DownloadSecureFile@1
+      name: envSecure
+      displayName: 'Download Secure .env'
+      inputs:
+        secureFile: '.env'
+
+    - download: current
+      artifact: backend-drop
+      
+    - download: current
+      artifact: frontend-drop
+      
+    - download: current
+      artifact: frontend-package
+
+    - task: SSH@0
+      displayName: 'Prepare directories on VPS'
+      inputs:
+        sshEndpoint: $(sshServiceConnection)
+        runOptions: 'inline'
+        inline: |
+          mkdir -p $(serverDeployPath)/backend/publish
+          mkdir -p $(serverDeployPath)/frontend/build
+          
+    - task: CopyFilesOverSSH@0
+      displayName: 'Copy Backend Files'
+      inputs:
+        sshEndpoint: $(sshServiceConnection)
+        sourceFolder: '$(Pipeline.Workspace)/backend-drop'
+        targetFolder: '$(serverDeployPath)/backend/publish'
+        cleanTargetFolder: true
+        
+    - task: CopyFilesOverSSH@0
+      displayName: 'Copy Frontend Build'
+      inputs:
+        sshEndpoint: $(sshServiceConnection)
+        sourceFolder: '$(Pipeline.Workspace)/frontend-drop'
+        targetFolder: '$(serverDeployPath)/frontend/build'
+        cleanTargetFolder: true
+        
+    - task: CopyFilesOverSSH@0
+      displayName: 'Copy Frontend Package.json'
+      inputs:
+        sshEndpoint: $(sshServiceConnection)
+        sourceFolder: '$(Pipeline.Workspace)/frontend-package'
+        contents: 'package.json'
+        targetFolder: '$(serverDeployPath)/frontend'
+        
+    - task: CopyFilesOverSSH@0
+      displayName: 'Copy appsettings.json'
+      inputs:
+        sshEndpoint: $(sshServiceConnection)
+        sourceFolder: '$(appsettingsSecure.secureFilePath)'
+        targetFolder: '$(serverDeployPath)/backend/publish'
+        flattenFolders: true
+        
+    - task: CopyFilesOverSSH@0
+      displayName: 'Copy frontend .env'
+      inputs:
+        sshEndpoint: $(sshServiceConnection)
+        sourceFolder: '$(envSecure.secureFilePath)'
+        targetFolder: '$(serverDeployPath)/frontend'
+        flattenFolders: true
+
+    - task: SSH@0
+      displayName: 'Install Frontend Production Dependencies & Restart Services'
+      inputs:
+        sshEndpoint: $(sshServiceConnection)
+        runOptions: 'inline'
+        inline: |
+          cd $(serverDeployPath)/frontend
+          npm install --production
+          systemctl restart sarvashresthaCMS_UAT-backend.service
+          systemctl restart sarvashresthaCMS_UAT-frontend.service
+          systemctl reload nginx
