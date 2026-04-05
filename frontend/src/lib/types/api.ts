@@ -29,6 +29,39 @@ export interface RegisterRequest {
   email: string;
   password: string;
 }
+ export interface booking{
+  id:number;
+  room_id: number;
+  guest_name:string;
+  email:string;
+  checkin:number;
+  checkout:number;
+  price:number;
+  discountamount:number;
+  finalprice:number;
+  status:string;
+  createdat:number;
+  
+ }
+export interface BookingCreateRequest{
+  id:number;
+  room_id: number;
+  guest_name:string;
+  email:string;
+  checkin:number;
+  checkout:number;
+  price:number;
+  discountamount:number;
+  finalprice:number;
+  status:string;
+  createdat:number;
+  
+ }
+  
+ export interface BookingpdateRequest extends BookingCreateRequest {
+  id: number;
+}
+
 
 export interface Room {
   id: number;

@@ -1,109 +1,66 @@
 <script lang="ts">
-  import { authStore } from "$lib/stores/authStore";
+  import NavBar from "$lib/components/home/NavBar.svelte";
+  import Hero from "$lib/components/home/Hero.svelte";
+  import AboutSection from "$lib/components/home/AboutSection.svelte";
+  import SuitesSection from "$lib/components/home/SuitesSection.svelte";
+  import ExperiencesSection from "$lib/components/home/ExperiencesSection.svelte";
+  import DiningSection from "$lib/components/home/DiningSection.svelte";
+  import GallerySection from "$lib/components/home/GallerySection.svelte";
+  import ContactSection from "$lib/components/home/ContactSection.svelte";
+  import FooterSection from "$lib/components/home/FooterSection.svelte";
+  import { reveal } from "$lib/actions/reveal";
 </script>
 
-<nav class="navbar">
-  <div class="nav-content">
-    <div class="logo">
-      <span class="logo-text">SARVASHRESTHA</span>
-      <span class="logo-sub">RESORT & SPA</span>
-    </div>
+<svelte:head>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet"
+  />
+</svelte:head>
 
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
+<NavBar />
 
-      {#if $authStore}
-        <a href="/(protected)/user" class="btn-primary">Dashboard</a>
-      {:else}
-        <a href="/login" class="btn-primary">Login</a>
-        <a href="/register" class="btn-primary">Book Now</a>
-      {/if}
-    </div>
-  </div>
-</nav>
+<main class="bg-surface text-on-surface">
+  <Hero />
+  <div class="section-reveal" use:reveal><AboutSection /></div>
+  <div class="section-reveal" data-delay="0.08s" use:reveal><SuitesSection /></div>
+  <div class="section-reveal" data-delay="0.16s" use:reveal><ExperiencesSection /></div>
+  <div class="section-reveal" data-delay="0.24s" use:reveal><DiningSection /></div>
+  <div class="section-reveal" data-delay="0.32s" use:reveal><GallerySection /></div>
+  <div class="section-reveal" data-delay="0.4s" use:reveal><ContactSection /></div>
+</main>
 
-<main>test</main>
+<FooterSection />
 
 <style>
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 1.5rem 0;
-    background: rgba(10, 10, 10, 0.1);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  :global(html) {
+    scroll-behavior: smooth;
   }
 
-  .nav-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
+  .section-reveal {
+    opacity: 1;
+    transform: none;
   }
 
-  .logo {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
+  .section-reveal.is-visible {
+    animation: sectionFade 0.7s ease both;
+    animation-delay: var(--reveal-delay, 0s);
   }
 
-  .logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: white;
+  @keyframes sectionFade {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .logo-sub {
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.4em;
-    color: var(--text-secondary);
-    margin-top: 2px;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-  }
-
-  .nav-links a:not(.btn-primary):not(.btn-secondary) {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    transition: color 0.3s ease;
-  }
-
-  .nav-links a:hover {
-    color: white;
-  }
-
-  .btn-primary {
-    background: white;
-    color: black !important;
-    padding: 0.75rem 1.75rem;
-    border-radius: 100px;
-    font-weight: 600;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
-  }
-
-  .btn-secondary {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: white !important;
+  @media (prefers-reduced-motion: reduce) {
+    .section-reveal.is-visible {
+      animation: none;
+    }
   }
 </style>
