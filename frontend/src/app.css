@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 @theme {
   --font-headline: "Noto Serif", serif;
@@ -16,7 +17,6 @@
   --color-secondary: #9a6b1e;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 body {
   font-family: var(--font-body);

@@ -39,7 +39,14 @@ stages:
         versionSpec: '20.x'
       displayName: 'Install Node.js'
 
+    - task: DownloadSecureFile@1
+      name: envSecure
+      displayName: 'Download Secure .env'
+      inputs:
+        secureFile: '.env'
+
     - script: |
+        cp $(envSecure.secureFilePath) .env
         npm install -g pnpm
         pnpm install
         npx svelte-kit sync
