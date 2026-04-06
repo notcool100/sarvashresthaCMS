@@ -34,7 +34,7 @@ export interface RegisterRequest {
   room_id: number;
   guest_name:string;
   email:string;
-  checkin:number;
+  checkin:number; 
   checkout:number;
   price:number;
   discountamount:number;

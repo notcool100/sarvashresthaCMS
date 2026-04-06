@@ -50,6 +50,9 @@
             loading = false;
         }
     }
+    async function gotoCreatePage(){
+        goto('/admin/bookings/create')
+    }
 
     function startEdit(booking: booking) {
         editingId = booking.id;
@@ -145,116 +148,7 @@
     onMount(loadRooms);
 </script>
 
-<section class="space-y-10">
-    <header class="flex items-end justify-between">
-        <div>
-            <h2 class="font-headline text-3xl text-emerald-900 tracking-tight mb-2">Rooms</h2>
-            <p class="text-stone-500 font-medium">Manage your room inventory and availability.</p>
-        </div>
-        <button
-            class="px-6 py-3 rounded-xl bg-emerald-900 text-amber-400 font-bold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity"
-            onclick={resetForm}
-        >
-            New Room
-        </button>
-    </header>
 
-    {#if error}
-        <div class="p-4 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 text-sm font-semibold">
-            {error}
-        </div>
-    {/if}
-
-   <aside class="bg-surface-container-lowest rounded-xl shadow-sm border border-stone-100 p-6">
-    <h3 class="font-headline text-xl text-emerald-900 mb-4">
-        {editingId ? 'Edit Booking' : 'Create Booking'}
-    </h3>
-
-    <form class="space-y-4" onsubmit={saveRoom}>
-
-        <!-- Guest Name -->
-        <div>
-            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Guest Name</label>
-            <input class="w-full border px-3 py-2 rounded-lg"
-                bind:value={form.guest_name}
-                required />
-        </div>
-
-        <!-- Email -->
-        <div>
-            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Email</label>
-            <input type="email"
-                class="w-full border px-3 py-2 rounded-lg"
-                bind:value={form.email}
-                required />
-        </div>
-
-        <!-- Room ID -->
-        <div>
-            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Booking ID</label>
-            <input type="number"
-                class="w-full border px-3 py-2 rounded-lg"
-                bind:value={form.room_id} />
-        </div>
-
-        <!-- Dates -->
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Check-in</label>
-                <input type="date"
-                    class="w-full border px-3 py-2 rounded-lg"
-                    bind:value={form.checkin} />
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Check-out</label>
-                <input type="date"
-                    class="w-full border px-3 py-2 rounded-lg"
-                    bind:value={form.checkout} />
-            </div>
-        </div>
-
-        <!-- Price -->
-        <div>
-            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Price</label>
-            <input type="number"
-                class="w-full border px-3 py-2 rounded-lg"
-                bind:value={form.price} />
-        </div>
-
-        <!-- Discount -->
-        <div>
-            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Discount</label>
-            <input type="number"
-                class="w-full border px-3 py-2 rounded-lg"
-                bind:value={form.discountamount} />
-        </div>
-
-        <!-- Final Price (auto) -->
-        <div>
-            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Final Price</label>
-            <input type="number"
-                class="w-full border px-3 py-2 rounded-lg bg-gray-100"
-                value={form.price - form.discountamount}
-                readonly />
-        </div>
-
-        <!-- Status -->
-        <div>
-            <label class="block text-xs font-bold uppercase text-stone-400 mb-2">Status</label>
-            <select class="w-full border px-3 py-2 rounded-lg"
-                bind:value={form.status}>
-                <option value="">Select</option>
-                <option value="Pending">Pending</option>
-                <option value="Confirmed">Confirmed</option>
-                <option value="Cancelled">Cancelled</option>
-            </select>
-        </div>
-
-        <!-- Submit -->
-        <button class="w-full py-3 bg-emerald-900 text-amber-400 rounded-lg text-xs font-bold uppercase">
-            {editingId ? 'Update Booking' : 'Create Booking'}
-        </button>
-    </form>
-</aside>
-</section>
+<button onclick={gotoCreatePage}>
+create
+</button>
