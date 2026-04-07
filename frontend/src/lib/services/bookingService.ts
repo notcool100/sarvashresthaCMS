@@ -22,12 +22,20 @@ function authHeaders(): HeadersInit {
 
 export const bookingService = {
   async getAll(): Promise<ServiceResponse<booking[]>> {
-    const response = await fetch(`${API_BASE_URL}/booking`);
+    const response = await fetch(`${API_BASE_URL}/booking`, {
+      headers: {
+        ...authHeaders()
+      }
+    });
     return await response.json();
   },
 
   async getById(id: number): Promise<ServiceResponse<booking>> {
-    const response = await fetch(`${API_BASE_URL}/booking/${id}`);
+    const response = await fetch(`${API_BASE_URL}/booking/${id}`, {
+      headers: {
+        ...authHeaders()
+      }
+    });
     return await response.json();
   },
 
