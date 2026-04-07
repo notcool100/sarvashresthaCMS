@@ -7,7 +7,7 @@
     import { goto } from "$app/navigation";
     // import {roomService} from '$lib/services/roomService';
     import { roomService } from "$lib/services/roomService";
-
+let sucessMessage= $state('');
     let Booking = $state<booking[]>([]);
     let Rooms = $state<Room[]>([]);
     let loading = $state(true);
@@ -73,9 +73,13 @@
     }
 
     async function saveRoom(e: SubmitEvent) {
+        console.log(selectedRoom, "this is selected room");
         e.preventDefault();
         saving = true;
         error = "";
+        console.log(form, "form before ");
+        form.room_id = Number(selectedRoom);
+        console.log(form, "fprm after room");
         try {
             if (editingId) {
                 const response = await bookingService.update({
@@ -92,8 +96,11 @@
                     error = response.message || "Failed to create room";
                     return;
                 } else {
-                    goto("/admin/bookings");
-                }
+                    // goto("/admin/bookings");
+                     resetForm();
+                     sucessMessage="booking createdd sucesfully";   
+                       error="";         
+                      }
             }
             resetForm();
             await loadRooms();
@@ -183,7 +190,12 @@
             {error}
         </div>
     {/if}
-
+    {#if sucessMessage}
+    <div
+         class="p-4 rounded-lg border border-green-200 bg-green-50 text-green-700 text-sm font-semibold">
+            {sucessMessage}
+    </div>
+{/if}
     <aside
         class="bg-surface-container-lowest rounded-xl shadow-sm border border-stone-100 p-6"
     >
@@ -231,11 +243,38 @@
                     bind:value={form.room_id}
                 /> -->
 
-                <select id="course" name="course" bind:value={selectedRoom}>
-                    {#each Rooms as r}
-                        <option value={r.id}>{r.name}</option>
-                    {/each}
-                </select>
+                <div class="w-full max-w-md">
+                    <label
+                        for="course"
+                        class="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                        Select Room
+                    </label>
+
+                    <select
+                        id="course"
+                        name="course"
+                        bind:value={selectedRoom}
+                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+               bg-white text-gray-700 transition duration-200"
+                    >
+                        <option
+                            value=""
+                            disabled
+                            selected
+                            class="text-gray-400"
+                        >
+                            Choose a room
+                        </option>
+
+                        {#each Rooms as r}
+                            <option value={r.id} class="text-gray-700">
+                                {r.name}
+                            </option>
+                        {/each}
+                    </select>
+                </div>
             </div>
 
             <!-- Dates -->
