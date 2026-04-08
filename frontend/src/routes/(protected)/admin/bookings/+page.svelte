@@ -1,23 +1,25 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-     import { bookingService } from "$lib/services/bookingService";
-      import type { booking, BookingCreateRequest, Room } from "$lib/types/api";
-  import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
+    import { bookingService } from "$lib/services/bookingService";
+    import type { booking, BookingCreateRequest, Room } from "$lib/types/api";
+    import { goto } from "$app/navigation";
+    
 
-  function gotoCreatePage(){
-    goto('/admin/bookings/create');
-  }
-  let sucessMessage= $state('');
+    function gotoCreatePage() {
+        goto("/admin/bookings/create");
+    }
+   
+    let sucessMessage = $state("");
     let Booking = $state<booking[]>([]);
- 
+
     let loading = $state(true);
     let error = $state("");
     let saving = $state(false);
     let editingId = $state<number | null>(null);
     let uploading = $state(false);
     let selectedRoom = $state("");
-
-  async function loadBookings() {
+ let activeTab=$state("tab");
+    async function loadBookings() {
         loading = true;
         error = "";
         try {
@@ -35,75 +37,79 @@
         }
     }
 
+    onMount(loadBookings);
+</script>
 
-   onMount(loadBookings);
-   </script>
+<button onclick={gotoCreatePage}> create </button>
 
-<button onclick={gotoCreatePage}>
-create
-</button>
-<table>
-<thead>
-<tr>
-<th>
-s.n
-</th>
-<th>
-room no
-</th>
+<div class="overflow-x-auto p-4">
+    <table class="min-w-full bg-white rounded-2xl shadow-md overflow-hidden">
+        <!-- Header -->
+        <thead class="bg-gray-100 text-gray-700 uppercase text-sm">
+            <tr>
+                <th class="py-3 px-4 text-left">S.N</th>
+                <th class="py-3 px-4 text-left">Room No</th>
+                <th class="py-3 px-4 text-left">Guest Name</th>
+                <th class="py-3 px-4 text-left">Email</th>
+                <th class="py-3 px-4 text-left">Check In</th>
+                <th class="py-3 px-4 text-left">Check Out</th>
+                <th class="py-3 px-4 text-left">Status</th>
+                <th class="py-3 px-4 text-center">Action</th>
+            </tr>
+        </thead>
 
-<th>
-guest name
-</th>
-<th>
-email
-</th>
-<th>
-check in 
-</th>
-<th>
-checkout
-</th>
-<th>
-status 
-</th>
-<th>
-action
-</th>
+        <!-- Body -->
+        <tbody class="text-gray-600 text-sm">
+            {#each Booking as x, i}
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="py-3 px-4">{i + 1}</td>
+                    <td class="py-3 px-4">{x.roomId}</td>
+                    <td class="py-3 px-4 font-medium text-gray-800">
+                        {x.guestName}
+                    </td>
+                    <td class="py-3 px-4">{x.guestEmail}</td>
+                    <td class="py-3 px-4">{x.checkIn}</td>
+                    <td class="py-3 px-4">{x.checkOut}</td>
 
-</tr>
+                    <!-- Status Badge -->
+                    <td class="py-3 px-4">
+                        <span
+                            class="px-3 py-1 rounded-full text-xs font-semibold
+              {x.status === 'confirmed'
+                                ? 'bg-green-100 text-green-700'
+                                : x.status === 'pending'
+                                  ? 'bg-yellow-100 text-yellow-700'
+                                  : 'bg-red-100 text-red-700'}"
+                        >
+                            {x.status}
+                        </span>
+                    </td>
 
-</thead>
-<tbody>
-<tr>
-<td>
-1
-</td>
-<td>
-101
-</td>
-
-<td>
-kristina 
-</td>
-<td>
-k@gmail.com
-</td>
-<td>
-9am
-</td>
-<td>
-9am
-</td>
-<td>
-pending
-</td>
-<td>
-
-<button> edit</button>
-<button> delete</button>
-</td>
-
-</tr>
-</tbody>
-</table>
+                    <!-- Buttons -->
+                    <td class="py-3 px-4 text-center space-x-2">
+                        <button
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-xs"
+                            onclick={() =>
+                                goto(`/admin/bookings/create?id=${x.id}`)}
+                        >
+                            Edit
+                        </button>
+                        <button
+                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-xs"
+                            onclick={()=>activeTab ='deleted' }
+                         
+                            
+                        >
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            {/each}
+        </tbody>
+    </table>
+    {#if activeTab === "deleted"}
+  <p class="text-red-600 bg-red-100 px-4 py-2 rounded mt-4">
+    ⚠️ This is deleted
+  </p>
+{/if}
+</div>

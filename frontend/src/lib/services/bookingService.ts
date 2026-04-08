@@ -47,12 +47,12 @@ export const bookingService = {
         ...authHeaders()
       },
       body: JSON.stringify({
-        roomId: payload.room_id,
+        roomId: payload.roomId,
         offerId: (payload as { offer_id?: number | null }).offer_id ?? null,
-        guestName: payload.guest_name,
-        guestEmail: payload.email,
-        checkIn: payload.checkin,
-        checkOut: payload.checkout,
+        guestName: payload.guestName,
+        guestEmail: payload.guestEmail,
+        checkIn: payload.checkIn,
+        checkOut: payload.checkOut,
         totalPrice: payload.price,
         discountAmount: payload.discountamount,
         finalPrice: payload.finalprice

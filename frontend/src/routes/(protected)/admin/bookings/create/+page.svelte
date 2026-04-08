@@ -1,5 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    
+    import { page } from "$app/stores";
     import { bookingService } from "$lib/services/bookingService";
     import { fileService } from "$lib/services/fileService";
     import { PUBLIC_API_BASE_URL } from "$env/static/public";
@@ -7,7 +9,9 @@
     import { goto } from "$app/navigation";
     // import {roomService} from '$lib/services/roomService';
     import { roomService } from "$lib/services/roomService";
-let sucessMessage= $state('');
+    
+    let sucessMessage = $state("");
+    let bookingId = $state($page.url.searchParams.get("id"));
     let Booking = $state<booking[]>([]);
     let Rooms = $state<Room[]>([]);
     let loading = $state(true);
@@ -15,21 +19,25 @@ let sucessMessage= $state('');
     let saving = $state(false);
     let editingId = $state<number | null>(null);
     let uploading = $state(false);
+    
     let selectedRoom = $state("");
+    function formatDate(date: string) {
+        return date ? date.split("T")[0] : "";
+    }
     const emptyForm: booking = {
         id: 0,
-        room_id: 0,
-        guest_name: "",
-        email: "",
-        checkin: 0,
-        checkout: 0,
-        price: 0,
-        discountamount: 0,
+        roomId: 0,
+        guestName: "",
+        guestEmail: "",
+        checkIn: "",
+        checkOut: "",
+        totalPrice: 0,
+        discountAmount: 0,
         finalprice: 0,
         status: "",
         createdat: 0,
     };
-
+    
     let form = $state<BookingCreateRequest>({ ...emptyForm });
 
     function resetForm() {
@@ -59,26 +67,47 @@ let sucessMessage= $state('');
         editingId = booking.id;
         form = {
             id: booking.id,
-            room_id: booking.room_id,
-            guest_name: booking.guest_name,
-            email: booking.email,
-            checkin: booking.checkin,
-            checkout: booking.checkout,
-            price: booking.price,
-            discountamount: booking.discountamount,
+            roomId: booking.roomId,
+            guestName: booking.guestName,
+            guestEmail: booking.guestEmail,
+            checkIn: booking.checkIn,
+            checkOut: booking.checkOut,
+            totalPrice: booking.totalPrice,
+            discountAmount: booking.discountAmount,
             finalprice: booking.finalprice,
             status: booking.status,
             createdat: booking.createdat,
         };
     }
-
+    async function loadBookingById(id: number) {
+        loading = true;
+        error = "";
+        try {
+            const response = await bookingService.getById(id);
+            console.log(response, " this is get all. room respinse");
+            if (response.success == true && response.data) {
+                const test = response.data;
+                form = {
+                    ...test,
+                    checkIn: formatDate(test.checkIn),
+                    checkOut: formatDate(test.checkOut),
+                };
+            } else {
+                error = response.message || "Failed to load rooms";
+            }
+        } catch (e) {
+            error = "Failed to load rooms";
+        } finally {
+            loading = false;
+        }
+    }
     async function saveRoom(e: SubmitEvent) {
         console.log(selectedRoom, "this is selected room");
         e.preventDefault();
         saving = true;
         error = "";
         console.log(form, "form before ");
-        form.room_id = Number(selectedRoom);
+        form.roomId = Number(selectedRoom);
         console.log(form, "fprm after room");
         try {
             if (editingId) {
@@ -97,10 +126,10 @@ let sucessMessage= $state('');
                     return;
                 } else {
                     // goto("/admin/bookings");
-                     resetForm();
-                     sucessMessage="booking createdd sucesfully";   
-                       error="";         
-                      }
+                    resetForm();
+                    sucessMessage = "booking createdd sucesfully";
+                    error = "";
+                }
             }
             resetForm();
             await loadRooms();
@@ -151,6 +180,7 @@ let sucessMessage= $state('');
     // function removeImage(url: string) {
     //     form.imageUrls = form.imageUrls.filter(u => u !== url);
     // }
+    
 
     function getFullImageUrl(path: string) {
         if (!path) return "";
@@ -159,8 +189,21 @@ let sucessMessage= $state('');
         const base = PUBLIC_API_BASE_URL.replace("/api", "");
         return `${base}${path}`;
     }
+       
+    onMount(() => {
+        if (bookingId != null || bookingId != undefined) {
+            console.log("this is booking id ", bookingId);
+            loadBookingById(Number(bookingId));
+            loadRooms();
+            // 👉 you can load specific booking here (edit mode)
+            // example:
+            // loadBookingById(bookingId);
+        } else {
+            console.log("room loading");
 
-    onMount(loadRooms);
+            loadRooms(); // ✅ correct function call
+        }
+    });
 </script>
 
 <section class="space-y-10">
@@ -191,11 +234,12 @@ let sucessMessage= $state('');
         </div>
     {/if}
     {#if sucessMessage}
-    <div
-         class="p-4 rounded-lg border border-green-200 bg-green-50 text-green-700 text-sm font-semibold">
+        <div
+            class="p-4 rounded-lg border border-green-200 bg-green-50 text-green-700 text-sm font-semibold"
+        >
             {sucessMessage}
-    </div>
-{/if}
+        </div>
+    {/if}
     <aside
         class="bg-surface-container-lowest rounded-xl shadow-sm border border-stone-100 p-6"
     >
@@ -212,7 +256,7 @@ let sucessMessage= $state('');
                 >
                 <input
                     class="w-full border px-3 py-2 rounded-lg"
-                    bind:value={form.guest_name}
+                    bind:value={form.guestName}
                     required
                 />
             </div>
@@ -226,7 +270,7 @@ let sucessMessage= $state('');
                 <input
                     type="email"
                     class="w-full border px-3 py-2 rounded-lg"
-                    bind:value={form.email}
+                    bind:value={form.guestEmail}
                     required
                 />
             </div>
@@ -287,7 +331,7 @@ let sucessMessage= $state('');
                     <input
                         type="date"
                         class="w-full border px-3 py-2 rounded-lg"
-                        bind:value={form.checkin}
+                        bind:value={form.checkIn}
                     />
                 </div>
 
@@ -299,7 +343,7 @@ let sucessMessage= $state('');
                     <input
                         type="date"
                         class="w-full border px-3 py-2 rounded-lg"
-                        bind:value={form.checkout}
+                        bind:value={form.checkOut}
                     />
                 </div>
             </div>
@@ -313,7 +357,7 @@ let sucessMessage= $state('');
                 <input
                     type="number"
                     class="w-full border px-3 py-2 rounded-lg"
-                    bind:value={form.price}
+                    bind:value={form.totalPrice}
                 />
             </div>
 
@@ -326,7 +370,7 @@ let sucessMessage= $state('');
                 <input
                     type="number"
                     class="w-full border px-3 py-2 rounded-lg"
-                    bind:value={form.discountamount}
+                    bind:value={form.discountAmount}
                 />
             </div>
 
@@ -339,7 +383,7 @@ let sucessMessage= $state('');
                 <input
                     type="number"
                     class="w-full border px-3 py-2 rounded-lg bg-gray-100"
-                    value={form.price - form.discountamount}
+                    value={form.totalPrice - form.discountAmount}
                     readonly
                 />
             </div>

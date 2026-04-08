@@ -31,13 +31,13 @@ export interface RegisterRequest {
 }
  export interface booking{
   id:number;
-  room_id: number;
-  guest_name:string;
-  email:string;
-  checkin:number; 
-  checkout:number;
-  price:number;
-  discountamount:number;
+  roomId: number;
+  guestName:string;
+  guestEmail:string;
+  checkIn:string; 
+  checkOut:string;
+  totalPrice:number;
+  discountAmount:number;
   finalprice:number;
   status:string;
   createdat:number;
@@ -45,13 +45,13 @@ export interface RegisterRequest {
  }
 export interface BookingCreateRequest{
   id:number;
-  room_id: number;
-  guest_name:string;
-  email:string;
-  checkin:number;
-  checkout:number;
-  price:number;
-  discountamount:number;
+  roomId: number;
+  guestName:string;
+  guestEmail:string;
+  checkIn:string;
+  checkOut:string;
+  totalPrice:number;
+  discountAmount:number;
   finalprice:number;
   status:string;
   createdat:number;
