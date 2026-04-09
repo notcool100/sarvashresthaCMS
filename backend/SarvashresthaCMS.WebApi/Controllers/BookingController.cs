@@ -6,6 +6,8 @@ using SarvashresthaCMS.Application.Interfaces;
 using SarvashresthaCMS.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace SarvashresthaCMS.WebApi.Controllers;
 
@@ -27,7 +29,7 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
     public async Task<ActionResult<ServiceResponse<Booking>>> GetById(int id)
     {
         var booking = await _bookingRepository.GetByIdAsync(id);
-        if (booking == null) 
+        if (booking == null)
             return NotFound(ServiceResponse<Booking>.Fail("Booking not found."));
         return Ok(ServiceResponse<Booking>.Ok(booking));
     }
@@ -35,8 +37,18 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<int>>> Create([FromBody] CreateBookingRequest request)
     {
+        var principal = _jwtTokenGenerator.GetPrincipalFromExpiredToken(request.AccessToken);
+
+        var userIdString = principal.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+        if (userIdString == null)
+        {
+            return Unauthorized("Invalid token");
+        }
+
         var booking = new Booking
         {
+            UserId = int.Parse(userIdString),
             RoomId = request.RoomId,
             OfferId = request.OfferId,
             GuestName = request.GuestName,
@@ -50,14 +62,15 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
         };
 
         var id = await _bookingRepository.CreateAsync(booking);
-        return CreatedAtAction(nameof(GetById), new { id = id }, ServiceResponse<int>.Ok(id, "Booking created successfully."));
-    }
 
+        return CreatedAtAction(nameof(GetById), new { id = id },
+            ServiceResponse<int>.Ok(id, "Booking created successfully."));
+    }
     [HttpPatch("{id}/status")]
     public async Task<ActionResult<ServiceResponse<bool>>> UpdateStatus(int id, [FromBody] UpdateBookingStatusRequest request)
     {
         var result = await _bookingRepository.UpdateStatusAsync(id, request.Status);
-        if (!result) 
+        if (!result)
             return NotFound(ServiceResponse<bool>.Fail("Booking not found or update failed."));
         return Ok(ServiceResponse<bool>.Ok(result, "Booking status updated successfully."));
     }
@@ -66,7 +79,7 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
     public async Task<ActionResult<ServiceResponse<bool>>> Delete(int id)
     {
         var result = await _bookingRepository.DeleteAsync(id);
-        if (!result) 
+        if (!result)
             return NotFound(ServiceResponse<bool>.Fail("Booking not found or delete failed."));
         return Ok(ServiceResponse<bool>.Ok(result, "Booking removed successfully."));
     }
