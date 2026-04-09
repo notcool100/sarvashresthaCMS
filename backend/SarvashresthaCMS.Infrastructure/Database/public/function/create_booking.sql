@@ -7,12 +7,13 @@ CREATE OR REPLACE FUNCTION create_booking(
     p_check_out TIMESTAMPTZ,
     p_total_price DECIMAL,
     p_discount_amount DECIMAL,
-    p_final_price DECIMAL
+    p_final_price DECIMAL,
+    p_user_id INTEGER
 ) RETURNS INTEGER AS $$
 DECLARE
     v_booking_id INTEGER;
 BEGIN
-    INSERT INTO bookings (room_id, offer_id, guest_name, guest_email, check_in, check_out, total_price, discount_amount, final_price, status)
+    INSERT INTO bookings (room_id, offer_id, guest_name, guest_email, check_in, check_out, total_price, discount_amount, final_price, status, user_id)
     VALUES (
         p_room_id,
         p_offer_id,
@@ -23,7 +24,8 @@ BEGIN
         p_total_price,
         COALESCE(p_discount_amount, 0),
         COALESCE(p_final_price, p_total_price - COALESCE(p_discount_amount, 0)),
-        'Pending'
+        'Pending',
+        p_user_id
     )
     RETURNING id INTO v_booking_id;
     

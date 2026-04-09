@@ -42,11 +42,11 @@ public class BookingRepository(IDbConnectionFactory dbConnectionFactory) : IBook
             p_total_price = booking.TotalPrice,
             p_discount_amount = booking.DiscountAmount,
             p_final_price = booking.FinalPrice,
-            p_user_id=booking.UserId,
+            p_user_id = booking.UserId
         };
 
         return await connection.ExecuteScalarAsync<int>(
-            "SELECT create_booking(@p_room_id, @p_offer_id, @p_guest_name, @p_guest_email, @p_check_in, @p_check_out, @p_total_price, @p_discount_amount, @p_final_price),@p_user_id",
+            "SELECT create_booking(@p_room_id, @p_offer_id, @p_guest_name, @p_guest_email, @p_check_in, @p_check_out, @p_total_price, @p_discount_amount, @p_final_price, @p_user_id)",
             parameters,
             commandType: CommandType.Text
         );
