@@ -37,18 +37,22 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<int>>> Create([FromBody] CreateBookingRequest request)
     {
-        var principal = _jwtTokenGenerator.GetPrincipalFromExpiredToken(request.AccessToken);
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                           ?? User.FindFirst("sub")?.Value;
 
-        var userIdString = principal.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-
-        if (userIdString == null)
+        if (string.IsNullOrEmpty(userIdString))
         {
-            return Unauthorized("Invalid token");
+            return Unauthorized(ServiceResponse<int>.Fail("User is not logged in or invalid token."));
+        }
+
+        if (!int.TryParse(userIdString, out var userId))
+        {
+            return BadRequest(ServiceResponse<int>.Fail("Invalid user identity."));
         }
 
         var booking = new Booking
         {
-            UserId = int.Parse(userIdString),
+            UserId = userId,
             RoomId = request.RoomId,
             OfferId = request.OfferId,
             GuestName = request.GuestName,
