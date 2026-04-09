@@ -3,12 +3,12 @@
     import { bookingService } from "$lib/services/bookingService";
     import type { booking, BookingCreateRequest, Room } from "$lib/types/api";
     import { goto } from "$app/navigation";
-    
+    import { invalidateAll } from "$app/navigation";
 
     function gotoCreatePage() {
         goto("/admin/bookings/create");
     }
-   
+
     let sucessMessage = $state("");
     let Booking = $state<booking[]>([]);
 
@@ -18,7 +18,24 @@
     let editingId = $state<number | null>(null);
     let uploading = $state(false);
     let selectedRoom = $state("");
- let activeTab=$state("tab");
+    async function deletebooking(id: number) {
+        console.log(id, "this is booking ");
+        const result = confirm("Do you want to delete this item?");
+
+        if (result) {
+            // YES clicked
+            console.log("Deleted ID:", id);
+            const response = await bookingService.remove(id);
+            console.log(response, "this is deletd booking id");
+            if (response.success == true) {
+                await loadBookings();
+            }
+        } else {
+            // NO clicked
+            console.log("Cancelled");
+        }
+    }
+
     async function loadBookings() {
         loading = true;
         error = "";
@@ -96,9 +113,7 @@
                         </button>
                         <button
                             class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-xs"
-                            onclick={()=>activeTab ='deleted' }
-                         
-                            
+                            onclick={() => deletebooking(x.id)}
                         >
                             Delete
                         </button>
@@ -107,9 +122,4 @@
             {/each}
         </tbody>
     </table>
-    {#if activeTab === "deleted"}
-  <p class="text-red-600 bg-red-100 px-4 py-2 rounded mt-4">
-    ⚠️ This is deleted
-  </p>
-{/if}
 </div>

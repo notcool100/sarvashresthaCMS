@@ -53,8 +53,8 @@ export const bookingService = {
         guestEmail: payload.guestEmail,
         checkIn: payload.checkIn,
         checkOut: payload.checkOut,
-        totalPrice: payload.price,
-        discountAmount: payload.discountamount,
+        totalPrice: payload.totalPrice,
+        discountAmount: payload.discountAmount,
         finalPrice: payload.finalprice
       })
     });
