@@ -101,7 +101,7 @@
             loading = false;
         }
     }
-    async function saveRoom(e: SubmitEvent) {
+    async function saveBoooking(e: SubmitEvent) {
         console.log(selectedRoom, "this is selected room");
         e.preventDefault();
         saving = true;
@@ -247,7 +247,7 @@
             {editingId ? "Edit Booking" : "Create Booking"}
         </h3>
 
-        <form class="space-y-4" onsubmit={saveRoom}>
+        <form class="space-y-4" onsubmit={saveBoooking}>
             <!-- Guest Name -->
             <div>
                 <label

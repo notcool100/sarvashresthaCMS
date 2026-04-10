@@ -4,10 +4,28 @@
   import NavBar from "$lib/components/home/NavBar.svelte";
   import FooterSection from "$lib/components/home/FooterSection.svelte";
   import type { Room } from "$lib/types/api";
+  import { bookingService } from "$lib/services/bookingService";
   import { roomService } from "$lib/services/roomService";
+  import type { booking, BookingCreateRequest } from "$lib/types/api";
 
+  let Booking = $state<booking[]>([]);
   let rooms = $state<Room[]>([]);
   let isLoading = $state(true);
+  const emptyForm: booking = {
+    id: 0,
+    roomId: 0,
+    guestName: "",
+    guestEmail: "",
+    checkIn: "",
+    checkOut: "",
+    totalPrice: 0,
+    discountAmount: 0,
+    finalprice: 0,
+    status: "",
+    createdat: 0,
+  };
+
+  let form = $state<BookingCreateRequest>({ ...emptyForm });
 
   const nights = 6;
   const sustainabilityFee = 120;
@@ -16,12 +34,12 @@
   const fallbackImages = [
     "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop",
   ];
 
   const selectedId = $derived($page.url.searchParams.get("room"));
   const selectedRoom = $derived(
-    rooms.find((room) => String(room.id) === String(selectedId)) ?? rooms[0]
+    rooms.find((room) => String(room.id) === String(selectedId)) ?? rooms[0],
   );
   const subtotal = $derived((selectedRoom?.pricePerNight ?? 0) * nights);
   const total = $derived(subtotal + sustainabilityFee + taxes);
@@ -31,12 +49,55 @@
     const list = room?.imageUrls?.length ? room.imageUrls : fallbackImages;
     return list.slice(0, 3);
   };
+
+  async function submitReservation() {
+    console.log(form, "this is form");
+    // saving = true;
+    // error = "";
+    // console.log(form, "form before ");
+    // form.roomId = Number(selectedRoom);
+    // console.log(form, "fprm after room");
+    // try {
+    //     if (editingId) {
+    //         const response = await bookingService.update({
+    //             id: editingId,
+    //             status: form.status,
+    //         });
+    //         if (!response.success) {
+    //             error = response.message || "Failed to update room";
+    //             return;
+    //         }
+    //     } else {
+    //         const response = await bookingService.create(form);
+    //         if (!response.success) {
+    //             error = response.message || "Failed to create room";
+    //             return;
+    //         } else {
+    //             // goto("/admin/bookings");
+    //             resetForm();
+    //             sucessMessage = "booking createdd sucesfully";
+    //             error = "";
+    //         }
+    //     }
+    //     resetForm();
+    //     await loadRooms();
+    // } catch (e) {
+    //     error = "Failed to save room";
+    // } finally {
+    //     saving = false;
+    // }
+  }
+
   const bathLabel = (room?: Room) => {
-    const amenity = room?.amenities?.find((item) => item.toLowerCase().includes("bath"));
+    const amenity = room?.amenities?.find((item) =>
+      item.toLowerCase().includes("bath"),
+    );
     return amenity ? `Attached ${amenity}` : "Attached Bath";
   };
   const highlightItems = (room?: Room) =>
-    room?.amenities?.length ? room.amenities.slice(0, 3) : ["Private rituals", "Mountain views", "Concierge service"];
+    room?.amenities?.length
+      ? room.amenities.slice(0, 3)
+      : ["Private rituals", "Mountain views", "Concierge service"];
 
   onMount(async () => {
     const response = await roomService.getAll();
@@ -60,8 +121,12 @@
     <div class="col-span-12 lg:col-span-8 space-y-12">
       <section>
         <div class="flex items-center gap-4 mb-8">
-          <span class="font-[var(--font-headline)] text-4xl text-secondary">01</span>
-          <h2 class="font-[var(--font-headline)] text-4xl tracking-tight">Select Your Sanctuary</h2>
+          <span class="font-[var(--font-headline)] text-4xl text-secondary"
+            >01</span
+          >
+          <h2 class="font-[var(--font-headline)] text-4xl tracking-tight">
+            Select Your Sanctuary
+          </h2>
         </div>
         <div class="panel p-8 md:p-10 space-y-8">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -69,7 +134,11 @@
               <label>Check-in & Check-out</label>
               <div class="input-shell">
                 <span class="material-symbols-outlined">calendar_today</span>
-                <input type="text" value="Oct 12, 2024 - Oct 18, 2024" readonly />
+                <input
+                  type="text"
+                  value="Oct 12, 2024 - Oct 18, 2024"
+                  readonly
+                />
               </div>
             </div>
             <div class="field">
@@ -95,13 +164,30 @@
               <div class="selected-hero">
                 <img src={heroImage(selectedRoom)} alt={selectedRoom?.name} />
                 <div class="selected-info">
-                  <h3 class="font-[var(--font-headline)] text-2xl">{selectedRoom?.name}</h3>
-                  <p class="text-sm text-on-surface-variant">{selectedRoom?.description}</p>
+                  <h3 class="font-[var(--font-headline)] text-2xl">
+                    {selectedRoom?.name}
+                  </h3>
+                  <p class="text-sm text-on-surface-variant">
+                    {selectedRoom?.description}
+                  </p>
                   <div class="selected-meta">
-                    <span><span class="material-symbols-outlined">square_foot</span> {selectedRoom?.sizeSqFt} ft²</span>
-                    <span><span class="material-symbols-outlined">king_bed</span> {selectedRoom?.bedType}</span>
-                    <span><span class="material-symbols-outlined">bathroom</span> {bathLabel(selectedRoom)}</span>
-                    <span><span class="material-symbols-outlined">landscape</span> {selectedRoom?.viewType || "Mountain View"}</span>
+                    <span
+                      ><span class="material-symbols-outlined">square_foot</span
+                      >
+                      {selectedRoom?.sizeSqFt} ft²</span
+                    >
+                    <span
+                      ><span class="material-symbols-outlined">king_bed</span>
+                      {selectedRoom?.bedType}</span
+                    >
+                    <span
+                      ><span class="material-symbols-outlined">bathroom</span>
+                      {bathLabel(selectedRoom)}</span
+                    >
+                    <span
+                      ><span class="material-symbols-outlined">landscape</span>
+                      {selectedRoom?.viewType || "Mountain View"}</span
+                    >
                   </div>
                 </div>
               </div>
@@ -125,27 +211,83 @@
 
       <section>
         <div class="flex items-center gap-4 mb-8">
-          <span class="font-[var(--font-headline)] text-4xl text-secondary">02</span>
-          <h2 class="font-[var(--font-headline)] text-4xl tracking-tight">Personal Details</h2>
+          <span class="font-[var(--font-headline)] text-4xl text-secondary"
+            >02</span
+          >
+          <h2 class="font-[var(--font-headline)] text-4xl tracking-tight">
+            Personal Details
+          </h2>
         </div>
         <div class="panel space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="field">
-              <label>First Name</label>
-              <input class="text-input" placeholder="Tenzing" type="text" />
-            </div>
-            <div class="field">
-              <label>Last Name</label>
-              <input class="text-input" placeholder="Norgay" type="text" />
+            <div class="field mb-4">
+              <label class="block text-gray-200 mb-1">Full Name</label>
+
+              <input
+                type="text"
+                placeholder="Tenjing"
+                class="w-full p-3 border border-white rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-1"
+                bind:value={form.guestName}
+              />
             </div>
           </div>
-          <div class="field">
-            <label>Email Address</label>
-            <input class="text-input" placeholder="expedition@himalayas.com" type="email" />
+          <div class="field mb-4">
+            <label class="block text-black mb-1">Email Address</label>
+            <input
+              type="email"
+              placeholder="expedition@himalayas.com"
+              class="w-full p-3 border border-black rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-1"
+              bind:value={form.guestEmail}
+            />
           </div>
-          <div class="field">
-            <label>Special Requirements</label>
-            <textarea class="text-input" rows="4" placeholder="Dietary preferences, arrival time, or celebratory occasions..."></textarea>
+          <!-- <div class="field">
+            <label class="text-gray-200 mb-1 block">Special Requirements</label>
+            <textarea
+              class="w-full p-3 border border-black rounded-lg text-black placeholder-gray-500 focus:outline-none focus:ring-1"
+              rows="4"
+              placeholder="Dietary preferences, arrival time, or celebratory occasions..."
+              
+            ></textarea>
+          </div> -->
+          <div>
+            <label class="block text-gray-700 mb-1" for="checkin"
+              >Check-In</label
+            >
+            <input
+              id="checkIn"
+              type="date"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
+           bind:value={form.checkIn}
+            />
+          </div>
+
+          <!-- Check-Out -->
+          <div>
+            <label class="block text-gray-700 mb-1" for="checkout"
+              >Check-Out</label
+            >
+
+            <input
+              id="checkout"
+              type="date"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
+               bind:value={form.checkOut}
+            />
+          </div>
+          <!-- <div class="field mb-4">
+            <label class="block text-gray-200 mb-1">Discount Amount</label>
+            <input
+              type="number"
+              placeholder="0"
+              class="w-full p-3 border border-black rounded-lg text-black focus:outline-none focus:ring-1"
+            />
+          </div> -->
+
+          <!-- Price Display -->
+          <div class="mt-4 p-4 rounded-lg">
+            <p>Total Price:</p>
+            <p>Discount:</p>
+            <p class="font-bold text-lg">Final Price:</p>
           </div>
         </div>
       </section>
@@ -160,25 +302,61 @@
           </div>
           <div class="p-7 space-y-5">
             <div class="space-y-3 text-sm">
-              <div class="flex justify-between"><span class="muted">Stay Duration</span><span class="font-bold">{nights} Nights</span></div>
-              <div class="flex justify-between"><span class="muted">Room Type</span><span class="font-bold">{selectedRoom?.name}</span></div>
-              <div class="flex justify-between"><span class="muted">Guests</span><span class="font-bold">2 Adults</span></div>
+              <div class="flex justify-between">
+                <span class="muted">Stay Duration</span><span class="font-bold"
+                  >{nights} Nights</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="muted">Room Type</span><span class="font-bold"
+                  >{selectedRoom?.name}</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="muted">Guests</span><span class="font-bold"
+                  >2 Adults</span
+                >
+              </div>
             </div>
             <div class="border-t border-black/10 pt-4 space-y-2 text-sm">
-              <div class="flex justify-between"><span>${(selectedRoom?.pricePerNight ?? 0).toFixed(2)} x {nights} nights</span><span>${subtotal.toFixed(2)}</span></div>
-              <div class="flex justify-between"><span>Sustainability Fee</span><span>${sustainabilityFee.toFixed(2)}</span></div>
-              <div class="flex justify-between"><span>Local Taxes</span><span>${taxes.toFixed(2)}</span></div>
+              <div class="flex justify-between">
+                <span
+                  >${(selectedRoom?.pricePerNight ?? 0).toFixed(2)} x {nights} nights</span
+                ><span>${subtotal.toFixed(2)}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Sustainability Fee</span><span
+                  >${sustainabilityFee.toFixed(2)}</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span>Local Taxes</span><span>${taxes.toFixed(2)}</span>
+              </div>
             </div>
             <div class="pt-3 flex justify-between items-end">
               <div>
-                <p class="muted text-[10px] uppercase tracking-[0.2em]">Total Amount</p>
-                <h3 class="font-[var(--font-headline)] text-3xl text-[#1b5e20]">${total.toFixed(2)}</h3>
+                <p class="muted text-[10px] uppercase tracking-[0.2em]">
+                  Total Amount
+                </p>
+                <h3 class="font-[var(--font-headline)] text-3xl text-[#1b5e20]">
+                  ${total.toFixed(2)}
+                </h3>
               </div>
-              <p class="text-[10px] text-on-surface-variant/70 italic text-right">All-inclusive gourmet<br />dining included</p>
+              <p
+                class="text-[10px] text-on-surface-variant/70 italic text-right"
+              >
+                All-inclusive gourmet<br />dining included
+              </p>
             </div>
-            <button class="cta">Complete Reservation</button>
-            <div class="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">
-              <span class="material-symbols-outlined text-sm">verified_user</span>
+            <button class="cta" onclick={()=>submitReservation()}
+              >Complete Reservation</button
+            >
+            <div
+              class="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant"
+            >
+              <span class="material-symbols-outlined text-sm"
+                >verified_user</span
+              >
               Secure SSL Encrypted Payment
             </div>
           </div>
@@ -188,9 +366,12 @@
           <span class="material-symbols-outlined">psychology_alt</span>
           <div>
             <p class="font-[var(--font-headline)] text-sm italic">
-              "The silence here is a presence you can feel. A transformative stay."
+              "The silence here is a presence you can feel. A transformative
+              stay."
             </p>
-            <p class="text-[9px] uppercase tracking-widest mt-1">— Condé Nast Traveler</p>
+            <p class="text-[9px] uppercase tracking-widest mt-1">
+              — Condé Nast Traveler
+            </p>
           </div>
         </div>
       </div>
@@ -376,7 +557,9 @@
     letter-spacing: 0.2rem;
     font-weight: 800;
     font-size: 0.75rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .cta:hover {

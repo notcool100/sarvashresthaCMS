@@ -324,6 +324,14 @@
                     />
                 </div>
                 <div>
+                    <label class="block text-xs">
+                        Price per Night
+                    </label>
+                    <input class="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm"
+                        placeholder="Rs 1000" bind:value={form.pricePerNight}>
+                        
+                </div>
+                <div>
                     <label for="room-images" class="block text-xs font-bold tracking-widest uppercase text-stone-400 mb-2">Room Gallery</label>
                     <div class="space-y-3">
                         <div class="grid grid-cols-4 gap-2">
