@@ -62,6 +62,7 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
             TotalPrice = request.TotalPrice,
             DiscountAmount = request.DiscountAmount,
             FinalPrice = request.FinalPrice,
+            NumberOfPeople = request.NumberOfPeople,
             Status = "Pending"
         };
 

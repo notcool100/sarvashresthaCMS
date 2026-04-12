@@ -15,5 +15,6 @@ public class Booking
     public decimal TotalPrice { get; set; }
     public decimal DiscountAmount { get; set; }
     public decimal FinalPrice { get; set; }
+    public int NumberOfPeople { get; set; } = 1;
     public string Status { get; set; } = "Pending";
 }

@@ -11,7 +11,7 @@
   let Booking = $state<booking[]>([]);
   let rooms = $state<Room[]>([]);
   let isLoading = $state(true);
-  const emptyForm: booking = {
+  const emptyForm: BookingCreateRequest = {
     id: 0,
     roomId: 0,
     guestName: "",
@@ -21,11 +21,15 @@
     totalPrice: 0,
     discountAmount: 0,
     finalprice: 0,
-    status: "",
+    status: "Pending",
+    numberOfPeople: 2,
     createdat: 0,
   };
 
   let form = $state<BookingCreateRequest>({ ...emptyForm });
+  let isSaving = $state(false);
+  let errorMessage = $state("");
+  let successMessage = $state("");
 
   const nights = 6;
   const sustainabilityFee = 120;
@@ -41,7 +45,18 @@
   const selectedRoom = $derived(
     rooms.find((room) => String(room.id) === String(selectedId)) ?? rooms[0],
   );
-  const subtotal = $derived((selectedRoom?.pricePerNight ?? 0) * nights);
+
+  const calculatedNights = $derived(() => {
+    if (!form.checkIn || !form.checkOut) return 1;
+    const start = new Date(form.checkIn);
+    const end = new Date(form.checkOut);
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 1;
+  });
+
+  const nightsCount = $derived(calculatedNights());
+  const subtotal = $derived((selectedRoom?.pricePerNight ?? 0) * nightsCount);
   const total = $derived(subtotal + sustainabilityFee + taxes);
 
   const heroImage = (room?: Room) => room?.imageUrls?.[0] ?? fallbackImages[0];
@@ -51,41 +66,38 @@
   };
 
   async function submitReservation() {
-    console.log(form, "this is form");
-    // saving = true;
-    // error = "";
-    // console.log(form, "form before ");
-    // form.roomId = Number(selectedRoom);
-    // console.log(form, "fprm after room");
-    // try {
-    //     if (editingId) {
-    //         const response = await bookingService.update({
-    //             id: editingId,
-    //             status: form.status,
-    //         });
-    //         if (!response.success) {
-    //             error = response.message || "Failed to update room";
-    //             return;
-    //         }
-    //     } else {
-    //         const response = await bookingService.create(form);
-    //         if (!response.success) {
-    //             error = response.message || "Failed to create room";
-    //             return;
-    //         } else {
-    //             // goto("/admin/bookings");
-    //             resetForm();
-    //             sucessMessage = "booking createdd sucesfully";
-    //             error = "";
-    //         }
-    //     }
-    //     resetForm();
-    //     await loadRooms();
-    // } catch (e) {
-    //     error = "Failed to save room";
-    // } finally {
-    //     saving = false;
-    // }
+    if (!form.guestName || !form.guestEmail || !form.checkIn || !form.checkOut) {
+      errorMessage = "Please fill in all required fields.";
+      return;
+    }
+
+    isSaving = true;
+    errorMessage = "";
+    successMessage = "";
+
+    try {
+      const payload: BookingCreateRequest = {
+        ...form,
+        roomId: selectedRoom.id,
+        totalPrice: total,
+        finalprice: total,
+        discountAmount: 0,
+        status: "Pending"
+      };
+
+      const response = await bookingService.create(payload);
+      if (response.success) {
+        successMessage = "Your reservation has been submitted successfully!";
+        form = { ...emptyForm };
+      } else {
+        errorMessage = response.message || "Failed to submit reservation.";
+      }
+    } catch (e) {
+      console.error(e);
+      errorMessage = "An unexpected error occurred. Please try again.";
+    } finally {
+      isSaving = false;
+    }
   }
 
   const bathLabel = (room?: Room) => {
@@ -146,11 +158,12 @@
               <label for="travelers-count">Travelers</label>
               <div class="input-shell">
                 <span class="material-symbols-outlined">group</span>
-                <select id="travelers-count">
-                  <option>2 Adults, 0 Children</option>
-                  <option>1 Adult</option>
-                  <option>2 Adults, 1 Child</option>
-                  <option>2 Adults, 2 Children</option>
+                <select id="travelers-count" bind:value={form.numberOfPeople}>
+                  <option value={1}>1 Person</option>
+                  <option value={2}>2 People</option>
+                  <option value={3}>3 People</option>
+                  <option value={4}>4 People</option>
+                  <option value={5}>5 People</option>
                 </select>
               </div>
             </div>
@@ -286,11 +299,25 @@
           </div> -->
 
           <!-- Price Display -->
-          <div class="mt-4 p-4 rounded-lg">
-            <p>Total Price:</p>
-            <p>Discount:</p>
-            <p class="font-bold text-lg">Final Price:</p>
+          <div class="mt-4 p-4 rounded-lg space-y-2 border border-black/10">
+            <p class="flex justify-between"><span>Total Price:</span> <span>${subtotal.toFixed(2)}</span></p>
+            <p class="flex justify-between"><span>Fees & Taxes:</span> <span>${(sustainabilityFee + taxes).toFixed(2)}</span></p>
+            <p class="font-bold text-lg flex justify-between border-t border-black/10 pt-2">
+              <span>Final Price:</span> <span>${total.toFixed(2)}</span>
+            </p>
           </div>
+
+          {#if errorMessage}
+            <div class="p-4 bg-red-100 text-red-700 rounded-lg text-sm">
+              {errorMessage}
+            </div>
+          {/if}
+
+          {#if successMessage}
+            <div class="p-4 bg-green-100 text-green-700 rounded-lg text-sm">
+              {successMessage}
+            </div>
+          {/if}
         </div>
       </section>
     </div>
@@ -306,7 +333,7 @@
             <div class="space-y-3 text-sm">
               <div class="flex justify-between">
                 <span class="muted">Stay Duration</span><span class="font-bold"
-                  >{nights} Nights</span
+                   >{nightsCount} Nights</span
                 >
               </div>
               <div class="flex justify-between">
@@ -316,14 +343,14 @@
               </div>
               <div class="flex justify-between">
                 <span class="muted">Guests</span><span class="font-bold"
-                  >2 Adults</span
+                  >{form.numberOfPeople} People</span
                 >
               </div>
             </div>
             <div class="border-t border-black/10 pt-4 space-y-2 text-sm">
               <div class="flex justify-between">
                 <span
-                  >${(selectedRoom?.pricePerNight ?? 0).toFixed(2)} x {nights} nights</span
+                  >${(selectedRoom?.pricePerNight ?? 0).toFixed(2)} x {nightsCount} nights</span
                 ><span>${subtotal.toFixed(2)}</span>
               </div>
               <div class="flex justify-between">
@@ -350,9 +377,13 @@
                 All-inclusive gourmet<br />dining included
               </p>
             </div>
-            <button class="cta" onclick={()=>submitReservation()}
-              >Complete Reservation</button
-            >
+            <button class="cta" onclick={()=>submitReservation()} disabled={isSaving}>
+              {#if isSaving}
+                Processing...
+              {:else}
+                Complete Reservation
+              {/if}
+            </button>
             <div
               class="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant"
             >

@@ -11,7 +11,8 @@ public record CreateBookingRequest(
     DateTime CheckOut,
     decimal TotalPrice,
     decimal DiscountAmount,
-    decimal FinalPrice
+    decimal FinalPrice,
+    int NumberOfPeople
 );
 
 public record BookingResponse(
@@ -25,7 +26,8 @@ public record BookingResponse(
     decimal TotalPrice,
     decimal DiscountAmount,
     decimal FinalPrice,
-    string Status
+    string Status,
+    int NumberOfPeople
 );
 
 public record UpdateBookingStatusRequest(string Status);

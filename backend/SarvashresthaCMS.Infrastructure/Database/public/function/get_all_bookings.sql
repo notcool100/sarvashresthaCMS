@@ -10,11 +10,12 @@ RETURNS TABLE (
     total_price DECIMAL,
     discount_amount DECIMAL,
     final_price DECIMAL,
-    status VARCHAR
+    status VARCHAR,
+    number_of_people INTEGER
 ) AS $$
 BEGIN
     RETURN QUERY
-    SELECT b.id, b.room_id, b.offer_id, b.guest_name, b.guest_email, b.check_in, b.check_out, b.total_price, b.discount_amount, b.final_price, b.status
+    SELECT b.id, b.room_id, b.offer_id, b.guest_name, b.guest_email, b.check_in, b.check_out, b.total_price, b.discount_amount, b.final_price, b.status, b.number_of_people
     FROM bookings b;
 END;
 $$ LANGUAGE plpgsql;

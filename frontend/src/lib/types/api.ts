@@ -40,9 +40,10 @@ export interface RegisterRequest {
   discountAmount:number;
   finalprice:number;
   status:string;
+  numberOfPeople:number;
   createdat:number;
-  
- }
+}
+
 export interface BookingCreateRequest{
   id:number;
   roomId: number;
@@ -54,9 +55,9 @@ export interface BookingCreateRequest{
   discountAmount:number;
   finalprice:number;
   status:string;
+  numberOfPeople:number;
   createdat:number;
-  
- }
+}
   
  export interface BookingpdateRequest extends BookingCreateRequest {
   id: number;

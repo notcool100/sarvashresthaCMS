@@ -55,7 +55,8 @@ export const bookingService = {
         checkOut: payload.checkOut,
         totalPrice: payload.totalPrice,
         discountAmount: payload.discountAmount,
-        finalPrice: payload.finalprice
+        finalPrice: payload.finalprice,
+        numberOfPeople: payload.numberOfPeople
       })
     });
     return await response.json();
