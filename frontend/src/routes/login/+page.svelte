@@ -4,10 +4,10 @@
   import { goto } from '$app/navigation';
   import { UserRole } from '$lib/types/api';
 
-  let email = '';
-  let password = '';
-  let error = '';
-  let loading = false;
+  let email = $state('');
+  let password = $state('');
+  let error = $state('');
+  let loading = $state(false);
 
   async function handleLogin(e: SubmitEvent) {
     e.preventDefault();
