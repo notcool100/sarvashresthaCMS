@@ -18,9 +18,9 @@
     <div>
       <p class="uppercase tracking-[0.3em] text-xs text-white/60">Social</p>
       <div class="mt-4 grid gap-2 text-sm text-white/80">
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
+        <a href="/">Instagram</a>
+        <a href="/">Facebook</a>
+        <a href="/">YouTube</a>
       </div>
     </div>
   </div>
