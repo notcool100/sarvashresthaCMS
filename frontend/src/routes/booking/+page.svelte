@@ -131,10 +131,11 @@
         <div class="panel p-8 md:p-10 space-y-8">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="field">
-              <label>Check-in & Check-out</label>
+              <label for="booking-dates">Check-in & Check-out</label>
               <div class="input-shell">
                 <span class="material-symbols-outlined">calendar_today</span>
                 <input
+                  id="booking-dates"
                   type="text"
                   value="Oct 12, 2024 - Oct 18, 2024"
                   readonly
@@ -142,10 +143,10 @@
               </div>
             </div>
             <div class="field">
-              <label>Travelers</label>
+              <label for="travelers-count">Travelers</label>
               <div class="input-shell">
                 <span class="material-symbols-outlined">group</span>
-                <select>
+                <select id="travelers-count">
                   <option>2 Adults, 0 Children</option>
                   <option>1 Adult</option>
                   <option>2 Adults, 1 Child</option>
@@ -157,7 +158,7 @@
 
           <div class="space-y-4">
             <div class="flex items-center justify-between">
-              <label class="block">Selected Room</label>
+              <span class="block">Selected Room</span>
               <a class="change-link" href="/rooms">Change room</a>
             </div>
             <div class="selected-room">
@@ -221,9 +222,9 @@
         <div class="panel space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="field mb-4">
-              <label class="block text-gray-200 mb-1">Full Name</label>
-
+              <label class="block text-gray-200 mb-1" for="guestName">Full Name</label>
               <input
+                id="guestName"
                 type="text"
                 placeholder="Tenjing"
                 class="w-full p-3 border border-white rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-1"
@@ -232,8 +233,9 @@
             </div>
           </div>
           <div class="field mb-4">
-            <label class="block text-black mb-1">Email Address</label>
+            <label class="block text-black mb-1" for="guestEmail">Email Address</label>
             <input
+              id="guestEmail"
               type="email"
               placeholder="expedition@himalayas.com"
               class="w-full p-3 border border-black rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-1"
@@ -250,7 +252,7 @@
             ></textarea>
           </div> -->
           <div>
-            <label class="block text-gray-700 mb-1" for="checkin"
+            <label class="block text-gray-700 mb-1" for="checkIn"
               >Check-In</label
             >
             <input

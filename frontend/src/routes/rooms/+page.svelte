@@ -81,23 +81,23 @@
     <div class="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-8">
       <div class="flex flex-wrap items-center gap-10">
         <div class="filter-chip">
-          <label>View by Tier</label>
+          <span class="chip-label">View by Tier</span>
           <div class="filter-value">
             <span>All Collections</span>
             <span class="material-symbols-outlined">expand_more</span>
           </div>
         </div>
         <div class="filter-chip">
-          <label>Nightly Rate</label>
+          <span class="chip-label">Nightly Rate</span>
           <div class="filter-value">
             <span>Any Price</span>
             <span class="material-symbols-outlined">expand_more</span>
           </div>
         </div>
         <div class="filter-chip">
-          <label>Occupancy</label>
+          <label for="capacity-filter">Occupancy</label>
           <div class="filter-value">
-            <select bind:value={selectedCapacity}>
+            <select id="capacity-filter" bind:value={selectedCapacity}>
            <option value="">All Capacity</option>
            {#each capacityDropdown as cap}
            <option value={cap}>{cap}</option>
@@ -448,7 +448,8 @@
     display: block;
   }
 
-  .filter-chip label {
+  .filter-chip label,
+  .chip-label {
     font-size: 0.6rem;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
