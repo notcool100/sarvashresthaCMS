@@ -325,6 +325,7 @@
                                 <img src={getFullImageUrl(form.imageUrl)} alt="Banner Preview" class="w-full h-full object-cover" />
                                 <button 
                                     type="button"
+                                    aria-label="Remove image"
                                     class="absolute top-2 right-2 p-1.5 bg-rose-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                                     onclick={() => form.imageUrl = ''}
                                 >

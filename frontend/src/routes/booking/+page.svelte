@@ -493,8 +493,7 @@
   }
 
 
-  .input-shell input,
-  .input-shell select {
+  .input-shell input {
     border: none;
     outline: none;
     width: 100%;
@@ -502,13 +501,7 @@
     font-weight: 600;
   }
 
-  .text-input {
-    width: 100%;
-    background: var(--color-surface-container-low);
-    border: none;
-    border-radius: 0.75rem;
-    padding: 0.9rem 1rem;
-  }
+
 
   .change-link {
     font-size: 0.65rem;

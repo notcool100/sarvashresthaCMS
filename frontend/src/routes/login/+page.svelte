@@ -51,7 +51,7 @@
       <p>Log in to manage your room bookings</p>
     </div>
 
-    <form on:submit={handleLogin}>
+    <form onsubmit={handleLogin}>
       <div class="input-group">
         <label for="email">Email Address</label>
         <input

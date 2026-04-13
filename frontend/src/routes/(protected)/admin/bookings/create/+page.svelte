@@ -35,6 +35,7 @@
         discountAmount: 0,
         finalprice: 0,
         status: "",
+        numberOfPeople: 1,
         createdat: 0,
     };
     
@@ -76,6 +77,7 @@
             discountAmount: booking.discountAmount,
             finalprice: booking.finalprice,
             status: booking.status,
+            numberOfPeople: booking.numberOfPeople,
             createdat: booking.createdat,
         };
     }
@@ -251,10 +253,12 @@
             <!-- Guest Name -->
             <div>
                 <label
+                    for="guestName"
                     class="block text-xs font-bold uppercase text-stone-400 mb-2"
                     >Guest Name</label
                 >
                 <input
+                    id="guestName"
                     class="w-full border px-3 py-2 rounded-lg"
                     bind:value={form.guestName}
                     required
@@ -264,10 +268,12 @@
             <!-- Email -->
             <div>
                 <label
+                    for="guestEmail"
                     class="block text-xs font-bold uppercase text-stone-400 mb-2"
                     >Email</label
                 >
                 <input
+                    id="guestEmail"
                     type="email"
                     class="w-full border px-3 py-2 rounded-lg"
                     bind:value={form.guestEmail}
@@ -277,27 +283,17 @@
 
             <!-- Room ID -->
             <div>
-                <label
-                    class="block text-xs font-bold uppercase text-stone-400 mb-2"
-                    >Rooms</label
-                >
-                <!-- <input
-                    type="number"
-                    class="w-full border px-3 py-2 rounded-lg"
-                    bind:value={form.room_id}
-                /> -->
-
                 <div class="w-full max-w-md">
                     <label
-                        for="course"
-                        class="block mb-2 text-sm font-medium text-gray-700"
+                        for="roomSelect"
+                        class="block text-xs font-bold uppercase text-stone-400 mb-2"
                     >
-                        Select Room
+                        Rooms
                     </label>
 
                     <select
-                        id="course"
-                        name="course"
+                        id="roomSelect"
+                        name="roomSelect"
                         bind:value={selectedRoom}
                         class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm
                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
@@ -325,10 +321,12 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label
+                        for="checkIn"
                         class="block text-xs font-bold uppercase text-stone-400 mb-2"
                         >Check-in</label
                     >
                     <input
+                        id="checkIn"
                         type="date"
                         class="w-full border px-3 py-2 rounded-lg"
                         bind:value={form.checkIn}
@@ -337,10 +335,12 @@
 
                 <div>
                     <label
+                        for="checkOut"
                         class="block text-xs font-bold uppercase text-stone-400 mb-2"
                         >Check-out</label
                     >
                     <input
+                        id="checkOut"
                         type="date"
                         class="w-full border px-3 py-2 rounded-lg"
                         bind:value={form.checkOut}
@@ -348,13 +348,32 @@
                 </div>
             </div>
 
+            <!-- Number of People -->
+            <div>
+                <label
+                    for="numberOfPeople"
+                    class="block text-xs font-bold uppercase text-stone-400 mb-2"
+                    >Number of People</label
+                >
+                <input
+                    id="numberOfPeople"
+                    type="number"
+                    min="1"
+                    class="w-full border px-3 py-2 rounded-lg"
+                    bind:value={form.numberOfPeople}
+                    required
+                />
+            </div>
+
             <!-- Price -->
             <div>
                 <label
+                    for="totalPrice"
                     class="block text-xs font-bold uppercase text-stone-400 mb-2"
                     >Price</label
                 >
                 <input
+                    id="totalPrice"
                     type="number"
                     class="w-full border px-3 py-2 rounded-lg"
                     bind:value={form.totalPrice}
@@ -364,10 +383,12 @@
             <!-- Discount -->
             <div>
                 <label
+                    for="discountAmount"
                     class="block text-xs font-bold uppercase text-stone-400 mb-2"
                     >Discount</label
                 >
                 <input
+                    id="discountAmount"
                     type="number"
                     class="w-full border px-3 py-2 rounded-lg"
                     bind:value={form.discountAmount}
@@ -377,10 +398,12 @@
             <!-- Final Price (auto) -->
             <div>
                 <label
+                    for="finalPrice"
                     class="block text-xs font-bold uppercase text-stone-400 mb-2"
                     >Final Price</label
                 >
                 <input
+                    id="finalPrice"
                     type="number"
                     class="w-full border px-3 py-2 rounded-lg bg-gray-100"
                     value={form.totalPrice - form.discountAmount}
@@ -391,10 +414,12 @@
             <!-- Status -->
             <div>
                 <label
+                    for="status"
                     class="block text-xs font-bold uppercase text-stone-400 mb-2"
                     >Status</label
                 >
                 <select
+                    id="status"
                     class="w-full border px-3 py-2 rounded-lg"
                     bind:value={form.status}
                 >

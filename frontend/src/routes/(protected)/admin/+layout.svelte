@@ -1,3 +1,7 @@
+<script lang="ts">
+    let { children } = $props();
+</script>
+
 <nav class="h-screen w-64 fixed left-0 top-0 bg-stone-100 dark:bg-stone-950 flex flex-col py-6 z-50 overflow-y-auto">
     <div class="px-6 mb-10">
         <h1 class="font-headline text-xl text-emerald-900 dark:text-emerald-100 mb-1">CMS Portal</h1>
@@ -44,5 +48,5 @@
 </nav>
 
 <main class="ml-64 p-10 min-h-screen bg-surface">
-    <slot />
+    {@render children()}
 </main>

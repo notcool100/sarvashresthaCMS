@@ -10,7 +10,8 @@
   let error = $state("");
   let loading = $state(false);
 
-  async function handleRegister() {
+  async function handleRegister(e: SubmitEvent) {
+    e.preventDefault();
     if (password !== confirmPassword) {
       error = "Passwords do not match";
       return;
@@ -47,7 +48,7 @@
       <p>Join Sarvashrestha today</p>
     </div>
 
-    <form on:submit|preventDefault={handleRegister}>
+    <form onsubmit={handleRegister}>
       <div class="input-group">
         <label for="username">Username</label>
         <input

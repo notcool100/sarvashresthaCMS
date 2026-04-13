@@ -324,10 +324,10 @@
                     />
                 </div>
                 <div>
-                    <label class="block text-xs">
+                    <label for="room-price" class="block text-xs font-bold tracking-widest uppercase text-stone-400 mb-2">
                         Price per Night
                     </label>
-                    <input class="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm"
+                    <input id="room-price" class="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm"
                         placeholder="Rs 1000" bind:value={form.pricePerNight}>
                         
                 </div>
@@ -340,6 +340,7 @@
                                     <img src={getFullImageUrl(imgUrl)} alt="Preview" class="w-full h-full object-cover" />
                                     <button 
                                         type="button"
+                                        aria-label="Remove image"
                                         class="absolute top-1 right-1 p-1 bg-rose-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                                         onclick={() => removeImage(imgUrl)}
                                     >

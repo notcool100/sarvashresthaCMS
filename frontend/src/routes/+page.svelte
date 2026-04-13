@@ -42,7 +42,7 @@
     transform: none;
   }
 
-  .section-reveal.is-visible {
+  .section-reveal:global(.is-visible) {
     animation: sectionFade 0.7s ease both;
     animation-delay: var(--reveal-delay, 0s);
   }
@@ -59,7 +59,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .section-reveal.is-visible {
+    .section-reveal:global(.is-visible) {
       animation: none;
     }
   }
