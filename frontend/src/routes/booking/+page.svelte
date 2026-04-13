@@ -156,16 +156,31 @@
             </div>
             <div class="field">
               <label for="travelers-count">Travelers</label>
-              <div class="input-shell">
+              <div class="input-shell stepper">
                 <span class="material-symbols-outlined">group</span>
-                <select id="travelers-count" bind:value={form.numberOfPeople}>
-                  <option value={1}>1 Person</option>
-                  <option value={2}>2 People</option>
-                  <option value={3}>3 People</option>
-                  <option value={4}>4 People</option>
-                  <option value={5}>5 People</option>
-                </select>
+                <div class="stepper-controls">
+                  <button 
+                    type="button"
+                    class="step-btn" 
+                    onclick={() => form.numberOfPeople = Math.max(1, form.numberOfPeople - 1)}
+                    disabled={form.numberOfPeople <= 1}
+                  >
+                    <span class="material-symbols-outlined text-sm">remove</span>
+                  </button>
+                  <span class="count-display">{form.numberOfPeople} {form.numberOfPeople === 1 ? 'Person' : 'People'}</span>
+                  <button 
+                    type="button"
+                    class="step-btn" 
+                    onclick={() => form.numberOfPeople = Math.min(selectedRoom?.capacity || 10, form.numberOfPeople + 1)}
+                    disabled={form.numberOfPeople >= (selectedRoom?.capacity || 10)}
+                  >
+                    <span class="material-symbols-outlined text-sm">add</span>
+                  </button>
+                </div>
               </div>
+              {#if selectedRoom && form.numberOfPeople >= selectedRoom.capacity}
+                <p class="capacity-hint text-[10px] text-amber-600 mt-1 uppercase tracking-wider font-bold">Max capacity for this room reached</p>
+              {/if}
             </div>
           </div>
 
@@ -439,6 +454,44 @@
     padding: 0.9rem 1rem;
     border-radius: 0.75rem;
   }
+
+  .stepper-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .step-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface-container-high);
+    color: var(--color-on-surface);
+    transition: all 0.2s ease;
+  }
+
+  .step-btn:hover:not(:disabled) {
+    background: #1b5e20;
+    color: white;
+  }
+
+  .step-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .count-display {
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 80px;
+    text-align: center;
+  }
+
 
   .input-shell input,
   .input-shell select {
