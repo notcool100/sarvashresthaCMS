@@ -4,24 +4,15 @@
   import Lightbox from "$lib/components/ui/Lightbox.svelte";
   import { flip } from "svelte/animate";
   import { scale, fade } from "svelte/transition";
-  import { reveal } from "$lib/actions/reveal";
+  import { galleryService } from "$lib/services/galleryService";
+  import { PUBLIC_API_BASE_URL } from "$env/static/public";
+  import { onMount } from "svelte";
+  import type { GalleryItem } from "$lib/types/api";
 
-  const categories = ["All", "Suites", "Dining", "Wellness", "Experiences"];
-
-  // Placeholder high-quality images based on Unsplash
-  const allImages = [
-    { id: 1, src: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=900&auto=format&fit=crop", alt: "Mountain Spa View", category: "Wellness" },
-    { id: 2, src: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=900&auto=format&fit=crop", alt: "Master Suite Interior", category: "Suites" },
-    { id: 3, src: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=900&auto=format&fit=crop", alt: "Gourmet Dining Experience", category: "Dining" },
-    { id: 4, src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=900&auto=format&fit=crop", alt: "Himalayan View Trek", category: "Experiences" },
-    { id: 5, src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=900&auto=format&fit=crop", alt: "Forest Ritual", category: "Wellness" },
-    { id: 6, src: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=900&auto=format&fit=crop", alt: "Infinity Pool", category: "Experiences" },
-    { id: 7, src: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=900&auto=format&fit=crop", alt: "Cocktail Bar", category: "Dining" },
-    { id: 8, src: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?q=80&w=900&auto=format&fit=crop", alt: "Deluxe Room", category: "Suites" },
-    { id: 9, src: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=900&auto=format&fit=crop", alt: "Massage Therapy", category: "Wellness" },
-    { id: 10, src: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=900&auto=format&fit=crop", alt: "Local Culture Tour", category: "Experiences" }
-  ];
-
+  const categories = ["All", "Suites", "Dining", "Wellness", "Experiences", "Exterior", "Events"];
+  
+  let allImages = $state<GalleryItem[]>([]);
+  let loading = $state(true);
   let currentCategory = $state("All");
   
   let filteredImages = $derived(
@@ -33,10 +24,33 @@
   let lightboxOpen = $state(false);
   let lightboxIndex = $state(0);
 
+  async function loadImages() {
+    loading = true;
+    try {
+      const response = await galleryService.getAll();
+      if (response.success && response.data) {
+        allImages = response.data;
+      }
+    } catch (e) {
+      console.error('Failed to load gallery', e);
+    } finally {
+      loading = false;
+    }
+  }
+
+  function getFullImageUrl(path: string) {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    const base = PUBLIC_API_BASE_URL.replace('/api', '');
+    return `${base}${path}`;
+  }
+
   function openLightbox(index: number) {
     lightboxIndex = index;
     lightboxOpen = true;
   }
+
+  onMount(loadImages);
 </script>
 
 <svelte:head>
@@ -47,8 +61,12 @@
 <NavBar />
 
 <!-- Hero Section -->
-<header class="bg-surface pt-32 pb-16 md:pt-40 md:pb-24 px-6 relative border-b border-surface-container-high/50">
-  <div class="mx-auto max-w-7xl text-center">
+<header class="bg-surface pt-32 pb-16 md:pt-40 md:pb-24 px-6 relative border-b border-surface-container-high/50 overflow-hidden">
+  <!-- Subtle gradient background element -->
+  <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full"></div>
+  <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/5 blur-[120px] rounded-full"></div>
+  
+  <div class="mx-auto max-w-7xl text-center relative z-10">
     <p class="uppercase tracking-[0.4em] text-secondary text-xs sm:text-sm mb-4 font-semibold" in:fade={{duration: 800, delay: 100}}>Visual Story</p>
     <h1 class="font-[var(--font-headline)] text-5xl md:text-6xl lg:text-7xl text-on-surface mb-6" in:fade={{duration: 800, delay: 200}}>
       Discover <span class="italic font-light">the Sanctuary</span>
@@ -63,15 +81,10 @@
   <div class="mx-auto max-w-7xl px-6 lg:px-8 pt-12">
     
     <!-- Category Filters -->
-    <div class="mb-12 flex flex-wrap justify-center gap-2 md:gap-4 sticky top-24 z-30 bg-surface/80 backdrop-blur-md py-4 -mx-6 px-6 sm:mx-0 sm:px-0">
+    <div class="mb-12 flex flex-wrap justify-center gap-2 md:gap-4 sticky top-24 z-30 bg-surface/80 backdrop-blur-md py-4 -mx-6 px-6 sm:mx-0 sm:px-0 rounded-2xl">
       {#each categories as category}
         <button 
-          class="rounded-full px-5 py-2 text-sm font-medium tracking-wide transition-all duration-300"
-          class:bg-on-surface={currentCategory === category}
-          class:text-surface={currentCategory === category}
-          class:bg-surface-container-high={currentCategory !== category}
-          class:text-on-surface-variant={currentCategory !== category}
-          class:hover:bg-surface-container-highest={currentCategory !== category}
+          class="rounded-full px-6 py-2.5 text-sm font-medium tracking-wide transition-all duration-500 transform hover:scale-105 {currentCategory === category ? 'bg-emerald-900 text-amber-400 shadow-lg shadow-emerald-900/20' : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest'}"
           onclick={() => currentCategory = category}
         >
           {category}
@@ -80,34 +93,47 @@
     </div>
 
     <!-- Masonry Grid -->
-    <div class="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-6">
-      {#each filteredImages as image, i (image.id)}
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
-        <!-- svelte-ignore a11y_no_static_element_interactions -->
-        <div 
-          class="break-inside-avoid relative group overflow-hidden rounded-xl cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-300 bg-surface-container"
-          in:scale={{duration: 400, delay: i * 50, start: 0.9}}
-          animate:flip={{duration: 400}}
-          onclick={() => openLightbox(i)}
-        >
-          <img 
-            src={image.src} 
-            alt={image.alt}
-            class="w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-end p-6">
-            <span class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-1">{image.category}</span>
-            <p class="text-white font-[var(--font-headline)] text-lg">{image.alt}</p>
-          </div>
-        </div>
-      {/each}
-    </div>
-
-    {#if filteredImages.length === 0}
-      <div class="text-center py-24 text-on-surface-variant" in:fade>
-        No images found for this category.
+    {#if loading}
+      <div class="flex items-center justify-center min-h-[400px]">
+        <div class="w-12 h-12 border-4 border-emerald-900/10 border-t-emerald-900 rounded-full animate-spin"></div>
       </div>
+    {:else}
+      <div class="columns-1 gap-8 sm:columns-2 lg:columns-3 xl:columns-4 space-y-8">
+        {#each filteredImages as image, i (image.id)}
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <div 
+            class="break-inside-avoid relative group overflow-hidden rounded-2xl cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-700 bg-surface-container-low"
+            in:scale={{duration: 600, delay: i * 50, start: 0.95}}
+            animate:flip={{duration: 600}}
+            onclick={() => openLightbox(i)}
+          >
+            <img 
+              src={getFullImageUrl(image.imageUrl)} 
+              alt={image.altText}
+              class="w-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
+              loading="lazy"
+            />
+            
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-950/20 to-transparent opacity-0 transition-all duration-500 group-hover:opacity-100 flex flex-col justify-end p-8 transform translate-y-4 group-hover:translate-y-0">
+              <span class="text-amber-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 block">{image.category}</span>
+              <p class="text-white font-[var(--font-headline)] text-xl mb-1 leading-tight">{image.altText || 'Untitled Moment'}</p>
+              <div class="w-8 h-0.5 bg-amber-400/50 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 delay-100"></div>
+            </div>
+
+            <!-- Subtle Border Reveal -->
+            <div class="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none group-hover:border-white/20 transition-colors duration-500"></div>
+          </div>
+        {/each}
+      </div>
+
+      {#if filteredImages.length === 0}
+        <div class="text-center py-32 text-on-surface-variant flex flex-col items-center" in:fade>
+          <span class="material-symbols-outlined text-4xl mb-4 opacity-20">filter_vintage</span>
+          <p class="font-light italic">More stories coming soon to this collection...</p>
+        </div>
+      {/if}
     {/if}
 
   </div>
@@ -116,7 +142,7 @@
 <FooterSection />
 
 <Lightbox 
-  images={filteredImages}
+  images={filteredImages.map(img => ({ ...img, src: getFullImageUrl(img.imageUrl), alt: img.altText }))}
   currentIndex={lightboxIndex}
   isOpen={lightboxOpen}
   onClose={() => lightboxOpen = false}
@@ -127,5 +153,9 @@
 <style>
   :global(html) {
     scroll-behavior: smooth;
+  }
+
+  .columns-1 {
+    column-fill: balance;
   }
 </style>

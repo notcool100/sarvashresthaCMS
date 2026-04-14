@@ -123,3 +123,20 @@ export interface OfferRequest {
   roomIds: number[];
   imageUrl: string;
 }
+
+export interface GalleryItem {
+  id: number;
+  imageUrl: string;
+  altText?: string;
+  category: string;
+  displayOrder: number;
+  createdAt: string;
+}
+
+export interface GalleryItemRequest {
+  imageUrl: string;
+  altText?: string;
+  category: string;
+  displayOrder: number;
+}
+

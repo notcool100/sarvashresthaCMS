@@ -26,7 +26,7 @@ BEGIN
         COALESCE(p_discount_amount, 0),
         COALESCE(p_final_price, p_total_price - COALESCE(p_discount_amount, 0)),
         'Pending',
-        p_user_id,
+        book_by,
         COALESCE(p_number_of_people, 1)
     )
     RETURNING id INTO v_booking_id;

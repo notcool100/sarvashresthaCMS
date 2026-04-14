@@ -24,6 +24,10 @@
             <span class="material-symbols-outlined">sell</span>
             <span class="font-sans text-sm tracking-wide uppercase font-bold">Offers</span>
         </a>
+        <a class="text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-900 mx-2 px-4 py-3 flex items-center gap-3 transition-transform hover:translate-x-1" href="/admin/gallery">
+            <span class="material-symbols-outlined">gallery_thumbnail</span>
+            <span class="font-sans text-sm tracking-wide uppercase font-bold">Gallery</span>
+        </a>
         <a class="text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-900 mx-2 px-4 py-3 flex items-center gap-3 transition-transform hover:translate-x-1" href="/admin/users">
             <span class="material-symbols-outlined">group</span>
             <span class="font-sans text-sm tracking-wide uppercase font-bold">Users</span>

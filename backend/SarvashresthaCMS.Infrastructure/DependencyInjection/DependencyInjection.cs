@@ -18,6 +18,7 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IDbConnectionFactory, SqlDbConnectionFactory>();
         services.AddScoped<IRoomRepository, RoomRepository>();
         services.AddScoped<IOfferRepository, OfferRepository>();
+        services.AddScoped<IGalleryRepository, GalleryRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
