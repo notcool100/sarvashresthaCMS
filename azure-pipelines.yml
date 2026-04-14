@@ -47,8 +47,10 @@ stages:
 
     - script: |
         cp $(envSecure.secureFilePath) .env
+        sed -i '/NODE_ENV/d' .env
         npm install -g pnpm
-        pnpm install
+        rm -rf node_modules
+        pnpm install --frozen-lockfile
         npx svelte-kit sync
         pnpm build
       workingDirectory: 'frontend'
