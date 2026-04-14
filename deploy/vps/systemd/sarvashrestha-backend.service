@@ -1,0 +1,18 @@
+[Unit]
+Description=Sarvashrestha CMS Backend
+After=network.target postgresql.service
+
+[Service]
+WorkingDirectory=/var/www/sarvashresthaCMS_UAT/backend/publish
+ExecStart=/usr/bin/dotnet SarvashresthaCMS.WebApi.dll
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=sarva-backend
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:5200
+Environment=UPLOADS_ABS_PATH=/var/www/sarvashresthaCMS_UAT/uploads
+
+[Install]
+WantedBy=multi-user.target

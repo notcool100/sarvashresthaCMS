@@ -99,6 +99,7 @@ stages:
         inline: |
           mkdir -p $(serverDeployPath)/backend/publish
           mkdir -p $(serverDeployPath)/frontend/build
+          mkdir -p $(serverDeployPath)/uploads
           
     - task: CopyFilesOverSSH@0
       displayName: 'Copy Backend Files'

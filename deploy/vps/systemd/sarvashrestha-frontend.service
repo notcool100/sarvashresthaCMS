@@ -1,0 +1,16 @@
+[Unit]
+Description=Sarvashrestha CMS Frontend
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/sarvashresthaCMS_UAT/frontend
+ExecStart=/usr/bin/node build/index.js
+Restart=always
+RestartSec=10
+SyslogIdentifier=sarva-frontend
+User=www-data
+Environment=NODE_ENV=production
+Environment=PORT=3200
+
+[Install]
+WantedBy=multi-user.target

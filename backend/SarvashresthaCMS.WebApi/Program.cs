@@ -99,7 +99,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Serve static files from the 'uploads' folder
-var uploadPath = Path.Combine(app.Environment.ContentRootPath, "uploads");
+var uploadPath = Environment.GetEnvironmentVariable("UPLOADS_ABS_PATH") 
+                 ?? Path.Combine(app.Environment.ContentRootPath, "uploads");
+
 if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
 
 app.UseStaticFiles(new StaticFileOptions

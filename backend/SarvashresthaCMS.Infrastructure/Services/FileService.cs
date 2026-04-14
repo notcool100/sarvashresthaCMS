@@ -8,7 +8,8 @@ namespace SarvashresthaCMS.Infrastructure.Services;
 
 public class FileService(IHostEnvironment env) : IFileService
 {
-    private readonly string _uploadFolder = Path.Combine(env.ContentRootPath, "uploads");
+    private readonly string _uploadFolder = Environment.GetEnvironmentVariable("UPLOADS_ABS_PATH") 
+                                            ?? Path.Combine(env.ContentRootPath, "uploads");
 
     public async Task<string> SaveFileAsync(Stream fileStream, string fileName, string subFolder)
     {
