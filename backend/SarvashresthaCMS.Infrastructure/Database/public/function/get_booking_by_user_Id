@@ -1,0 +1,22 @@
+CREATE OR REPLACE FUNCTION get_booking_by_user_id(p_userId INTEGER)
+RETURNS TABLE (
+    id INTEGER,
+    room_id INTEGER,
+    offer_id INTEGER,
+    guest_name VARCHAR,
+    guest_email VARCHAR,
+    check_in TIMESTAMPTZ,
+    check_out TIMESTAMPTZ,
+    total_price DECIMAL,
+    discount_amount DECIMAL,
+    final_price DECIMAL,
+    status VARCHAR,
+    number_of_people INTEGER
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT b.id, b.room_id, b.offer_id, b.guest_name, b.guest_email, b.check_in, b.check_out, b.total_price, b.discount_amount, b.final_price, b.status, b.number_of_people
+    FROM bookings b
+    WHERE b.user_id = p_userId;
+END;
+$$ LANGUAGE plpgsql;

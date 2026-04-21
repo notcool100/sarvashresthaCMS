@@ -18,6 +18,14 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
 {
     private readonly IBookingRepository _bookingRepository = bookingRepository;
 
+
+    [HttpGet("{userId}")]
+    public async Task<ActionResult<ServiceResponse<Booking>>> GetbyuserId(int userId)
+    {
+        var bookings = await _bookingRepository.GetbyuserId(userId);
+        return Ok(ServiceResponse<Booking>.Ok(bookings));
+    }
+
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<IEnumerable<Booking>>>> GetAll()
     {
@@ -88,4 +96,5 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
             return NotFound(ServiceResponse<bool>.Fail("Booking not found or delete failed."));
         return Ok(ServiceResponse<bool>.Ok(result, "Booking removed successfully."));
     }
+
 }

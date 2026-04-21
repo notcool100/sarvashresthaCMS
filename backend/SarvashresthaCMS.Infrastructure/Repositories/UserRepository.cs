@@ -15,17 +15,22 @@ public class UserRepository(IDbConnectionFactory dbConnectionFactory) : IUserRep
     {
         using var connection = _dbConnectionFactory.CreateConnection();
         return await connection.QueryFirstOrDefaultAsync<User>(
-            "SELECT * FROM get_user_by_email(@Email)", 
-            new { Email = email }, 
+            "SELECT * FROM get_user_by_email(@Email)",
+            new { Email = email },
             commandType: CommandType.Text);
     }
 
+    public async Task<IEnumerable<User?>> GetAllUsers()
+    {
+        using var connection = _dbConnectionFactory.CreateConnection();
+        return await connection.QueryAsync<User>("SELECT * FROM get_all_users()", commandType: CommandType.Text);
+    }
     public async Task<User?> GetByIdAsync(int id)
     {
         using var connection = _dbConnectionFactory.CreateConnection();
         return await connection.QueryFirstOrDefaultAsync<User>(
-            "SELECT * FROM get_user_by_id(@Id)", 
-            new { Id = id }, 
+            "SELECT * FROM get_user_by_id(@Id)",
+            new { Id = id },
             commandType: CommandType.Text);
     }
 
@@ -39,8 +44,8 @@ public class UserRepository(IDbConnectionFactory dbConnectionFactory) : IUserRep
         parameters.Add("p_role_id", (int)user.Role); // Renamed parameter to p_role_id
 
         return await connection.ExecuteScalarAsync<int>(
-            "SELECT create_user(@p_username, @p_email, @p_password_hash, @p_role_id)", 
-            parameters, 
+            "SELECT create_user(@p_username, @p_email, @p_password_hash, @p_role_id)",
+            parameters,
             commandType: CommandType.Text);
     }
 
@@ -48,8 +53,8 @@ public class UserRepository(IDbConnectionFactory dbConnectionFactory) : IUserRep
     {
         using var connection = _dbConnectionFactory.CreateConnection();
         await connection.ExecuteAsync(
-            "SELECT update_user_refresh_token(@UserId, @RefreshToken, @ExpiryTime)", 
-            new { UserId = userId, RefreshToken = refreshToken, ExpiryTime = expiryTime }, 
+            "SELECT update_user_refresh_token(@UserId, @RefreshToken, @ExpiryTime)",
+            new { UserId = userId, RefreshToken = refreshToken, ExpiryTime = expiryTime },
             commandType: CommandType.Text);
     }
 
@@ -57,8 +62,8 @@ public class UserRepository(IDbConnectionFactory dbConnectionFactory) : IUserRep
     {
         using var connection = _dbConnectionFactory.CreateConnection();
         return await connection.QueryFirstOrDefaultAsync<User>(
-            "SELECT * FROM get_user_by_refresh_token(@RefreshToken)", 
-            new { RefreshToken = refreshToken }, 
+            "SELECT * FROM get_user_by_refresh_token(@RefreshToken)",
+            new { RefreshToken = refreshToken },
             commandType: CommandType.Text);
     }
 }
