@@ -9,10 +9,10 @@
     <div class="flex flex-col leading-none">
       <span
         class="font-[var(--font-headline)] text-2xl tracking-tight text-on-surface"
-        >SARVASHRESTHA</span
+        >SARBASHRESTHA</span
       >
       <span class="text-[0.65rem] tracking-[0.4em] text-on-surface-variant"
-        >RESORT & SPA</span
+        >HOSPITALITY Pvt.Ltd.</span
       >
     </div>
 
