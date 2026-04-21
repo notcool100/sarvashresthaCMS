@@ -1,11 +1,9 @@
 <section class="mx-auto max-w-7xl px-6 py-24 grid lg:grid-cols-12 gap-12 items-center" id="about">
   <div class="lg:col-span-5">
     <p class="uppercase tracking-[0.3em] text-secondary text-xs">Ancient Wisdom, Modern Comfort</p>
-    <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">Elevated Living in the Heart of the Himalayas</h2>
+    <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">Bridging the Chure and Terai: The Charm of Bardibas </h2>
     <p class="mt-6 text-on-surface-variant leading-relaxed">
-      Designed with local stone, hand-woven textiles, and natural light, each space is built to bring
-      calm into the everyday. The resort is a pathway to stillness, with curated rituals rooted in
-      Himalayan tradition.
+     Bardibas is a gateway to the east and the west and also possesses a unique charm derived from its location at the foothills of the Chure Range. Whether you are looking for a quiet walk in the forest or a glimpse into the vibrant tradition of the Terai, Bardibas offers a refreshing blend of nature and culture.
     </p>
     <div class="mt-8 flex items-center gap-3 text-secondary font-semibold tracking-widest uppercase text-xs">
       Our Philosophy

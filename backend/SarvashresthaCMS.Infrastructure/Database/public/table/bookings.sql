@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     discount_amount DECIMAL(10, 2) DEFAULT 0,
     final_price DECIMAL(10, 2) NOT NULL,
     status VARCHAR(20) DEFAULT 'Pending', -- Pending, Confirmed, Cancelled, Completed
-    user_id INTEGER REFERENCES users(id),
+    book_by INTEGER REFERENCES users(id),
     number_of_people INTEGER DEFAULT 1,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );

@@ -4,8 +4,8 @@
       <p class="uppercase tracking-[0.3em] text-secondary text-xs">Experiences</p>
       <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">Moments That Ground You</h2>
       <p class="mt-6 text-on-surface-variant leading-relaxed">
-        Explore glacier walks, tea ceremonies, and private meditation pavilions. Every itinerary is
-        designed by our wellness team to match your rhythm and intentions.
+       Bardibas serves as an excellent "base camp" for exploring nearby legendary locations like Janakpur temple, Sindhuli Gadi and Dhanushadham. 
+
       </p>
       <div class="mt-10 grid gap-4">
         <div class="experience-item">
@@ -18,8 +18,8 @@
         <div class="experience-item">
           <span class="material-symbols-outlined">hiking</span>
           <div>
-            <h3>Glacier Day Trails</h3>
-            <p>Private treks led by expert Sherpa guides.</p>
+            <h3>Cultural Richness</h3>
+            <p>Excellent "base camp" for exploring nearby legendary locations.</p>
           </div>
         </div>
         <div class="experience-item">
@@ -49,8 +49,8 @@
           src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1000&auto=format&fit=crop"
         />
         <div>
-          <h3>Himalayan Spa Rituals</h3>
-          <p>Hot stone therapies with herbal infusions.</p>
+          <h3>Janakpurdham</h3>
+          <p>Home to the magnificent Janaki Mandir, a masterpiece of Rajput-Mughal architecture.</p>
         </div>
       </div>
       <div class="experience-card">
@@ -59,8 +59,8 @@
           src="https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=1000&auto=format&fit=crop"
         />
         <div>
-          <h3>Tea & Sound Ceremony</h3>
-          <p>Evening rituals under lantern light.</p>
+          <h3>Sindhuli Gadhi </h3>
+          <p>historic fort where the Gorkhali army defeated British forces.</p>
         </div>
       </div>
       <div class="experience-card">
