@@ -11,14 +11,30 @@ public class FileService(IHostEnvironment env) : IFileService
     private readonly string _uploadFolder = Environment.GetEnvironmentVariable("UPLOADS_ABS_PATH") 
                                             ?? Path.Combine(env.ContentRootPath, "uploads");
 
-    public async Task<string> SaveFileAsync(Stream fileStream, string fileName, string subFolder)
+    public async Task<string> SaveFileAsync(Stream fileStream, string fileName, string subFolder, string[] allowedExtensions)
     {
         if (fileStream == null) return null;
+
+        var extension = Path.GetExtension(fileName).ToLowerInvariant();
+        var isAllowed = false;
+        foreach (var ext in allowedExtensions)
+        {
+            if (ext.ToLowerInvariant() == extension)
+            {
+                isAllowed = true;
+                break;
+            }
+        }
+
+        if (!isAllowed)
+        {
+            throw new InvalidOperationException($"File extension {extension} is not allowed.");
+        }
 
         var targetFolder = Path.Combine(_uploadFolder, subFolder);
         if (!Directory.Exists(targetFolder)) Directory.CreateDirectory(targetFolder);
 
-        var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(fileName)}";
+        var newFileName = $"{Guid.NewGuid()}{extension}";
         var filePath = Path.Combine(targetFolder, newFileName);
 
         using (var stream = new FileStream(filePath, FileMode.Create))

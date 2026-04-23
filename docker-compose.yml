@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=${DATABASE_URL}
+      - JwtSettings__Key=${JWT_SECRET}
+    expose:
+      - "8080"
+    networks:
+      - cms-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      - PUBLIC_API_URL=${PUBLIC_API_URL}
+    expose:
+      - "3000"
+    depends_on:
+      - backend
+    networks:
+      - cms-network
+
+networks:
+  cms-network:
+    driver: bridge

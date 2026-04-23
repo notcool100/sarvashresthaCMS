@@ -15,6 +15,7 @@ namespace SarvashresthaCMS.WebApi.Controllers;
 public class UploadController(IFileService fileService) : ControllerBase
 {
     private readonly IFileService _fileService = fileService;
+    private readonly string[] _allowedImageExtensions = [".jpg", ".jpeg", ".png", ".webp"];
 
     [HttpPost("room")]
     public async Task<ActionResult<ServiceResponse<string>>> UploadRoomImage(IFormFile file)
@@ -23,9 +24,15 @@ public class UploadController(IFileService fileService) : ControllerBase
             return BadRequest(ServiceResponse<string>.Fail("No file uploaded."));
 
         using var stream = file.OpenReadStream();
-        var path = await _fileService.SaveFileAsync(stream, file.FileName, "room");
-        
-        return Ok(ServiceResponse<string>.Ok(path, "Image uploaded successfully."));
+        try
+        {
+            var path = await _fileService.SaveFileAsync(stream, file.FileName, "room", _allowedImageExtensions);
+            return Ok(ServiceResponse<string>.Ok(path, "Image uploaded successfully."));
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ServiceResponse<string>.Fail(ex.Message));
+        }
     }
 
     [HttpPost("room/multiple")]
@@ -38,8 +45,15 @@ public class UploadController(IFileService fileService) : ControllerBase
         foreach (var file in files)
         {
             using var stream = file.OpenReadStream();
-            var path = await _fileService.SaveFileAsync(stream, file.FileName, "room");
-            paths.Add(path);
+            try
+            {
+                var path = await _fileService.SaveFileAsync(stream, file.FileName, "room", _allowedImageExtensions);
+                paths.Add(path);
+            }
+            catch (InvalidOperationException)
+            {
+                // Continue with other files if one fails
+            }
         }
         
         return Ok(ServiceResponse<List<string>>.Ok(paths, "Images uploaded successfully."));
@@ -52,8 +66,14 @@ public class UploadController(IFileService fileService) : ControllerBase
             return BadRequest(ServiceResponse<string>.Fail("No file uploaded."));
 
         using var stream = file.OpenReadStream();
-        var path = await _fileService.SaveFileAsync(stream, file.FileName, "offer");
-        
-        return Ok(ServiceResponse<string>.Ok(path, "Image uploaded successfully."));
+        try
+        {
+            var path = await _fileService.SaveFileAsync(stream, file.FileName, "offer", _allowedImageExtensions);
+            return Ok(ServiceResponse<string>.Ok(path, "Image uploaded successfully."));
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ServiceResponse<string>.Fail(ex.Message));
+        }
     }
 }
