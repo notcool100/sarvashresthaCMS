@@ -38,6 +38,14 @@ export const bookingService = {
     });
     return await response.json();
   },
+  async getbyuserID(userId:number): Promise<ServiceResponse<booking>> {
+    const response = await fetch(`${API_BASE_URL}/booking/${userId}`, {
+      headers: {
+        ...authHeaders()
+      }
+    });
+    return await response.json();
+  },
 
   async create(payload: BookingCreateRequest): Promise<ServiceResponse<number>> {
     const response = await fetch(`${API_BASE_URL}/booking`, {

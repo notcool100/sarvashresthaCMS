@@ -12,11 +12,10 @@
     <div class="max-w-3xl">
       <p class="uppercase tracking-[0.4em] text-secondary text-xs md:text-sm reveal">The Modern Sanctuary</p>
       <h1 class="mt-6 font-[var(--font-headline)] text-5xl md:text-7xl text-white leading-tight reveal delay-1">
-        Where the Soul Finds Stillness
+        Where the Chure Hills Meet The Plains 
       </h1>
       <p class="mt-6 text-white/80 text-lg md:text-xl leading-relaxed reveal delay-2">
-        Perched above the clouds, Sarvashrestha is a curated retreat of slow mornings, cedar-scented
-        evenings, and panoramic Himalayan light.
+        Indulge in authentic Newari and Thakali flavours crafted with the freshest local ingredients, and architectural space designed to higlight Nepal's natural beauty.
       </p>
       <div class="mt-10 flex flex-col sm:flex-row gap-4 reveal delay-3">
         <a class="btn-primary" href="/booking">Book Your Escape</a>

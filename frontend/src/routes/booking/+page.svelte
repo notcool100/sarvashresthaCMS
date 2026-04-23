@@ -248,14 +248,14 @@
           </h2>
         </div>
         <div class="panel space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="">
             <div class="field mb-4">
               <label class="block text-gray-200 mb-1" for="guestName">Full Name</label>
               <input
                 id="guestName"
                 type="text"
                 placeholder="Tenjing"
-                class="w-full p-3 border border-white rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-1"
+                class="w-full p-3 border border-black rounded-lg  text-white placeholder-gray-400 focus:outline-none focus:ring-1"
                 bind:value={form.guestName}
               />
             </div>

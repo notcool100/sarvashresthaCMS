@@ -19,6 +19,13 @@ export enum UserRole {
   Customer = 3
 }
 
+export interface users
+{
+  id:number;
+  email:string;
+  name:string;
+}
+
 export interface LoginRequest {
   email: string;
   password: string;

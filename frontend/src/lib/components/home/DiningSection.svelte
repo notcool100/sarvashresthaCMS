@@ -9,23 +9,23 @@
     </div>
     <div class="lg:col-span-6">
       <p class="uppercase tracking-[0.3em] text-secondary text-xs">Dining</p>
-      <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">Cuisine Rooted in the Mountains</h2>
+      <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">Cuisine Rooted in the Culture</h2>
       <p class="mt-6 text-on-surface-variant leading-relaxed">
-        Our culinary team sources directly from Himalayan farms. Expect fire-roasted vegetables,
-        aromatic herbs, and Himalayan salt rituals with every course.
+        Our culinary team sources directly from the Terai farms. Expect authentic Newari and Thakali cusine ,
+         with every course.
       </p>
       <div class="mt-8 grid sm:grid-cols-2 gap-6">
         <div class="menu-card">
-          <h3>Alpine Breakfast</h3>
-          <p>Stone-ground grains, honey, and seasonal fruit.</p>
+          <h3>English and Continenatal Sets</h3>
+          <p>Complimentary English Breakfast .</p>
         </div>
         <div class="menu-card">
-          <h3>Lantern Supper</h3>
-          <p>Charcoal hearth menus and slow-braised lamb.</p>
+          <h3>Newari Cuisine</h3>
+          <p>Incerdibly diverse , spicy , and deeply tied to religious festivals and rituals .</p>
         </div>
         <div class="menu-card">
-          <h3>Garden Lunch</h3>
-          <p>Warm bread, wild greens, and herbal broths.</p>
+          <h3>Thakali Lunch</h3>
+          <p>The "gold standard" of the traditional Nepali <span class="italic">dal bhat</span></p>
         </div>
         <div class="menu-card">
           <h3>Tea Lounge</h3>

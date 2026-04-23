@@ -1,7 +1,7 @@
 <section class="bg-[var(--color-surface-container-high)] py-24" id="contact">
   <div class="mx-auto max-w-6xl px-6 text-center">
     <p class="uppercase tracking-[0.3em] text-secondary text-xs">Plan Your Visit</p>
-    <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">Your Himalayan Retreat Awaits</h2>
+    <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">Your Gateway to The East and The West</h2>
     <p class="mt-6 text-on-surface-variant max-w-2xl mx-auto">
       Share your travel dates and preferences. Our concierge will craft a personalized itinerary
       within 24 hours.
