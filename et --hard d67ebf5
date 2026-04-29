@@ -1,0 +1,62 @@
+[33m2765926[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m new repo
+[33md67ebf5[m refactor: centralize image URL generation and remove redundant proxy configuration
+[33m0be78c9[m feat: implement protected user dashboard with booking history and redirect logic after login
+[33me204371[m chore: remove pnpm-workspace.yaml configuration file
+[33mf91a811[m Merge branch 'main' of github.com:notcool100/sarvashresthaCMS
+[33m8885ce9[m feat: add Docker support and implement file extension validation for image uploads
+[33m57d21ed[m update the content
+[33mb51ab75[m users
+[33md77c0a2[m users
+[33mc9cd0fe[m feat: implement VPS deployment configuration with externalized upload path support
+[33m1fbf4df[m feat: implement full-stack gallery management system including database schemas, backend repository, API endpoints, and admin UI.
+[33mf5e682a[m chore: update frontend build pipeline to strip NODE_ENV and enforce frozen lockfile installation
+[33ma61722d[m refactor: migrate to Svelte 5 runes and snippets, improve form accessibility, and add guest count field to bookings
+[33mb275496[m feat: replace traveler count dropdown with interactive stepper control and capacity validation
+[33md394418[m feat: add number_of_people field to booking entity, database schema, and reservation form
+[33m207a56f[m fix: update footer social media links to point to home route
+[33mf642289[m dfgb
+[33mdb98426[m rtftghj
+[33m280d002[m commit
+[33m83a6dcf[m booking
+[33m58f53b4[m feat: add user_id column to bookings table and update create_booking function to associate bookings with users
+[33m74e9cec[m refactor: update user identity retrieval in BookingController to use ClaimsPrincipal and add validation
+[33md55158b[m wfdfwe
+[33mc38e367[m delete
+[33m2305aeb[m delete booking
+[33m07f1dba[m delete
+[33mfa80422[m afdsgh
+[33m1ae4f74[m bookings
+[33m6f37e37[m feat: adde the dropdown of room in the booking create. page of admin
+[33m23bb8df[m bookings
+[33m0b08d13[m feat: update AboutSection image and add anonymous cross-origin attribute
+[33m5327f88[m chore: update npm install flags to omit dev dependencies and ignore scripts in pipeline
+[33mfa57429[m chore: update file copy tasks to use Agent.TempDirectory and explicit content paths in azure-pipelines.yml
+[33mdab8ebe[m chore: add secure .env file download to pipeline and reorder font imports in app.css
+[33mf149f91[m feat: add @sveltejs/adapter-node and include sync step in frontend build pipeline
+[33m027ad48[m Set up CI with Azure Pipelines
+[33m9e58ab4[m Merge pull request #7 from notcool100/bookings
+[33m29ad906[m[33m ([m[1;31morigin/bookings[m[33m)[m chore: add deployment configuration and backend build artifacts for UAT environment
+[33m2abcf05[m feat: implement gallery page with reusable Lightbox component and update navigation and home sections
+[33m89ec3a1[m Merge pull request #6 from notcool100/bookings
+[33mde7e139[m feat: updating the filter section in public room page
+[33mea8d299[m Feat: Added the public page for home and rooms and booking
+[33m2b312d9[m Fix: update the booking services.ts according to the API routes
+[33m56eb6f8[m fix: fixed the spelling issue
+[33m472eb34[m booking
+[33medd6b1a[m commit
+[33m2c7de9b[m feat: implement room and offer management, dashboard analytics, file upload service, and admin protected routes
+[33m1970f3c[m Merge pull request #5 from notcool100/features/fe/auth
+[33m6985354[m[33m ([m[1;31morigin/features/fe/auth[m[33m)[m feat: add admin dashboard layout with navigation and performance metrics overview
+[33mb098953[m Merge pull request #4 from notcool100/features/fe/auth
+[33m5e9b7c4[m feat: implement role-based access control, migrate timestamps to TIMESTAMPTZ, and configure CORS policy for API integration.
+[33m3f2fbfc[m feat: implement resort and booking management infrastructure and frontend authentication system
+[33ma9b7976[m Merge branch 'main' of github.com:notcool100/sarvashresthaCMS into features/fe/auth
+[33mc1bead3[m form and register
+[33m4d7fda8[m Merge pull request #3 from notcool100/features/be/auth
+[33m4da65ba[m[33m ([m[1;31morigin/features/be/auth[m[33m)[m refactor: improve authentication token handling, update booking database functions to return row counts, and refine user registration and data access logic.
+[33m5b0ff14[m feat: implement authentication system with JWT, user management, and booking repository functionality
+[33ma172709[m Merge pull request #2 from notcool100/feature/backendFolderStructure
+[33m70190cc[m[33m ([m[1;31morigin/feature/backendFolderStructure[m[33m)[m feat: initialize clean architecture project structure with domain entities and resort CRUD API
+[33md3df6c5[m Merge pull request #1 from notcool100/features/frontendstructure
+[33m9f7b33b[m[33m ([m[1;31morigin/features/frontendstructure[m[33m)[m project setup
+[33m8bfb477[m first commit
