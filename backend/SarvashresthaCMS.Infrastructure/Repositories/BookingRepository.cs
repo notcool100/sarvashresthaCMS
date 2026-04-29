@@ -27,10 +27,10 @@ public class BookingRepository(IDbConnectionFactory dbConnectionFactory) : IBook
             commandType: CommandType.Text
         );
     }
-    public async Task<Booking?> GetbyuserId(int userId)
+    public async Task<IEnumerable<Booking>> GetbyuserId(int userId)
     {
         using var connection = _dbConnectionFactory.CreateConnection();
-        return await connection.QueryFirstOrDefaultAsync<Booking>(
+        return await connection.QueryAsync<Booking>(
             "SELECT * FROM get_booking_by_user_Id(@p_userId)",
             new {p_userId = userId},
             commandType: CommandType.Text

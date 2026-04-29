@@ -40,7 +40,7 @@
         loading = true;
         error = "";
         try {
-            const response = await bookingService.getAll();
+            const response = await bookingService.getMyBookings();
             console.log(response, " this is get all. room respinse");
             if (response.success == true && response.data) {
                 Booking = response.data;
@@ -105,17 +105,10 @@
                     <!-- Buttons -->
                     <td class="py-3 px-4 text-center space-x-2">
                         <button
-                            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-xs"
-                            onclick={() =>
-                                goto(`/admin/bookings/create?id=${x.id}`)}
-                        >
-                            Edit
-                        </button>
-                        <button
                             class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-xs"
                             onclick={() => deletebooking(x.id)}
                         >
-                            Delete
+                            Cancel
                         </button>
                     </td>
                 </tr>

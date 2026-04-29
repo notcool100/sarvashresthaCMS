@@ -11,7 +11,7 @@ public interface IBookingRepository
     Task<int> CreateAsync(Booking booking);
     Task<bool> UpdateStatusAsync(int id, string status);
     Task<bool> DeleteAsync(int id);
-    Task<Booking?> GetbyuserId(int userId);
+    Task<IEnumerable<Booking>> GetbyuserId(int userId);
 
     // Dashboard methods
     Task<decimal> GetTotalRevenueAsync();

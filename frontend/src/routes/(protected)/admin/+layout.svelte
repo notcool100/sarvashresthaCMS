@@ -1,5 +1,13 @@
 <script lang="ts">
+    import { authStore } from '$lib/stores/authStore';
+    import { goto } from '$app/navigation';
     let { children } = $props();
+
+    function logout() {
+        authStore.set(null);
+        document.cookie = 'auth_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        goto('/login');
+    }
 </script>
 
 <nav class="h-screen w-64 fixed left-0 top-0 bg-stone-100 dark:bg-stone-950 flex flex-col py-6 z-50 overflow-y-auto">
@@ -44,8 +52,12 @@
                     <p class="text-xs text-stone-500">Super Admin</p>
                 </div>
             </div>
-            <button class="w-full py-3 px-4 bg-emerald-900 text-amber-400 rounded-lg text-xs font-bold tracking-widest uppercase hover:opacity-90 transition-opacity">
+            <a href="/" target="_blank" class="w-full mb-2 py-3 px-4 bg-emerald-900 text-amber-400 rounded-lg text-xs font-bold tracking-widest uppercase hover:opacity-90 transition-opacity flex justify-center items-center">
                 View Live Site
+            </a>
+            <button onclick={logout} class="w-full py-3 px-4 bg-red-900/10 text-red-600 rounded-lg text-xs font-bold tracking-widest uppercase hover:bg-red-900/20 transition-colors flex justify-center items-center gap-2">
+                <span class="material-symbols-outlined text-sm">logout</span>
+                Logout
             </button>
         </div>
     </div>

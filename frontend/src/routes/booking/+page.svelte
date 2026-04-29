@@ -6,6 +6,8 @@
   import type { Room } from "$lib/types/api";
   import { bookingService } from "$lib/services/bookingService";
   import { roomService } from "$lib/services/roomService";
+  import { authStore } from "$lib/stores/authStore";
+  import { goto } from "$app/navigation";
   import type { booking, BookingCreateRequest } from "$lib/types/api";
 
   let Booking = $state<booking[]>([]);
@@ -66,8 +68,20 @@
   };
 
   async function submitReservation() {
+    if (!$authStore) {
+      goto(`/login?redirect=${encodeURIComponent(`/booking?room=${selectedRoom.id}`)}`);
+      return;
+    }
+
     if (!form.guestName || !form.guestEmail || !form.checkIn || !form.checkOut) {
       errorMessage = "Please fill in all required fields.";
+      return;
+    }
+
+    const start = new Date(form.checkIn);
+    const end = new Date(form.checkOut);
+    if (end <= start) {
+      errorMessage = "Check-out date must be after check-in date.";
       return;
     }
 
@@ -89,6 +103,11 @@
       if (response.success) {
         successMessage = "Your reservation has been submitted successfully!";
         form = { ...emptyForm };
+        
+        // Redirect to user bookings after a brief delay
+        setTimeout(() => {
+          goto('/user/bookings');
+        }, 1500);
       } else {
         errorMessage = response.message || "Failed to submit reservation.";
       }
@@ -144,13 +163,19 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="field">
               <label for="booking-dates">Check-in & Check-out</label>
-              <div class="input-shell">
-                <span class="material-symbols-outlined">calendar_today</span>
+              <div class="flex gap-2 w-full">
                 <input
-                  id="booking-dates"
-                  type="text"
-                  value="Oct 12, 2024 - Oct 18, 2024"
-                  readonly
+                  id="checkIn"
+                  type="date"
+                  class="flex-1 px-4 py-2 bg-white border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1b5e20]"
+                  bind:value={form.checkIn}
+                />
+                <span class="flex items-center text-gray-500">to</span>
+                <input
+                  id="checkout"
+                  type="date"
+                  class="flex-1 px-4 py-2 bg-white border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1b5e20]"
+                  bind:value={form.checkOut}
                 />
               </div>
             </div>
@@ -279,31 +304,7 @@
               
             ></textarea>
           </div> -->
-          <div>
-            <label class="block text-gray-700 mb-1" for="checkIn"
-              >Check-In</label
-            >
-            <input
-              id="checkIn"
-              type="date"
-              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
-           bind:value={form.checkIn}
-            />
-          </div>
-
-          <!-- Check-Out -->
-          <div>
-            <label class="block text-gray-700 mb-1" for="checkout"
-              >Check-Out</label
-            >
-
-            <input
-              id="checkout"
-              type="date"
-              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
-               bind:value={form.checkOut}
-            />
-          </div>
+          <!-- Dates moved to top -->
           <!-- <div class="field mb-4">
             <label class="block text-gray-200 mb-1">Discount Amount</label>
             <input

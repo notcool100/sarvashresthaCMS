@@ -38,8 +38,8 @@ export const bookingService = {
     });
     return await response.json();
   },
-  async getbyuserID(userId:number): Promise<ServiceResponse<booking>> {
-    const response = await fetch(`${API_BASE_URL}/booking/${userId}`, {
+  async getMyBookings(): Promise<ServiceResponse<booking[]>> {
+    const response = await fetch(`${API_BASE_URL}/booking/my-bookings`, {
       headers: {
         ...authHeaders()
       }

@@ -2,6 +2,7 @@
   import { authService } from '$lib/services/authService';
   import { authStore } from '$lib/stores/authStore';
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import { UserRole } from '$lib/types/api';
 
   let email = $state('');
@@ -24,6 +25,13 @@
         document.cookie = `auth_data=${JSON.stringify(
           response.data
         )}; path=/; max-age=3600; SameSite=Lax`;
+
+        // Check for redirect URL
+        const redirectUrl = $page.url.searchParams.get('redirect');
+        if (redirectUrl) {
+          goto(redirectUrl);
+          return;
+        }
 
         // Role-based redirect
         if (response.data.role === UserRole.Admin) {

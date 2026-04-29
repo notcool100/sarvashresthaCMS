@@ -19,11 +19,19 @@ public class BookingController(IBookingRepository bookingRepository) : Controlle
     private readonly IBookingRepository _bookingRepository = bookingRepository;
 
 
-    [HttpGet("{userId}")]
-    public async Task<ActionResult<ServiceResponse<Booking>>> GetbyuserId(int userId)
+    [HttpGet("my-bookings")]
+    public async Task<ActionResult<ServiceResponse<IEnumerable<Booking>>>> GetMyBookings()
     {
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                           ?? User.FindFirst("sub")?.Value;
+
+        if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userId))
+        {
+            return Unauthorized(ServiceResponse<IEnumerable<Booking>>.Fail("User is not logged in or invalid token."));
+        }
+
         var bookings = await _bookingRepository.GetbyuserId(userId);
-        return Ok(ServiceResponse<Booking>.Ok(bookings));
+        return Ok(ServiceResponse<IEnumerable<Booking>>.Ok(bookings));
     }
 
     [HttpGet]
