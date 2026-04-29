@@ -38,13 +38,7 @@
     }
   }
 
-  function getFullImageUrl(path: string) {
-    if (!path) return '';
-    if (path.startsWith('http')) return path;
-    const base = PUBLIC_API_BASE_URL.replace('/api', '');
-    return `${base}${path}`;
-  }
-
+  import { getImageUrl } from "$lib/utils/image";
   function openLightbox(index: number) {
     lightboxIndex = index;
     lightboxOpen = true;
@@ -109,7 +103,7 @@
             onclick={() => openLightbox(i)}
           >
             <img 
-              src={getFullImageUrl(image.imageUrl)} 
+              src={getImageUrl(image.imageUrl)} 
               alt={image.altText}
               class="w-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
               loading="lazy"
@@ -142,7 +136,7 @@
 <FooterSection />
 
 <Lightbox 
-  images={filteredImages.map(img => ({ ...img, src: getFullImageUrl(img.imageUrl), alt: img.altText }))}
+  images={filteredImages.map(img => ({ ...img, src: getImageUrl(img.imageUrl), alt: img.altText }))}
   currentIndex={lightboxIndex}
   isOpen={lightboxOpen}
   onClose={() => lightboxOpen = false}

@@ -29,16 +29,11 @@
   const secondaryRoom = $derived(roomsDerived[1]);
   const gridRooms = $derived(roomsDerived.slice(2, 8));
 
-  const getFullImageUrl = (path?: string) => {
-    if (!path) return "";
-    if (path.startsWith("http")) return path;
-    const base = PUBLIC_API_BASE_URL.replace("/api", "");
-    return `${base}${path}`;
-  };
+  import { getImageUrl } from "$lib/utils/image";
 
   const imageFor = (room?: Room, index = 0) => {
     const url = room?.imageUrls?.[index] ?? room?.imageUrls?.[0];
-    return getFullImageUrl(url) || fallbackImages[index % fallbackImages.length];
+    return getImageUrl(url) || fallbackImages[index % fallbackImages.length];
   };
 
   const slug = (room?: Room) => (room ? `/booking?room=${room.id}` : "/booking");

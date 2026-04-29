@@ -37,6 +37,8 @@
   const sustainabilityFee = 120;
   const taxes = 360;
 
+  import { getImageUrl } from "$lib/utils/image";
+
   const fallbackImages = [
     "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
@@ -61,9 +63,9 @@
   const subtotal = $derived((selectedRoom?.pricePerNight ?? 0) * nightsCount);
   const total = $derived(subtotal + sustainabilityFee + taxes);
 
-  const heroImage = (room?: Room) => room?.imageUrls?.[0] ?? fallbackImages[0];
+  const heroImage = (room?: Room) => getImageUrl(room?.imageUrls?.[0]) || fallbackImages[0];
   const galleryImages = (room?: Room) => {
-    const list = room?.imageUrls?.length ? room.imageUrls : fallbackImages;
+    const list = room?.imageUrls?.length ? room.imageUrls.map(url => getImageUrl(url)) : fallbackImages;
     return list.slice(0, 3);
   };
 

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { getImageUrl } from "$lib/utils/image";
 
     let { data } = $props();
     let dashboard = $derived(data.dashboard);
@@ -136,7 +137,7 @@
                         <div class="flex items-center justify-between group">
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 rounded-lg overflow-hidden bg-stone-100 border border-stone-200">
-                                    <img src={room.imageUrl} alt={room.name} class="w-full h-full object-cover" />
+                                    <img src={getImageUrl(room.imageUrl)} alt={room.name} class="w-full h-full object-cover" />
                                 </div>
                                 <div>
                                     <p class="text-sm font-bold text-on-surface">{room.name}</p>
