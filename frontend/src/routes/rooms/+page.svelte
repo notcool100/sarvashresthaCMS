@@ -213,7 +213,7 @@
         {#each roomCategories as category}
           <button 
             class="pill {selectedCategory === category.id ? 'is-active' : ''}"
-            on:click={() => selectedCategory = category.id}
+            onclick={() => selectedCategory = category.id}
           >
             {category.label}
           </button>
