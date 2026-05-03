@@ -1,23 +1,32 @@
 <section class="bg-[var(--color-surface-container-high)] py-24" id="contact">
   <div class="mx-auto max-w-6xl px-6 text-center">
-    <p class="uppercase tracking-[0.3em] text-secondary text-xs">Plan Your Visit</p>
-    <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">Your Gateway to The East and The West</h2>
+    <p class="uppercase tracking-[0.3em] text-secondary text-xs">
+      Plan Your Visit
+    </p>
+    <h2 class="mt-4 font-[var(--font-headline)] text-4xl md:text-5xl">
+      Your Gateway to The East and The West
+    </h2>
     <p class="mt-6 text-on-surface-variant max-w-2xl mx-auto">
-      Share your travel dates and preferences. Our concierge will craft a personalized itinerary
-      within 24 hours.
+      Share your travel dates and preferences. Our concierge will craft a
+      personalized itinerary within 24 hours.
     </p>
 
     <div class="mt-10 grid md:grid-cols-3 gap-6">
+    <a href="tel:+9779827071844">
       <div class="contact-card">
-        <span class="material-symbols-outlined">call</span>
-        <p class="contact-title">Reservations</p>
-        <p class="contact-detail">+977 9827071844</p>
+
+          <span class="material-symbols-outlined">call</span>
+          <p class="contact-title">Reservations</p>
+          <div>
+            <p class="contact-detail">+977 9827071844</p>
+          </div>
+       
       </div>
+      </a>
       <div class="contact-card">
         <span class="material-symbols-outlined">mail</span>
         <p class="contact-title">Email</p>
-        <p class="contact-detail">sarbashresthagroup@gmail.com
-</p>
+        <p class="contact-detail">sarbashresthagroup@gmail.com</p>
       </div>
       <div class="contact-card">
         <span class="material-symbols-outlined">location_on</span>
@@ -38,7 +47,9 @@
     border-radius: 1.25rem;
     padding: 2rem 1.5rem;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transition:
+      transform 0.4s ease,
+      box-shadow 0.4s ease;
   }
 
   .contact-card:hover {
@@ -73,7 +84,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .btn-primary:hover {
