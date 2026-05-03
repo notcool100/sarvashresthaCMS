@@ -11,17 +11,18 @@
       <div class="contact-card">
         <span class="material-symbols-outlined">call</span>
         <p class="contact-title">Reservations</p>
-        <p class="contact-detail">+977 61 555 888</p>
+        <p class="contact-detail">+977 9827071844</p>
       </div>
       <div class="contact-card">
         <span class="material-symbols-outlined">mail</span>
         <p class="contact-title">Email</p>
-        <p class="contact-detail">stay@sarvashrestha.com</p>
+        <p class="contact-detail">sarbashresthagroup@gmail.com
+</p>
       </div>
       <div class="contact-card">
         <span class="material-symbols-outlined">location_on</span>
         <p class="contact-title">Location</p>
-        <p class="contact-detail">Pokhara, Nepal</p>
+        <p class="contact-detail">Bardibas-01, Mahottari, Nepal</p>
       </div>
     </div>
 
