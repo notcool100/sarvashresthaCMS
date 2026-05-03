@@ -17,16 +17,46 @@
   --color-secondary: #9a6b1e;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 
 body {
   font-family: var(--font-body);
   background-color: var(--color-surface);
   color: var(--color-on-surface);
+  margin: 0;
+  min-width: 320px;
+  overflow-x: clip;
 }
 
 body {
   font-family: 'Manrope', sans-serif;
   background-color: #fcf9f4;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
 .material-symbols-outlined {

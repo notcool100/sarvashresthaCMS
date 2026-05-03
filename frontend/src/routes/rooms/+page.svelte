@@ -57,15 +57,15 @@
 <NavBar />
 
 <main class="pt-28 pb-24 bg-surface text-on-surface">
-  <section class="max-w-7xl mx-auto px-6 mb-16">
-    <div class="flex flex-col lg:flex-row items-end justify-between gap-10">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <div class="flex flex-col lg:flex-row items-start justify-between gap-8 lg:items-end lg:gap-10">
       <div class="max-w-2xl">
         <span class="label-eyebrow">Refined Living</span>
-        <h1 class="mt-4 font-[var(--font-headline)] text-5xl md:text-6xl text-[#1b5e20] leading-tight">
+        <h1 class="mt-4 font-[var(--font-headline)] text-4xl sm:text-5xl md:text-6xl text-[#1b5e20] leading-tight">
           Sanctuary Suites & Residencies
         </h1>
       </div>
-      <div class="max-w-sm lg:text-right text-on-surface-variant leading-relaxed">
+      <div class="max-w-sm text-sm leading-relaxed text-on-surface-variant sm:text-base lg:text-right">
         Each space is a deliberate intersection of Himalayan tradition and modern stillness, curated
         to provide an unparalleled connection to the peaks.
       </div>
@@ -73,8 +73,8 @@
   </section>
 
   <section class="bg-[var(--color-surface-container-low)] py-6 mb-14">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-8">
-      <div class="flex flex-wrap items-center gap-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-stretch justify-between gap-6 lg:items-center lg:gap-8">
+      <div class="flex flex-wrap items-stretch gap-4 sm:gap-6 lg:items-center lg:gap-10">
         <div class="filter-chip">
           <span class="chip-label">View by Tier</span>
           <div class="filter-value">
@@ -106,7 +106,7 @@
         <span>Advanced Filters</span>
       </div>
     </div>
-    <div class="max-w-7xl mx-auto px-6 mt-6 flex flex-col lg:flex-row items-center justify-between gap-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 mt-6 flex flex-col lg:flex-row items-stretch justify-between gap-4 sm:gap-6 lg:items-center">
       <div class="filter-pills">
         <button class="pill is-active">All</button>
         <button class="pill">Suites</button>
@@ -121,7 +121,7 @@
     </div>
   </section>
 
-  <section class="max-w-7xl mx-auto px-6">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-y-16 gap-x-10">
     {#if isFiltering}
     {#if filteredRooms.length}
@@ -157,7 +157,7 @@
                 src={imageFor(featuredRoom)}
               />
             </a>
-            <div class="heritage-overlay absolute bottom-5 right-5 p-6 rounded-xl shadow-2xl max-w-xs">
+            <div class="heritage-overlay absolute bottom-4 left-4 right-4 md:bottom-5 md:left-auto md:right-5 p-4 sm:p-6 rounded-xl shadow-2xl max-w-full md:max-w-xs">
               <span class="material-symbols-outlined text-secondary block mb-2" style="font-variation-settings: 'FILL' 1;">spa</span>
               <h3 class="font-[var(--font-headline)] text-2xl mb-2">{featuredRoom.name}</h3>
               <p class="text-sm text-on-surface-variant mb-4">
@@ -189,7 +189,7 @@
       {#if secondaryRoom}
         <div class="lg:col-span-4 group lg:mt-10">
           <div class="bg-[var(--color-surface-container)] rounded-2xl overflow-hidden h-full flex flex-col">
-            <div class="relative h-[420px] overflow-hidden">
+            <div class="relative h-[320px] sm:h-[420px] overflow-hidden">
               <a href={slug(secondaryRoom)}>
                 <img
                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -241,8 +241,8 @@
     </div>
   </section>
 
-  <section class="mt-24 max-w-7xl mx-auto px-6">
-    <div class="bg-[#0c3a1a] rounded-3xl p-12 md:p-16 flex flex-col lg:flex-row items-center gap-12 relative overflow-hidden">
+  <section class="mt-24 max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="bg-[#0c3a1a] rounded-3xl p-6 sm:p-8 md:p-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-12 relative overflow-hidden">
       <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 26px 26px;"></div>
       <div class="lg:w-1/2 relative z-10">
         <span class="text-secondary-fixed-dim text-xs uppercase tracking-[0.3rem] font-bold block mb-6">
@@ -328,7 +328,7 @@
   </section>
 
   <section class="mt-24 bg-[var(--color-surface-container-low)] py-16">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col lg:flex-row items-start justify-between gap-10">
         <div class="max-w-xl">
           <span class="label-eyebrow">Room Comparison</span>
@@ -386,7 +386,7 @@
     </div>
   </section>
 
-  <section class="mt-24 max-w-7xl mx-auto px-6">
+  <section class="mt-24 max-w-7xl mx-auto px-4 sm:px-6">
     <div class="grid lg:grid-cols-3 gap-8">
       <div class="testimonial-card">
         <p class="quote">“The Summit Pavilion made every sunrise feel sacred. The staff anticipated every need.”</p>
@@ -403,7 +403,7 @@
     </div>
   </section>
 
-  <section class="mt-24 max-w-7xl mx-auto px-6">
+  <section class="mt-24 max-w-7xl mx-auto px-4 sm:px-6">
     <div class="faq-card">
       <div>
         <span class="label-eyebrow">Planning</span>
@@ -453,6 +453,11 @@
     margin-bottom: 0.3rem;
   }
 
+  .filter-chip {
+    flex: 1 1 14rem;
+    min-width: min(100%, 14rem);
+  }
+
   .filter-value {
     display: flex;
     align-items: center;
@@ -464,6 +469,7 @@
   .advanced-filter {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     background: var(--color-surface-container-highest);
     padding: 0.75rem 1.5rem;
@@ -472,6 +478,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15rem;
+    width: 100%;
   }
 
   .filter-pills {
@@ -511,7 +518,8 @@
     border-radius: 999px;
     padding: 0.5rem 1rem;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    min-width: 260px;
+    width: 100%;
+    min-width: 0;
   }
 
   .filter-input input {
@@ -636,7 +644,7 @@
   .faq-card {
     background: var(--color-surface-container-low);
     border-radius: 1.5rem;
-    padding: 2.5rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
   }
 
   .faq-grid {
@@ -655,6 +663,14 @@
   }
 
   @media (min-width: 768px) {
+    .advanced-filter {
+      width: auto;
+    }
+
+    .filter-input {
+      max-width: 320px;
+    }
+
     .faq-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }

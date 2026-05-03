@@ -108,12 +108,12 @@
 
 <style>
   .login-container {
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #f4f4f2, #f8f8f8);
-    padding: 2rem;
+    padding: clamp(1rem, 4vw, 2rem);
   }
 
   .card {
@@ -121,7 +121,7 @@
     max-width: 440px;
     background: #ffffff;
     border-radius: 20px;
-    padding: 2.5rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     border: 1px solid #fefcfa;
   }
@@ -132,7 +132,7 @@
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: clamp(1.75rem, 6vw, 2rem);
     color: #92400e;
     font-weight: 700;
     margin-bottom: 0.5rem;
@@ -229,5 +229,15 @@
 
   .footer a:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      border-radius: 18px;
+    }
+
+    form {
+      gap: 1rem;
+    }
   }
 </style>

@@ -70,6 +70,11 @@
   };
 
   async function submitReservation() {
+    if (!selectedRoom) {
+      errorMessage = "Please select a room before submitting your reservation.";
+      return;
+    }
+
     if (!$authStore) {
       goto(`/login?redirect=${encodeURIComponent(`/booking?room=${selectedRoom.id}`)}`);
       return;
@@ -149,34 +154,34 @@
 
 <NavBar />
 
-<main class="pt-28 pb-24 px-6 max-w-7xl mx-auto bg-surface text-on-surface">
-  <div class="grid grid-cols-12 gap-10">
-    <div class="col-span-12 lg:col-span-8 space-y-12">
+<main class="pt-24 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6 max-w-7xl mx-auto bg-surface text-on-surface">
+  <div class="grid grid-cols-12 gap-8 xl:gap-10">
+    <div class="col-span-12 min-w-0 lg:col-span-8 space-y-10 sm:space-y-12">
       <section>
-        <div class="flex items-center gap-4 mb-8">
-          <span class="font-[var(--font-headline)] text-4xl text-secondary"
+        <div class="section-heading mb-6 sm:mb-8">
+          <span class="font-[var(--font-headline)] text-3xl sm:text-4xl text-secondary"
             >01</span
           >
-          <h2 class="font-[var(--font-headline)] text-4xl tracking-tight">
+          <h2 class="font-[var(--font-headline)] text-3xl sm:text-4xl tracking-tight">
             Select Your Sanctuary
           </h2>
         </div>
-        <div class="panel p-8 md:p-10 space-y-8">
+        <div class="panel space-y-6 sm:space-y-8">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="field">
               <label for="booking-dates">Check-in & Check-out</label>
-              <div class="flex gap-2 w-full">
+              <div class="date-range">
                 <input
                   id="checkIn"
                   type="date"
-                  class="flex-1 px-4 py-2 bg-white border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1b5e20]"
+                  class="date-input"
                   bind:value={form.checkIn}
                 />
-                <span class="flex items-center text-gray-500">to</span>
+                <span class="date-separator">to</span>
                 <input
                   id="checkout"
                   type="date"
-                  class="flex-1 px-4 py-2 bg-white border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1b5e20]"
+                  class="date-input"
                   bind:value={form.checkOut}
                 />
               </div>
@@ -212,7 +217,7 @@
           </div>
 
           <div class="space-y-4">
-            <div class="flex items-center justify-between">
+            <div class="room-header">
               <span class="block">Selected Room</span>
               <a class="change-link" href="/rooms">Change room</a>
             </div>
@@ -266,34 +271,34 @@
       </section>
 
       <section>
-        <div class="flex items-center gap-4 mb-8">
-          <span class="font-[var(--font-headline)] text-4xl text-secondary"
+        <div class="section-heading mb-6 sm:mb-8">
+          <span class="font-[var(--font-headline)] text-3xl sm:text-4xl text-secondary"
             >02</span
           >
-          <h2 class="font-[var(--font-headline)] text-4xl tracking-tight">
+          <h2 class="font-[var(--font-headline)] text-3xl sm:text-4xl tracking-tight">
             Personal Details
           </h2>
         </div>
         <div class="panel space-y-6">
           <div class="">
             <div class="field mb-4">
-              <label class="block text-gray-200 mb-1" for="guestName">Full Name</label>
+              <label class="block mb-1" for="guestName">Full Name</label>
               <input
                 id="guestName"
                 type="text"
                 placeholder="Tenjing"
-                class="w-full p-3 border border-black rounded-lg  text-white placeholder-gray-400 focus:outline-none focus:ring-1"
+                class="form-input"
                 bind:value={form.guestName}
               />
             </div>
           </div>
           <div class="field mb-4">
-            <label class="block text-black mb-1" for="guestEmail">Email Address</label>
+            <label class="block mb-1" for="guestEmail">Email Address</label>
             <input
               id="guestEmail"
               type="email"
               placeholder="expedition@himalayas.com"
-              class="w-full p-3 border border-black rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-1"
+              class="form-input"
               bind:value={form.guestEmail}
             />
           </div>
@@ -340,14 +345,14 @@
       </section>
     </div>
 
-    <aside class="col-span-12 lg:col-span-4">
-      <div class="sticky top-28 space-y-6">
+    <aside class="col-span-12 min-w-0 lg:col-span-4">
+      <div class="space-y-4 sm:space-y-6 lg:sticky lg:top-28">
         <div class="summary-card">
           <div class="summary-image">
             <img src={heroImage(selectedRoom)} alt={selectedRoom?.name} />
             <div class="overlay-title">Your Himalayan Sanctuary</div>
           </div>
-          <div class="p-7 space-y-5">
+          <div class="summary-body">
             <div class="space-y-3 text-sm">
               <div class="flex justify-between">
                 <span class="muted">Stay Duration</span><span class="font-bold"
@@ -395,7 +400,7 @@
                 All-inclusive gourmet<br />dining included
               </p>
             </div>
-            <button class="cta" onclick={()=>submitReservation()} disabled={isSaving}>
+            <button class="cta" onclick={()=>submitReservation()} disabled={isSaving || !selectedRoom}>
               {#if isSaving}
                 Processing...
               {:else}
@@ -433,10 +438,16 @@
 <FooterSection />
 
 <style>
+  .section-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
   .panel {
     background: var(--color-surface-container-low);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
   }
 
   .field label,
@@ -449,6 +460,39 @@
     margin-bottom: 0.4rem;
   }
 
+  .date-range {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .date-input,
+  .form-input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.75rem;
+    color: var(--color-on-surface);
+  }
+
+  .date-input:focus,
+  .form-input:focus {
+    outline: none;
+    border-color: #1b5e20;
+    box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.12);
+  }
+
+  .date-separator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14rem;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+  }
+
   .input-shell {
     display: flex;
     align-items: center;
@@ -456,6 +500,7 @@
     background: white;
     padding: 0.9rem 1rem;
     border-radius: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   .stepper-controls {
@@ -491,20 +536,17 @@
   .count-display {
     font-weight: 700;
     font-size: 0.9rem;
-    min-width: 80px;
+    min-width: 5rem;
     text-align: center;
   }
 
-
-  .input-shell input {
-    border: none;
-    outline: none;
-    width: 100%;
-    background: transparent;
-    font-weight: 600;
+  .room-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
-
-
 
   .change-link {
     font-size: 0.65rem;
@@ -517,7 +559,7 @@
   .selected-room {
     background: white;
     border-radius: 1rem;
-    padding: 1.5rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
   }
 
@@ -529,7 +571,7 @@
 
   .selected-hero img {
     width: 100%;
-    height: 220px;
+    height: clamp(200px, 35vw, 240px);
     object-fit: cover;
     border-radius: 0.9rem;
   }
@@ -540,7 +582,7 @@
 
   .selected-meta {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.75rem;
     margin-top: 1rem;
     font-size: 0.7rem;
@@ -558,13 +600,13 @@
   .gallery-grid {
     margin-top: 1.2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 0.6rem;
   }
 
   .gallery-grid img {
     width: 100%;
-    height: 140px;
+    height: clamp(120px, 24vw, 150px);
     object-fit: cover;
     border-radius: 0.7rem;
   }
@@ -572,7 +614,7 @@
   .highlight-grid {
     margin-top: 1.2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 0.75rem;
   }
 
@@ -603,9 +645,15 @@
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
   }
 
+  .summary-body {
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    display: grid;
+    gap: 1.25rem;
+  }
+
   .summary-image {
     position: relative;
-    height: 150px;
+    height: clamp(150px, 28vw, 190px);
   }
 
   .summary-image img {
@@ -623,6 +671,7 @@
     background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
     color: white;
     font-family: var(--font-headline);
+    font-size: clamp(1.05rem, 2.8vw, 1.35rem);
   }
 
   .muted {
@@ -653,8 +702,8 @@
     background: #1b5e20;
     color: white;
     border-radius: 1rem;
-    padding: 1.5rem;
-    display: flex;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    display: grid;
     gap: 0.75rem;
     align-items: flex-start;
   }
@@ -664,9 +713,27 @@
     color: #ffe088;
   }
 
-  @media (max-width: 768px) {
-    .summary-card {
-      position: static;
+  @media (min-width: 640px) {
+    .date-range {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .stepper {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .stepper-controls {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .count-display {
+      min-width: 0;
+      flex: 1;
     }
   }
 </style>
