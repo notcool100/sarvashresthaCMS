@@ -13,18 +13,105 @@
   ];
 
   let rooms = $state<Room[]>([]);
+  let isLoading = $state(true);
+
+  // Filter states
+  let selectedCapacity = $state("");
+  let selectedViewType = $state("");
+  let selectedCategory = $state("all");
+  let priceRange = $state<[number, number]>([0, 2000]);
+  let searchQuery = $state("");
+
+  // Derived dropdowns
   const capacityDropdown = $derived(
     [...new Set(rooms.map((x) => x.capacity))].sort((a, b) => a - b),
   );
-  let isLoading = $state(true);
+
+  const viewTypeDropdown = $derived(
+    [...new Set(rooms.map((x) => x.viewType).filter(Boolean))].sort(),
+  );
+
+  const maxPrice = $derived(
+    rooms.length > 0 ? Math.max(...rooms.map((x) => x.pricePerNight)) : 2000
+  );
+
+  const roomCategories = [
+    { id: "all", label: "All" },
+    { id: "suites", label: "Suites" },
+    { id: "villas", label: "Villas" },
+    { id: "signature", label: "Signature" },
+    { id: "mountain-view", label: "Mountain View" }
+  ];
+
+  // Helper to categorize rooms based on viewType
+  const getRoomCategory = (room: Room) => {
+    const viewType = room.viewType?.toLowerCase() || "";
+    if (viewType.includes("mountain") || viewType.includes("peak") || viewType.includes("panoramic")) return "mountain-view";
+    if (viewType.includes("villa") || room.name?.toLowerCase().includes("villa")) return "villas";
+    if (room.name?.toLowerCase().includes("suite")) return "suites";
+    if (room.name?.toLowerCase().includes("signature")) return "signature";
+    return "suites";
+  };
 
   onMount(async () => {
     const response = await roomService.getAll();
     rooms = response.data ?? [];
+    if (rooms.length > 0) {
+      priceRange = [0, maxPrice];
+    }
     isLoading = false;
   });
 
-  const roomsDerived = $derived(rooms);
+  // Filter logic
+  const filteredRooms = $derived.by(() => {
+    let result = rooms;
+
+    // Filter by capacity
+    if (selectedCapacity !== "") {
+      result = result.filter((x) => x.capacity === Number(selectedCapacity));
+    }
+
+    // Filter by view type (tier)
+    if (selectedViewType !== "") {
+      result = result.filter((x) => x.viewType === selectedViewType);
+    }
+
+    // Filter by category
+    if (selectedCategory !== "all") {
+      result = result.filter((room) => getRoomCategory(room) === selectedCategory);
+    }
+
+    // Filter by price range
+    result = result.filter(
+      (x) => x.pricePerNight >= priceRange[0] && x.pricePerNight <= priceRange[1]
+    );
+
+    // Filter by search query
+    if (searchQuery.trim() !== "") {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(
+        (x) =>
+          x.name.toLowerCase().includes(query) ||
+          x.description.toLowerCase().includes(query) ||
+          x.viewType?.toLowerCase().includes(query)
+      );
+    }
+
+    return result;
+  });
+
+  const isFiltering = $derived(
+    selectedCapacity !== "" ||
+    selectedViewType !== "" ||
+    selectedCategory !== "all" ||
+    priceRange[0] !== 0 ||
+    priceRange[1] !== maxPrice ||
+    searchQuery.trim() !== ""
+  );
+
+  const roomsDerived = $derived(
+    isFiltering ? filteredRooms : rooms
+  );
   const featuredRoom = $derived(roomsDerived[0]);
   const secondaryRoom = $derived(roomsDerived[1]);
   const gridRooms = $derived(roomsDerived.slice(2, 8));
@@ -37,13 +124,6 @@
   };
 
   const slug = (room?: Room) => (room ? `/booking?room=${room.id}` : "/booking");
- 
-  
-  let selectedCapacity = $state("");
-  const isFiltering = $derived(selectedCapacity !== "");
-  let filteredRooms = $derived(
-    isFiltering ? rooms.filter((x) => x.capacity === Number(selectedCapacity)) : [],
-  );
 </script>
 
 <svelte:head>
@@ -77,27 +157,49 @@
       <div class="flex flex-wrap items-stretch gap-4 sm:gap-6 lg:items-center lg:gap-10">
         <div class="filter-chip">
           <span class="chip-label">View by Tier</span>
-          <div class="filter-value">
-            <span>All Collections</span>
+          <div class="filter-value select-wrapper">
+            <select bind:value={selectedViewType} class="filter-select">
+              <option value="">All Collections</option>
+              {#each viewTypeDropdown as view}
+                <option value={view}>{view}</option>
+              {/each}
+            </select>
             <span class="material-symbols-outlined">expand_more</span>
           </div>
         </div>
         <div class="filter-chip">
           <span class="chip-label">Nightly Rate</span>
-          <div class="filter-value">
-            <span>Any Price</span>
+          <div class="filter-value select-wrapper">
+            <select class="filter-select" onchange={(e) => {
+              const val = (e.target as HTMLSelectElement).value;
+              if (val === "any") {
+                priceRange = [0, maxPrice];
+              } else if (val === "0-500") {
+                priceRange = [0, 500];
+              } else if (val === "500-1000") {
+                priceRange = [500, 1000];
+              } else if (val === "1000+") {
+                priceRange = [1000, maxPrice];
+              }
+            }}>
+              <option value="any">Any Price</option>
+              <option value="0-500">$0 - $500</option>
+              <option value="500-1000">$500 - $1,000</option>
+              <option value="1000+">$1,000+</option>
+            </select>
             <span class="material-symbols-outlined">expand_more</span>
           </div>
         </div>
         <div class="filter-chip">
           <label for="capacity-filter">Occupancy</label>
-          <div class="filter-value">
-            <select id="capacity-filter" bind:value={selectedCapacity}>
-           <option value="">All Capacity</option>
-           {#each capacityDropdown as cap}
-           <option value={cap}>{cap}</option>
-           {/each}
+          <div class="filter-value select-wrapper">
+            <select id="capacity-filter" bind:value={selectedCapacity} class="filter-select">
+              <option value="">All Capacity</option>
+              {#each capacityDropdown as cap}
+                <option value={cap}>{cap} {cap === 1 ? 'Person' : 'People'}</option>
+              {/each}
             </select>
+            <span class="material-symbols-outlined">expand_more</span>
           </div>
         </div>
       </div>
@@ -108,135 +210,144 @@
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 mt-6 flex flex-col lg:flex-row items-stretch justify-between gap-4 sm:gap-6 lg:items-center">
       <div class="filter-pills">
-        <button class="pill is-active">All</button>
-        <button class="pill">Suites</button>
-        <button class="pill">Villas</button>
-        <button class="pill">Signature</button>
-        <button class="pill">Mountain View</button>
+        {#each roomCategories as category}
+          <button 
+            class="pill {selectedCategory === category.id ? 'is-active' : ''}"
+            onclick={() => selectedCategory = category.id}
+          >
+            {category.label}
+          </button>
+        {/each}
       </div>
       <div class="filter-input">
         <span class="material-symbols-outlined">search</span>
-        <input type="text" placeholder="Search by suite name" />
+        <input 
+          type="text" 
+          placeholder="Search by suite name" 
+          bind:value={searchQuery}
+        />
       </div>
     </div>
   </section>
 
   <section class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-y-16 gap-x-10">
-    {#if isFiltering}
-    {#if filteredRooms.length}
-    {#each filteredRooms as fr}
-      <div class="lg:col-span-4 group">
-          <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-5">
-            <a href={slug(fr)}>
-              <img
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                alt={fr.name}
-                src={imageFor(fr, 2)}
-              />
-            </a>
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0c3a1a]/70 to-transparent"></div>
-            <div class="absolute bottom-6 left-6 text-white">
-              <h3 class="font-[var(--font-headline)] text-2xl">{fr.name}</h3>
-              <p class="text-xs uppercase tracking-widest opacity-80">${fr.pricePerNight} / Night</p>
-            </div>
-          </div>
-        </div>
-    {/each}
-    {:else}
-    <p>NO foo</p>
-    {/if}
-    {:else}
-      {#if featuredRoom}
-        <div class="lg:col-span-8 group">
-          <div class="relative overflow-hidden rounded-2xl aspect-[16/9] mb-6">
-            <a href={slug(featuredRoom)}>
-              <img
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                alt={featuredRoom.name}
-                src={imageFor(featuredRoom)}
-              />
-            </a>
-            <div class="heritage-overlay absolute bottom-4 left-4 right-4 md:bottom-5 md:left-auto md:right-5 p-4 sm:p-6 rounded-xl shadow-2xl max-w-full md:max-w-xs">
-              <span class="material-symbols-outlined text-secondary block mb-2" style="font-variation-settings: 'FILL' 1;">spa</span>
-              <h3 class="font-[var(--font-headline)] text-2xl mb-2">{featuredRoom.name}</h3>
-              <p class="text-sm text-on-surface-variant mb-4">
-                {featuredRoom.description}
-              </p>
-              <div class="flex items-center justify-between border-t border-black/10 pt-4">
-                <span class="font-semibold text-lg">${featuredRoom.pricePerNight} <span class="text-xs text-on-surface-variant">/ NIGHT</span></span>
-                <span class="text-xs font-bold uppercase tracking-widest text-secondary">{featuredRoom.viewType || "Available"}</span>
+      {#if isFiltering}
+        {#if filteredRooms.length}
+          {#each filteredRooms as room}
+            <div class="lg:col-span-4 group">
+              <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-5">
+                <a href={slug(room)}>
+                  <img
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    alt={room.name}
+                    src={imageFor(room, 2)}
+                  />
+                </a>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0c3a1a]/70 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 text-white">
+                  <h3 class="font-[var(--font-headline)] text-2xl">{room.name}</h3>
+                  <p class="text-xs uppercase tracking-widest opacity-80">${room.pricePerNight} / Night</p>
+                </div>
               </div>
             </div>
+          {/each}
+        {:else}
+          <div class="lg:col-span-12 text-center py-12">
+            <p class="text-lg text-on-surface-variant">No rooms match your filters. Try adjusting your search.</p>
           </div>
-          <div class="flex flex-wrap gap-6 text-xs uppercase tracking-widest text-on-surface-variant">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-secondary text-sm">bed</span>
-              {featuredRoom.bedType || "Signature Bed"}
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-secondary text-sm">bathtub</span>
-              Attached Bath
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-secondary text-sm">landscape</span>
-              {featuredRoom.viewType || "Mountain View"}
-            </div>
-          </div>
-        </div>
-      {/if}
-
-      {#if secondaryRoom}
-        <div class="lg:col-span-4 group lg:mt-10">
-          <div class="bg-[var(--color-surface-container)] rounded-2xl overflow-hidden h-full flex flex-col">
-            <div class="relative h-[320px] sm:h-[420px] overflow-hidden">
-              <a href={slug(secondaryRoom)}>
+        {/if}
+      {:else}
+        {#if featuredRoom}
+          <div class="lg:col-span-8 group">
+            <div class="relative overflow-hidden rounded-2xl aspect-[16/9] mb-6">
+              <a href={slug(featuredRoom)}>
                 <img
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  alt={secondaryRoom.name}
-                  src={imageFor(secondaryRoom, 1)}
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  alt={featuredRoom.name}
+                  src={imageFor(featuredRoom)}
                 />
               </a>
-            </div>
-            <div class="p-8 flex-grow flex flex-col justify-between">
-              <div>
-                <h3 class="font-[var(--font-headline)] text-3xl mb-4">{secondaryRoom.name}</h3>
-                <p class="text-on-surface-variant leading-relaxed mb-6">
-                  {secondaryRoom.description}
+              <div class="heritage-overlay absolute bottom-4 left-4 right-4 md:bottom-5 md:left-auto md:right-5 p-4 sm:p-6 rounded-xl shadow-2xl max-w-full md:max-w-xs">
+                <span class="material-symbols-outlined text-secondary block mb-2" style="font-variation-settings: 'FILL' 1;">spa</span>
+                <h3 class="font-[var(--font-headline)] text-2xl mb-2">{featuredRoom.name}</h3>
+                <p class="text-sm text-on-surface-variant mb-4">
+                  {featuredRoom.description}
                 </p>
-              </div>
-              <div class="pt-6 border-t border-black/10">
-                <div class="flex justify-between items-baseline mb-6">
-                  <span class="font-semibold text-2xl text-[#1b5e20]">${secondaryRoom.pricePerNight}</span>
-                  <span class="text-[10px] uppercase tracking-[0.2rem] text-secondary font-bold">Limited Dates</span>
+                <div class="flex items-center justify-between border-t border-black/10 pt-4">
+                  <span class="font-semibold text-lg">${featuredRoom.pricePerNight} <span class="text-xs text-on-surface-variant">/ NIGHT</span></span>
+                  <span class="text-xs font-bold uppercase tracking-widest text-secondary">{featuredRoom.viewType || "Available"}</span>
                 </div>
-                <a class="w-full block text-center border-2 border-[#1b5e20] text-[#1b5e20] hover:bg-[#1b5e20] hover:text-white py-3 rounded-lg font-label uppercase text-xs font-bold transition-all duration-300" href={slug(secondaryRoom)}>
-                  View Details
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-6 text-xs uppercase tracking-widest text-on-surface-variant">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-sm">bed</span>
+                {featuredRoom.bedType || "Signature Bed"}
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-sm">bathtub</span>
+                Attached Bath
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-sm">landscape</span>
+                {featuredRoom.viewType || "Mountain View"}
+              </div>
+            </div>
+          </div>
+        {/if}
+
+        {#if secondaryRoom}
+          <div class="lg:col-span-4 group lg:mt-10">
+            <div class="bg-[var(--color-surface-container)] rounded-2xl overflow-hidden h-full flex flex-col">
+              <div class="relative h-[320px] sm:h-[420px] overflow-hidden">
+                <a href={slug(secondaryRoom)}>
+                  <img
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    alt={secondaryRoom.name}
+                    src={imageFor(secondaryRoom, 1)}
+                  />
                 </a>
               </div>
+              <div class="p-8 flex-grow flex flex-col justify-between">
+                <div>
+                  <h3 class="font-[var(--font-headline)] text-3xl mb-4">{secondaryRoom.name}</h3>
+                  <p class="text-on-surface-variant leading-relaxed mb-6">
+                    {secondaryRoom.description}
+                  </p>
+                </div>
+                <div class="pt-6 border-t border-black/10">
+                  <div class="flex justify-between items-baseline mb-6">
+                    <span class="font-semibold text-2xl text-[#1b5e20]">${secondaryRoom.pricePerNight}</span>
+                    <span class="text-[10px] uppercase tracking-[0.2rem] text-secondary font-bold">Limited Dates</span>
+                  </div>
+                  <a class="w-full block text-center border-2 border-[#1b5e20] text-[#1b5e20] hover:bg-[#1b5e20] hover:text-white py-3 rounded-lg font-label uppercase text-xs font-bold transition-all duration-300" href={slug(secondaryRoom)}>
+                    View Details
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      {/if}
+        {/if}
 
-      {#each gridRooms as room}
-        <div class="lg:col-span-4 group">
-          <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-5">
-            <a href={slug(room)}>
-              <img
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                alt={room.name}
-                src={imageFor(room, 2)}
-              />
-            </a>
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0c3a1a]/70 to-transparent"></div>
-            <div class="absolute bottom-6 left-6 text-white">
-              <h3 class="font-[var(--font-headline)] text-2xl">{room.name}</h3>
-              <p class="text-xs uppercase tracking-widest opacity-80">${room.pricePerNight} / Night</p>
+        {#each gridRooms as room}
+          <div class="lg:col-span-4 group">
+            <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-5">
+              <a href={slug(room)}>
+                <img
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  alt={room.name}
+                  src={imageFor(room, 2)}
+                />
+              </a>
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0c3a1a]/70 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 text-white">
+                <h3 class="font-[var(--font-headline)] text-2xl">{room.name}</h3>
+                <p class="text-xs uppercase tracking-widest opacity-80">${room.pricePerNight} / Night</p>
+              </div>
             </div>
           </div>
-        </div>
-      {/each}
+        {/each}
       {/if}
     </div>
   </section>
@@ -464,6 +575,35 @@
     gap: 0.5rem;
     font-weight: 700;
     color: #1b5e20;
+  }
+
+  .select-wrapper {
+    position: relative;
+  }
+
+  .filter-select {
+    appearance: none;
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-weight: 700;
+    color: #1b5e20;
+    cursor: pointer;
+    padding-right: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .filter-select:focus {
+    outline: none;
+  }
+
+  .select-wrapper .material-symbols-outlined {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1.2rem;
   }
 
   .advanced-filter {
