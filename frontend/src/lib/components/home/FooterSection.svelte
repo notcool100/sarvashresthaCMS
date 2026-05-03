@@ -1,7 +1,7 @@
 <footer class="bg-black text-white py-12">
   <div class="mx-auto max-w-7xl px-6 grid md:grid-cols-3 gap-10">
     <div>
-      <p class="font-[var(--font-headline)] text-2xl">Sarvashrestha</p>
+      <p class="font-[var(--font-headline)] text-2xl">Sarbashrestha</p>
       <p class="mt-3 text-white/70 text-sm">
         A modern Himalayan sanctuary blending heritage design with immersive wellness.
       </p>
