@@ -183,9 +183,9 @@
               }
             }}>
               <option value="any">Any Price</option>
-              <option value="0-500">$0 - $500</option>
-              <option value="500-1000">$500 - $1,000</option>
-              <option value="1000+">$1,000+</option>
+              <option value="0-500">Rs.0 - Rs.500</option>
+              <option value="500-1000">Rs.500 - Rs.1,000</option>
+              <option value="1000+">Rs.1,000+</option>
             </select>
             <span class="material-symbols-outlined">expand_more</span>
           </div>
@@ -213,7 +213,7 @@
         {#each roomCategories as category}
           <button 
             class="pill {selectedCategory === category.id ? 'is-active' : ''}"
-            onclick={() => selectedCategory = category.id}
+            on:click={() => selectedCategory = category.id}
           >
             {category.label}
           </button>
