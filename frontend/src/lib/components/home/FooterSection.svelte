@@ -18,9 +18,9 @@
     <div>
       <p class="uppercase tracking-[0.3em] text-xs text-white/60">Social</p>
       <div class="mt-4 grid gap-2 text-sm text-white/80">
-        <a href="/">Instagram</a>
-        <a href="/">Facebook</a>
-        <a href="/">YouTube</a>
+        <a href="https://www.instagram.com/sarbashresthahospitality?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61572149100011&ref=PROFILE_EDIT_xav_ig_profile_page_web" target="_blank">Facebook</a>
+        <a href="https://www.tiktok.com/@sarbashresthahospitality?is_from_webapp=1&sender_device=pc" target="_blank">Tiktok</a>
       </div>
     </div>
   </div>
